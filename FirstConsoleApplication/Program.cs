@@ -45,6 +45,9 @@ switch (arithmeticOperator)
         break;
 }
 
+Console.WriteLine();
+Console.WriteLine("Press any key to exit...");
+Console.ReadKey();
 
 static double ReadNumber(string message)
 {
