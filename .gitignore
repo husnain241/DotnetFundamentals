@@ -10,3 +10,7 @@
 
 # Visual Studio workspace
 VSWorkspaceState.json
+
+# Build folders
+bin/
+obj/
