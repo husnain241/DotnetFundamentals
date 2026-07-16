@@ -1,21 +1,18 @@
 ﻿Console.WriteLine("=== Simple Calculator ===");
 Console.WriteLine();
 
-Console.Write("Enter first number: ");
-if (!double.TryParse(Console.ReadLine(), out double firstNumber))
+double ReadNumber(string message)
 {
-    Console.WriteLine("Invalid first number.");
-    return;
+    Console.WriteLine(message);
+    while (!double.TryParse(Console.ReadLine(), out double number) {
+        Console.Write("Invalid input. please enter a valid number: ");
+    }
+    return number;
 }
+    double firstNumber = ReadNumber("Enter first number: ");
+    double secondNumber = ReadNumber("Enter second number: ");
 
-Console.Write("Enter second number: ");
-if (!double.TryParse(Console.ReadLine(), out double secondNumber))
-{
-    Console.WriteLine("Invalid second number.");
-    return;
-}
-
-Console.WriteLine();
+    Console.WriteLine();
 Console.WriteLine("Results");
 Console.WriteLine("-------------------------");
 Console.WriteLine($"Addition       : {firstNumber + secondNumber}");
