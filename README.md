@@ -1,5 +1,11 @@
 # CMIntern4
 
+## Development Environment
+
+- Visual Studio 2022 Installed
+- .NET SDK Installed
+- Git Installed
+- Repository Cloned Successfully
 Source Code Repository for intern 4
 
 ## Getting started
