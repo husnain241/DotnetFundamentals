@@ -1,12 +1,36 @@
-# CMIntern4
+﻿# CMIntern4
 
 ## Development Environment
 
 - Visual Studio 2022 Installed
 - .NET SDK Installed
 - Git Installed
-- Repository Cloned Successfully
-Source Code Repository for intern 4
+- GitLab Repository Cloned Successfully
+
+## Completed Tasks
+
+### Issue #1 - Development Environment Setup
+- Development environment configured
+- Repository cloned successfully
+- README updated
+- `.gitignore` added
+
+### Issue #2 - First Console Application
+- Created a Console Application
+- Read two numbers from user input
+- Performed arithmetic operations:
+  - Addition
+  - Subtraction
+  - Multiplication
+  - Division
+- Input validation implemented using `TryParse`
+
+## Project Structure
+
+```
+CMIntern4
+└── FirstConsoleApplication
+```
 
 ## Getting started
 
