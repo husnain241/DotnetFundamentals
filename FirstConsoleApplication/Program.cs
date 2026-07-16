@@ -1,31 +1,64 @@
 ﻿Console.WriteLine("=== Simple Calculator ===");
 Console.WriteLine();
 
-double ReadNumber(string message)
-{
-    Console.WriteLine(message);
-    while (!double.TryParse(Console.ReadLine(), out double number) {
-        Console.Write("Invalid input. please enter a valid number: ");
-    }
-    return number;
-}
-    double firstNumber = ReadNumber("Enter first number: ");
-    double secondNumber = ReadNumber("Enter second number: ");
+double firstNumber = ReadNumber("Enter first number: ");
 
-    Console.WriteLine();
-Console.WriteLine("Results");
+Console.Write("Enter operator (+, -, *, /): ");
+char arithmeticOperator = Console.ReadKey().KeyChar;
+
+Console.WriteLine();
+Console.WriteLine();
+
+double secondNumber = ReadNumber("Enter second number: ");
+
+Console.WriteLine();
+Console.WriteLine("Result");
 Console.WriteLine("-------------------------");
-Console.WriteLine($"Addition       : {firstNumber + secondNumber}");
-Console.WriteLine($"Subtraction    : {firstNumber - secondNumber}");
-Console.WriteLine($"Multiplication : {firstNumber * secondNumber}");
 
-if (secondNumber != 0)
+switch (arithmeticOperator)
 {
-    Console.WriteLine($"Division       : {firstNumber / secondNumber}");
+    case '+':
+        Console.WriteLine($"Result: {firstNumber + secondNumber}");
+        break;
+
+    case '-':
+        Console.WriteLine($"Result: {firstNumber - secondNumber}");
+        break;
+
+    case '*':
+        Console.WriteLine($"Result: {firstNumber * secondNumber}");
+        break;
+
+    case '/':
+        if (secondNumber != 0)
+        {
+            Console.WriteLine($"Result: {firstNumber / secondNumber}");
+        }
+        else
+        {
+            Console.WriteLine("Cannot divide by zero.");
+        }
+        break;
+
+    default:
+        Console.WriteLine("Invalid operator.");
+        break;
 }
-else
+
+
+static double ReadNumber(string message)
 {
-    Console.WriteLine("Division       : Cannot divide by zero.");
+    double number;
+
+    while (true)
+    {
+        Console.Write(message);
+
+        if (double.TryParse(Console.ReadLine(), out number))
+        {
+            return number;
+        }
+
+        Console.WriteLine("Invalid input. Please enter a valid number.");
+    }
 }
-Console.WriteLine("\nPress any key to exit...");
-Console.ReadKey();
