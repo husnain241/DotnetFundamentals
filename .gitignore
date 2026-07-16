@@ -1,0 +1,12 @@
+# Visual Studio
+.vs/
+
+# User-specific files
+*.user
+*.suo
+
+# Database files
+*.sqlite
+
+# Visual Studio workspace
+VSWorkspaceState.json
