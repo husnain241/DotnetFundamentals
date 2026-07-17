@@ -1,58 +1,89 @@
-﻿Console.WriteLine("=== Simple Calculator ===");
+﻿const string AppName = "Simple Calculator";
+
+Console.WriteLine($"=== {AppName} ===");
 Console.WriteLine();
 
 double firstNumber = ReadNumber("Enter first number: ");
 
-Console.Write("Enter operator (+, -, *, /): ");
-char arithmeticOperator = Console.ReadKey().KeyChar;
+char arithmeticOperator = ReadOperator();
 
-Console.WriteLine();
 Console.WriteLine();
 
 double secondNumber = ReadNumber("Enter second number: ");
 
 Console.WriteLine();
-Console.WriteLine("Result");
-Console.WriteLine("-------------------------");
+
+double result = 0;
 
 switch (arithmeticOperator)
 {
     case '+':
-        Console.WriteLine($"Result: {firstNumber + secondNumber}");
+        result = firstNumber + secondNumber;
         break;
 
     case '-':
-        Console.WriteLine($"Result: {firstNumber - secondNumber}");
+        result = firstNumber - secondNumber;
         break;
 
     case '*':
-        Console.WriteLine($"Result: {firstNumber * secondNumber}");
+        result = firstNumber * secondNumber;
         break;
 
     case '/':
         if (secondNumber != 0)
         {
-            Console.WriteLine($"Result: {firstNumber / secondNumber}");
+            result = firstNumber / secondNumber;
         }
         else
         {
             Console.WriteLine("Cannot divide by zero.");
+            return;
         }
-        break;
-
-    default:
-        Console.WriteLine("Invalid operator.");
         break;
 }
 
+int convertedResult = (int)result;
+
+Console.WriteLine("Result");
+Console.WriteLine("-------------------------");
+Console.WriteLine($"Original Result : {result}");
+Console.WriteLine($"Converted Result: {convertedResult}");
+
+Console.WriteLine();
+Console.WriteLine("Press any key to exit...");
+Console.ReadKey();
+
 static double ReadNumber(string message)
 {
-    Console.Write(message);
+    double number;
 
-    while (!double.TryParse(Console.ReadLine(), out double number))
+    while (true)
     {
-        Console.Write("Invalid input. Please enter a valid number: ");
-    }
+        Console.Write(message);
 
-    return number;
+        if (double.TryParse(Console.ReadLine(), out number))
+        {
+            return number;
+        }
+
+        Console.WriteLine("Invalid input. Please enter a valid number.");
+    }
+}
+
+static char ReadOperator()
+{
+    while (true)
+    {
+        Console.Write("Enter operator (+, -, *, /): ");
+
+        char op = Console.ReadKey().KeyChar;
+        Console.WriteLine();
+
+        if (op == '+' || op == '-' || op == '*' || op == '/')
+        {
+            return op;
+        }
+
+        Console.WriteLine("Invalid operator. Please enter +, -, *, or /.");
+    }
 }
