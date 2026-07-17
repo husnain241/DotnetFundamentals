@@ -32,6 +32,16 @@
 - Implemented error handling for invalid input and division by zero scenarios
 Added comments and documentation for better code readability and maintainability
 
+### Issue #4 - Control Statements
+- Built a Number Guessing Game
+- Implemented `if`, `else`, `while`, and `break`
+- Generated a random number using the `Random` class
+- Added input and range validation
+- Tracked the number of attempts
+- Implemented the Play Again (Y/N) feature
+- Improved code readability using separate methods
+
+
 ## Project Structure
 
 ```
