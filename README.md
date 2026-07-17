@@ -25,6 +25,13 @@
   - Division
 - Input validation implemented using `TryParse`
 
+### Issue #3 - Variables & Data Types
+- Implemented variables and data types in the console application
+- Used appropriate data types for user input and arithmetic operations
+- Handled type conversions and casting where necessary
+- Implemented error handling for invalid input and division by zero scenarios
+Added comments and documentation for better code readability and maintainability
+
 ## Project Structure
 
 ```
