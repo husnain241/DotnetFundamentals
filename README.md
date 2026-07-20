@@ -41,6 +41,14 @@ Added comments and documentation for better code readability and maintainability
 - Implemented the Play Again (Y/N) feature
 - Improved code readability using separate methods
 
+### Issue #5 - Methods
+-Created a Grade Calculator console application
+- Used methods with parameters and return values
+	- CalculateGrade method to calculate the grade based on marks
+- Calculated grades based on marks
+- Added the Play Again (Y/N) feature
+- Improved code readability by separating responsibilities into methods
+
 
 ## Project Structure
 
@@ -48,6 +56,8 @@ Added comments and documentation for better code readability and maintainability
 CMIntern4
 └── FirstConsoleApplication
 └── ControlStatements
+└── Methods
+
 
 ```
 
