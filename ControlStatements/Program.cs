@@ -42,7 +42,7 @@ while (true)
                 Console.Clear();
 
                 Console.WriteLine("=== Guessing Game ===");
-                goto StartNewGame;
+                break;
 
             case 'N':
                 Console.WriteLine("Thanks for playing!");
@@ -55,10 +55,9 @@ while (true)
                 Console.WriteLine("Invalid choice. Please enter Y or N.");
                 break;
         }
+        break;
     }
 
-       StartNewGame:
-    continue;
 }
 
 static int ReadGuess()
