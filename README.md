@@ -44,7 +44,6 @@ Added comments and documentation for better code readability and maintainability
 ### Issue #5 - Methods
 -Created a Grade Calculator console application
 - Used methods with parameters and return values
-	- ReadMarks method to read user input
 	- CalculateGrade method to calculate the grade based on marks
 - Calculated grades based on marks
 - Added the Play Again (Y/N) feature
