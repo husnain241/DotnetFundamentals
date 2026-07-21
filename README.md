@@ -50,6 +50,19 @@ Added comments and documentation for better code readability and maintainability
 - Added the Play Again (Y/N) feature
 - Improved code readability by separating responsibilities into methods
 
+### Issue #6 - Arrays & Collections
+- Created a Student Record System console application
+- Used a List<Student> to store multiple student records
+- Implemented CRUD operations:
+  - Add Student
+  - View Students
+  - Search Student by ID
+  - Update Student information
+  - Delete Student by ID
+- Used foreach loop to display and search student records
+- Applied input validation for student information
+- Organized the application using separate methods for each operation
+
 
 ## Project Structure
 
