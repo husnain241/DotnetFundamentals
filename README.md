@@ -49,6 +49,14 @@ Added comments and documentation for better code readability and maintainability
 - Added the Play Again (Y/N) feature
 - Improved code readability by separating responsibilities into methods
 
+### Issue #7 - Classes and Objects
+- Created a Student class
+- Implemented default and parameterized constructors
+- Created multiple Student objects
+- Demonstrated object creation using constructors and object initialization
+- Displayed student information in the console
+- Learned the concepts of classes, objects, constructors, and object initialization
+- Understood reference types (Stack vs Heap), garbage collection, and the THIS keyword
 
 ## Project Structure
 
