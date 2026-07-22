@@ -2,7 +2,21 @@
 
 while (true)
 {
-    int marks = ReadMarks();
+    Console.Write("Enter the mark: ");
+
+    if (!int.TryParse(Console.ReadLine(), out int marks))
+    {
+        Console.WriteLine("Please enter a valid integer.");
+        continue;
+    }
+
+    if (marks < 0 || marks > 100)
+    {
+        Console.WriteLine("Please enter marks between 0 and 100.");
+        continue;
+    }
+
+   // int marks = ReadMarks();
     char grade = CalculateGrade(marks);
 
     Console.WriteLine($"The grade for marks {marks} is: {grade}");
