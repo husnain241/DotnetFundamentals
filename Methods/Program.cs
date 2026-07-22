@@ -47,7 +47,28 @@ while (true)
     }
 }
 
+// Method: Read student marks
+static int ReadMarks()
+{
+    while (true)
+    {
+        Console.Write("Enter the mark: ");
 
+        if (!int.TryParse(Console.ReadLine(), out int marks))
+        {
+            Console.WriteLine("Please enter a valid integer.");
+            continue;
+        }
+
+        if (marks < 0 || marks > 100)
+        {
+            Console.WriteLine("Please enter marks between 0 and 100.");
+            continue;
+        }
+
+        return marks;
+    }
+}
 
 // Method: Calculate grade
 static char CalculateGrade(int marks)
