@@ -72,6 +72,40 @@ Added comments and documentation for better code readability and maintainability
 - Learned the concepts of classes, objects, constructors, and object initialization
 - Understood reference types (Stack vs Heap), garbage collection, and the THIS keyword
 
+### Issue #8 - Inheritance and Polymorphism
+- Built a Vehicle Management System using inheritance and polymorphism
+- Created a base `Vehicle` class with common properties and behaviors
+- Implemented derived classes:
+  - `Car`
+  - `Truck`
+  - `Motorcycle`
+- Demonstrated inheritance by sharing common functionality through the base class
+- Implemented method overriding using the `DisplayInfo()` method
+- Applied runtime polymorphism by storing different vehicle types in a single `List<Vehicle>`
+- Implemented complete CRUD operations:
+  - Add Vehicle
+  - View All Vehicles
+  - Search Vehicle by ID
+  - Update Vehicle
+  - Delete Vehicle
+- Updated both common vehicle properties and type-specific properties
+- Implemented input validation using `TryParse()` and helper methods
+- Used `FuelType` and `InputMode` enums for cleaner and more maintainable code
+- Organized the project using a layered structure:
+  - Models
+  - Services
+  - Helpers
+  - UI
+  - Data
+  - Enums
+- Applied professional coding practices:
+  - Separation of Concerns (SoC)
+  - Single Responsibility Principle (SRP)
+  - Reusable helper methods
+  - Clean and maintainable project structure
+	
+
+
 ## Project Structure
 
 ```
@@ -81,10 +115,13 @@ CMIntern4
 └── Methods
 └── Arrays-Collections
 └── objects-Classes
-
-
-
-
+└── Inheritance-Polymorphism
+	├── Data
+    ├── Helpers
+    ├── Model
+    ├── Services
+    ├── UI
+    └── Program.cs
 
 ```
 
