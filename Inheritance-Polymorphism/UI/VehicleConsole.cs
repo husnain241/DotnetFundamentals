@@ -216,16 +216,18 @@ namespace Inheritance_Polymorphism.UI
 					return;
 			}
 
-			if (_vehicleService.AddVehicle(vehicle))
-			{
-				Console.WriteLine("Vehicle added successfully.");
-			}
-			else
-			{
-				Console.WriteLine("A vehicle with this ID already exists.");
-			}
+            int? vehicleId = _vehicleService.AddVehicle(vehicle);
 
-			ConsoleHelper.Pause();
+            if (vehicleId.HasValue)
+            {
+                Console.WriteLine($"Vehicle added successfully. ID: {vehicleId}");
+            }
+            else
+            {
+                Console.WriteLine("A vehicle with this ID already exists.");
+            }
+
+            ConsoleHelper.Pause();
 		}
 
 		private void UpdateVehicle()
