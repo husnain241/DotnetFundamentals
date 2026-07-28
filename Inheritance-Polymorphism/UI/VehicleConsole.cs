@@ -2,6 +2,7 @@ using Inheritance_Polymorphism.Enums;
 using Inheritance_Polymorphism.Helpers;
 using Inheritance_Polymorphism.Model;
 using Inheritance_Polymorphism.Services;
+using Inheritance_Polymorphism.DTOs;
 
 namespace Inheritance_Polymorphism.UI
 {
@@ -230,117 +231,105 @@ namespace Inheritance_Polymorphism.UI
             ConsoleHelper.Pause();
 		}
 
-		private void UpdateVehicle()
-		{
-			Console.Clear();
+        private void UpdateVehicle()
+        {
+            Console.Clear();
 
-			int id = ConsoleHelper.ReadInt("Enter Vehicle ID to update: ").Value;
+            int id = ConsoleHelper.ReadInt("Enter Vehicle ID to update: ").Value;
 
-			Vehicle? existingVehicle = _vehicleService.SearchVehicle(id);
+            Vehicle? vehicle = _vehicleService.SearchVehicle(id);
 
-			if (existingVehicle == null)
-			{
-				Console.WriteLine("Vehicle not found.");
-				ConsoleHelper.Pause();
-				return;
-			}
+            if (vehicle == null)
+            {
+                Console.WriteLine("Vehicle not found.");
+                ConsoleHelper.Pause();
+                return;
+            }
 
-			Console.WriteLine("Leave field empty to keep the current value.");
-			Console.WriteLine();
+            Console.WriteLine("Leave a field empty to keep the current value.");
+            Console.WriteLine();
 
-			// Base Properties
-			string? brand = ConsoleHelper.ReadString(
-				$"Brand ({existingVehicle.Brand}): ",
-				InputMode.Optional);
+            VehicleUpdateDto dto = new VehicleUpdateDto();
 
-			string? model = ConsoleHelper.ReadString(
-				$"Model ({existingVehicle.Model}): ",
-				InputMode.Optional);
+            dto.VehicleId = id;
 
-			string? color = ConsoleHelper.ReadString(
-				$"Color ({existingVehicle.Color}): ",
-				InputMode.Optional);
+            // Base Properties
+            dto.Brand = ConsoleHelper.ReadString(
+                $"Brand ({vehicle.Brand}): ",
+                InputMode.Optional);
 
-			int? year = ConsoleHelper.ReadInt(
-				$"Year ({existingVehicle.Year}): ",
-				InputMode.Optional);
+            dto.Model = ConsoleHelper.ReadString(
+                $"Model ({vehicle.Model}): ",
+                InputMode.Optional);
 
-			if (!string.IsNullOrWhiteSpace(brand))
-				existingVehicle.Brand = brand;
+            dto.Color = ConsoleHelper.ReadString(
+                $"Color ({vehicle.Color}): ",
+                InputMode.Optional);
 
-			if (!string.IsNullOrWhiteSpace(model))
-				existingVehicle.Model = model;
+            dto.Year = ConsoleHelper.ReadInt(
+                $"Year ({vehicle.Year}): ",
+                InputMode.Optional);
 
-			if (!string.IsNullOrWhiteSpace(color))
-				existingVehicle.Color = color;
+            // Car
+            if (vehicle is Car car)
+            {
+                dto.NumberOfDoors = ConsoleHelper.ReadInt(
+                    $"Number of Doors ({car.NumberOfDoors}): ",
+                    InputMode.Optional);
 
-			if (year.HasValue)
-				existingVehicle.Year = year.Value;
+                Console.WriteLine($"Current Fuel Type: {car.FuelType}");
+                Console.Write("New Fuel Type (Petrol, Diesel, Electric, Hybrid, CNG) or press Enter to keep current: ");
 
-			// Car
-			if (existingVehicle is Car car)
-			{
-				int? doors = ConsoleHelper.ReadInt(
-					$"Number of Doors ({car.NumberOfDoors}): ",
-					InputMode.Optional);
+                string? input = Console.ReadLine();
 
-				if (doors.HasValue)
-					car.NumberOfDoors = doors.Value;
+                if (!string.IsNullOrWhiteSpace(input))
+                {
+                    if (int.TryParse(input, out _))
+                    {
+                        Console.WriteLine("Please enter the fuel type name, not a number.");
+                        ConsoleHelper.Pause();
+                        return;
+                    }
 
-				Console.WriteLine($"Current Fuel Type: {car.FuelType}");
-				Console.Write("New Fuel Type (Petrol, Diesel, Electric, Hybrid, CNG) or press Enter to keep current: ");
+                    if (Enum.TryParse(input, true, out FuelType fuelType))
+                    {
+                        dto.FuelType = fuelType;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Fuel Type.");
+                        ConsoleHelper.Pause();
+                        return;
+                    }
+                }
+            }
 
-				string? input = Console.ReadLine();
+            // Truck
+            else if (vehicle is Truck truck)
+            {
+                dto.LoadCapacity = ConsoleHelper.ReadDouble(
+                    $"Load Capacity ({truck.LoadCapacity}): ",
+                    InputMode.Optional);
+            }
 
-				if (!string.IsNullOrWhiteSpace(input))
-				{
-					if (int.TryParse(input, out _))
-					{
-						Console.WriteLine("Please enter the fuel type name, not a number.");
-					}
-					else if (Enum.TryParse(input, true, out FuelType fuelType))
-					{
-						car.FuelType = fuelType;
-					}
-					else
-					{
-						Console.WriteLine("Invalid Fuel Type.");
-					}
-				}
-			}
+            // Motorcycle
+            else if (vehicle is Motorcycle motorcycle)
+            {
+                dto.HasSideCar = ConsoleHelper.ReadBool(
+                    $"Has Side Car ({(motorcycle.HasSideCar ? "Y" : "N")}) (Y/N): ",
+                    InputMode.Optional);
+            }
 
-			// Truck
-			else if (existingVehicle is Truck truck)
-			{
-				double? capacity = ConsoleHelper.ReadDouble(
-					$"Load Capacity ({truck.LoadCapacity}): ",
-					InputMode.Optional);
+            if (_vehicleService.UpdateVehicle(dto))
+            {
+                Console.WriteLine("Vehicle updated successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Failed to update vehicle.");
+            }
 
-				if (capacity.HasValue)
-					truck.LoadCapacity = capacity.Value;
-			}
-
-			// Motorcycle
-			else if (existingVehicle is Motorcycle motorcycle)
-			{
-				bool? hasSideCar = ConsoleHelper.ReadBool(
-					$"Has Side Car ({(motorcycle.HasSideCar ? "Y" : "N")}) (Y/N): ",
-					InputMode.Optional);
-
-				if (hasSideCar.HasValue)
-					motorcycle.HasSideCar = hasSideCar.Value;
-			}
-
-			if (_vehicleService.UpdateVehicle(existingVehicle))
-			{
-				Console.WriteLine("Vehicle updated successfully.");
-			}
-			else
-			{
-				Console.WriteLine("Failed to update vehicle.");
-			}
-
-			ConsoleHelper.Pause();
-		}
-	}
+            ConsoleHelper.Pause();
+        }
+    }
 }

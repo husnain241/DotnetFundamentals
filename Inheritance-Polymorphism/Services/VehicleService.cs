@@ -1,4 +1,5 @@
 using Inheritance_Polymorphism.Model;
+using Inheritance_Polymorphism.DTOs;
 
 namespace Inheritance_Polymorphism.Services
 {
@@ -49,19 +50,67 @@ namespace Inheritance_Polymorphism.Services
             return true;
         }
 
-        // Update Vehicle
-        public bool UpdateVehicle(Vehicle vehicle)
+        public bool UpdateVehicle(VehicleUpdateDto dto)
         {
-            Vehicle? existingVehicle = SearchVehicle(vehicle.VehicleId);
+            Vehicle? vehicle = SearchVehicle(dto.VehicleId);
 
-            if (existingVehicle == null)
+            if (vehicle == null)
             {
                 return false;
             }
 
-            int index = _vehicles.IndexOf(existingVehicle);
+            // Base Properties
+            if (!string.IsNullOrWhiteSpace(dto.Brand))
+            {
+                vehicle.Brand = dto.Brand;
+            }
 
-            _vehicles[index] = vehicle;
+            if (!string.IsNullOrWhiteSpace(dto.Model))
+            {
+                vehicle.Model = dto.Model;
+            }
+
+            if (!string.IsNullOrWhiteSpace(dto.Color))
+            {
+                vehicle.Color = dto.Color;
+            }
+
+            if (dto.Year.HasValue)
+            {
+                vehicle.Year = dto.Year.Value;
+            }
+
+            // Car
+            if (vehicle is Car car)
+            {
+                if (dto.NumberOfDoors.HasValue)
+                {
+                    car.NumberOfDoors = dto.NumberOfDoors.Value;
+                }
+
+                if (dto.FuelType.HasValue)
+                {
+                    car.FuelType = dto.FuelType.Value;
+                }
+            }
+
+            // Truck
+            else if (vehicle is Truck truck)
+            {
+                if (dto.LoadCapacity.HasValue)
+                {
+                    truck.LoadCapacity = dto.LoadCapacity.Value;
+                }
+            }
+
+            // Motorcycle
+            else if (vehicle is Motorcycle motorcycle)
+            {
+                if (dto.HasSideCar.HasValue)
+                {
+                    motorcycle.HasSideCar = dto.HasSideCar.Value;
+                }
+            }
 
             return true;
         }
