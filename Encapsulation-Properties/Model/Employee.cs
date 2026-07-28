@@ -6,7 +6,9 @@ public class Employee{
     private string _name;
     private string _department;
     private decimal _monthlySalary;
-        
+    private const decimal MidSalaryThreshold = 120000m;
+    private const decimal SeniorSalaryThreshold = 250000m;
+
     public int EmployeeId
     {
         get => _employeeId;
@@ -58,8 +60,8 @@ public class Employee{
     {
         get
         {
-            if (_monthlySalary >= 200000) return "Senior";
-            if (_monthlySalary >= 100000) return "Mid";
+            if (_monthlySalary >= SeniorSalaryThreshold) return "Senior";
+            if (_monthlySalary >= MidSalaryThreshold) return "Mid";
             return "Junior";
         }
     }
