@@ -5,7 +5,7 @@ public class Employee{
     private int _employeeId;
     private string _name;
     private string _department;
-    private double _monthlySalary;
+    private decimal _monthlySalary;
         
     public int EmployeeId
     {
@@ -40,7 +40,7 @@ public class Employee{
         }
     }
 
-    public double MonthlySalary
+    public decimal MonthlySalary
     {
         get => _monthlySalary;
         set
@@ -51,7 +51,7 @@ public class Employee{
         }
     }
 
-    public double AnnualSalary => _monthlySalary * 12;
+    public decimal AnnualSalary => _monthlySalary * 12;
 
 
     public string SalaryGrade
@@ -64,7 +64,7 @@ public class Employee{
         }
     }
 
-    public Employee(int employeeId, string name, string department, double monthlySalary)
+    public Employee(int employeeId, string name, string department, decimal monthlySalary)
     {
         EmployeeId = employeeId;
         Name = name;

@@ -46,7 +46,7 @@ using Encapsulation_Properties.Services;
                 string department = Console.ReadLine();
 
                 Console.Write("Enter Monthly Salary: ");
-                double salary = ReadDouble();
+                decimal salary = ReadDecimal();
 
                 var employee = new Employee(id, name, department, salary);
                 bool result = service.AddEmployee(employee);
@@ -113,10 +113,10 @@ using Encapsulation_Properties.Services;
     return result;
         }
 
-        static double ReadDouble()
+        static decimal ReadDecimal()
         {
-    double result;
-            while (!double.TryParse(Console.ReadLine(), out result))
+    decimal result;
+            while (!decimal.TryParse(Console.ReadLine(), out result))
     {
         Console.Write("Invalid number, try again: ");
 
