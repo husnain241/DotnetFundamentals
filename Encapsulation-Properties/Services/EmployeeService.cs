@@ -39,6 +39,10 @@ public class EmployeeService
 
     public bool UpdateEmployee(int employeeId, Employee updatedEmployee)
     {
+        if (updatedEmployee == null)
+        {
+            throw new ArgumentNullException(nameof(updatedEmployee));
+        }
         Employee? employee = SearchEmployeeById(employeeId);
 
         if (employee == null)
