@@ -12,15 +12,15 @@ namespace Inheritance_Polymorphism.Services
         }
 
         // Add Vehicle
-        public bool AddVehicle(Vehicle vehicle)
+        public int? AddVehicle(Vehicle vehicle)
         {
             if (_vehicles.Any(v => v.VehicleId == vehicle.VehicleId))
             {
-                return false;
+                return null;
             }
 
             _vehicles.Add(vehicle);
-            return true;
+            return vehicle.VehicleId;
         }
 
         // View All Vehicles
