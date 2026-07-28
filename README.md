@@ -121,6 +121,7 @@ CMIntern4
     ├── Model
     ├── Services
     ├── UI
+    ├── DTOs
     └── Program.cs
 
 ```
