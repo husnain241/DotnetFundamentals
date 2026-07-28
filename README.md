@@ -72,6 +72,22 @@ Added comments and documentation for better code readability and maintainability
 - Learned the concepts of classes, objects, constructors, and object initialization
 - Understood reference types (Stack vs Heap), garbage collection, and the THIS keyword
 
+### Issue #8 - Encapsulation and Properties
+- Created an Employee Management System
+- Implemented encapsulation in the Employee class
+  - Used private backing fields
+  - Exposed data through public properties (`get` and `set`)
+  - Added validation for Employee ID, Name, Department, and Monthly Salary
+- Implemented calculated properties
+  - Annual Salary
+  - Salary Grade
+- Created an EmployeeService class
+  - Added employee records
+  - Viewed all employees
+  - Searched employees by Employee ID
+  - Updated employee information
+  - Deleted employee records.
+
 ## Project Structure
 
 ```
@@ -81,6 +97,10 @@ CMIntern4
 └── Methods
 └── Arrays-Collections
 └── objects-Classes
+└── Encapsulation-Properties
+	└── Model
+	└── Services
+	└── Program.cs
 
 
 
