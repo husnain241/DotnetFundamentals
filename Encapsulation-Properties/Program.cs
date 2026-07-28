@@ -13,9 +13,10 @@ using Encapsulation_Properties.Services;
                 {
                     case "1": AddEmployee(employeeService); break;
                     case "2": ViewEmployees(employeeService); break;
-                    case "3": UpdateSalary(employeeService); break;
-                    case "4": DeleteEmployee(employeeService); break;
-                    case "5": running = false; break;
+                    case "3": UpdateEmployee(employeeService); break;
+                    case "4": UpdateSalary(employeeService); break;
+                    case "5": DeleteEmployee(employeeService); break;
+                    case "6": running = false; break;
                     default: Console.WriteLine("Invalid choice, try again.\n"); break;
                 }
             }
@@ -74,8 +75,25 @@ using Encapsulation_Properties.Services;
 
             Console.WriteLine();
         }
+        
+        static void UpdateEmployee(EmployeeService service)
+{
 
-        static void UpdateSalary(EmployeeService service)
+    Console.Write("Enter new Name: ");
+    string name = Console.ReadLine();
+
+    Console.Write("Enter new Department: ");
+    string department = Console.ReadLine();
+
+    Console.Write("Enter new Monthly Salary: ");
+    decimal salary = ReadDecimal();
+
+    var updatedEmployee = new Employee(name, department, salary);
+    bool updated = service.UpdateEmployee(id, updatedEmployee);
+    Console.WriteLine(updated ? "Employee updated successfully!\n" : "Employee not found.\n");
+}
+
+static void UpdateSalary(EmployeeService service)
         {
             Console.Write("Enter Employee ID to update: ");
             int id = ReadInt();
