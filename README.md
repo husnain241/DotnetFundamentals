@@ -72,7 +72,6 @@ Added comments and documentation for better code readability and maintainability
 - Learned the concepts of classes, objects, constructors, and object initialization
 - Understood reference types (Stack vs Heap), garbage collection, and the THIS keyword
 
-<<<<<<< README.md
 ### Issue #8 - Inheritance and Polymorphism
 - Built a Vehicle Management System using inheritance and polymorphism
 - Created a base `Vehicle` class with common properties and behaviors
@@ -122,7 +121,6 @@ Added comments and documentation for better code readability and maintainability
   - Searched employees by Employee ID
   - Updated employee information
   - Deleted employee records.
->>>>>>> README.md
 
 ## Project Structure
 
@@ -133,7 +131,6 @@ CMIntern4
 └── Methods
 └── Arrays-Collections
 └── objects-Classes
-<<<<<<< README.md
 └── Inheritance-Polymorphism
 	├── Data
     ├── Helpers
@@ -142,7 +139,6 @@ CMIntern4
     ├── UI
     ├── DTOs
     └── Program.cs
-=======
 └── Encapsulation-Properties
 	└── Model
 	└── Services
@@ -151,7 +147,6 @@ CMIntern4
 
 
 
->>>>>>> README.md
 
 ```
 
