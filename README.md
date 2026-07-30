@@ -122,6 +122,12 @@ Added comments and documentation for better code readability and maintainability
   - Updated employee information
   - Deleted employee records.
 
+  ### Issue #11 - LINQ Basics
+  - Implemented LINQ queries to filter, sort, and project data from collections
+  - Used LINQ methods such as `Where`, `Select`, `OrderBy`, and `GroupBy`
+  - Applied LINQ to perform operations on the student record.
+  - Make functions like `GetAllStudents`, `GetTopStudents`, `GetStudentNames`, `GetStudentsByMarks` ,`GetStudentsById` etc.
+  - 
 ## Project Structure
 
 ```
@@ -143,6 +149,7 @@ CMIntern4
 	└── Model
 	└── Services
 	└── Program.cs
+└── LINQ-Basics
 
 
 
