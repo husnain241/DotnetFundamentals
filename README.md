@@ -121,6 +121,13 @@ Added comments and documentation for better code readability and maintainability
   - Searched employees by Employee ID
   - Updated employee information
   - Deleted employee records.
+	
+### Issue #12 - Advanced LINQ
+- Implemented advanced LINQ operations for searching, grouping, counting, and data aggregation.
+- Applied LINQ methods such as Any, All, Count, Sum, GroupBy, Distinct, Skip, Take, Contains, LastOrDefault, SingleOrDefault, and Join.
+- Refactored the project by separating Student and Department models and establishing relationships using DepartmentId.
+- Used LINQ Join to combine student and department data through a `StudentDepartmentDto`, `GetAverageMarksByDepartment`.
+- Improved the project structure by updating the seeders, services, helpers, and program flow to support a clean, maintainable, and scalable design.
 
 ## Project Structure
 
@@ -143,6 +150,8 @@ CMIntern4
 	└── Model
 	└── Services
 	└── Program.cs
+└── Advanced-LINQ
+
 
 
 
