@@ -124,6 +124,8 @@ Added comments and documentation for better code readability and maintainability
 ### Issue #13 - Git Workflow
 - Created and switched to a feature branch.
 - Make changes in readme file and committed the changes.
+- Practing the git workflow by pushing the changes to the remote repository and creating a merge request.
+- Learn how cheery pick a commit from one branch to another.
 
 
 ## Project Structure
