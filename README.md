@@ -123,10 +123,14 @@ Added comments and documentation for better code readability and maintainability
   - Deleted employee records.
 ### Issue #13 - Git Workflow
 - Created and switched to a feature branch.
-- Make changes in readme file and committed the changes.
-- Practing the git workflow by pushing the changes to the remote repository and creating a merge request.
-- Learn how cheery pick a commit from one branch to another.
-
+- Made changes to the `README.md` file and committed the changes.
+- Practiced the Git workflow by pushing changes to the remote repository and creating a Merge Request.
+- Learned how to merge changes from one branch into another using `git merge`.
+- Understood merge conflicts and practiced resolving them.
+- Learned how to copy a specific commit from one branch to another using `git cherry-pick`.
+- Practiced undoing committed changes safely using `git revert`.
+- Practiced restoring uncommitted changes using `git restore`.
+- Followed Git best practices, including meaningful commit messages, feature branch workflow, and keeping the local `main` branch up to date before starting new work.
 
 ## Project Structure
 
@@ -149,6 +153,7 @@ CMIntern4
 	└── Model
 	└── Services
 	└── Program.cs
+
 
 
 
