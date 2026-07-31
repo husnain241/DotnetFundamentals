@@ -8,7 +8,7 @@ namespace Advanced_Linq.Services
         private const double PassingMarks = 50;
         private const int ComputerScienceDepartmentId = 1;
 
-        private readonly Enumerable<Student> _students;
+        private static readonly Enumerable<Student> _students;
         private readonly Enumerable<Department> _departments;
 
         public StudentService(Enumerable<Student> students, Enumerable<Department> departments)
