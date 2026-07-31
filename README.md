@@ -121,6 +121,10 @@ Added comments and documentation for better code readability and maintainability
   - Searched employees by Employee ID
   - Updated employee information
   - Deleted employee records.
+### Issue #13 - Git Workflow
+- Created and switched to a feature branch.
+- Make changes in readme file and committed the changes.
+
 
 ## Project Structure
 
