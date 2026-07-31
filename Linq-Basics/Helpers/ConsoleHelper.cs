@@ -21,21 +21,22 @@ namespace Linq_Basics.Helpers
 			}
 		}
 
-		public static void DisplayStudents(IEnumerable<Student> students)
-		{
-			if (!students.Any())
-			{
-				Console.WriteLine("No students found.");
-				return;
-			}
+        public static void DisplayStudents(IEnumerable<Student> students)
+        {
+            List<Student> studentList = students.ToList();
 
-			foreach (Student student in students)
-			{
-				DisplayStudent(student);
-			}
-		}
+            if (studentList.Count == 0)
+            {
+                Console.WriteLine("No students found.");
+                return;
+            }
 
-		public static void DisplayStudent(Student student)
+            foreach (Student student in studentList)
+            {
+                DisplayStudent(student);
+            }
+        }
+        public static void DisplayStudent(Student student)
 		{
 			Console.WriteLine($"ID         : {student.Id}");
 			Console.WriteLine($"Name       : {student.Name}");
