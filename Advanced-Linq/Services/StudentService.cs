@@ -8,10 +8,10 @@ namespace Advanced_Linq.Services
         private const double PassingMarks = 50;
         private const int ComputerScienceDepartmentId = 1;
 
-        private readonly List<Student> _students;
-        private readonly List<Department> _departments;
+        private readonly Enumerable<Student> _students;
+        private readonly Enumerable<Department> _departments;
 
-        public StudentService(List<Student> students, List<Department> departments)
+        public StudentService(Enumerable<Student> students, Enumerable<Department> departments)
         {
             _students = students ?? throw new ArgumentNullException(nameof(students));
             _departments = departments ?? throw new ArgumentNullException(nameof(departments));
@@ -20,7 +20,8 @@ namespace Advanced_Linq.Services
         public bool HasPassedStudents()
         {
             return _students.Any(s => s.Marks >= PassingMarks);
-        }
+        } 
+
 
         public bool AreAllStudentsPassed()
         {
