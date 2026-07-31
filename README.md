@@ -122,12 +122,28 @@ Added comments and documentation for better code readability and maintainability
   - Updated employee information
   - Deleted employee records.
 
-  ### Issue #11 - LINQ Basics
-  - Implemented LINQ queries to filter, sort, and project data from collections
-  - Used LINQ methods such as `Where`, `Select`, `OrderBy`, and `GroupBy`
-  - Applied LINQ to perform operations on the student record.
-  - Make functions like `GetAllStudents`, `GetTopStudents`, `GetStudentNames`, `GetStudentsByMarks` ,`GetStudentsById` etc.
-  - 
+  
+### Issue #10 - Interfaces & Abstraction
+- Designed and implemented a Payment System using interfaces and abstract classes.
+- Created the IPaymentProcessor interface and PaymentProcessorBase abstract class.
+- Implemented multiple payment gateways:
+	- PayPal
+	- Stripe
+	- SecureNet
+	- We can add more payment gateways in the future by implementing the IPaymentProcessor interface like Credit Card, Jazzcash, EasyPaisa etc.
+- Applied runtime polymorphism to process payments through different payment processors.
+- Integrated the Stripe .NET SDK with the Stripe Test API.
+- Processed real test payments using Stripe test tokens (tok_visa).
+- Implemented payment refund functionality using the Stripe API.
+- Developed payment management features:
+	- Create Payment
+	- Process Payment
+	- View Payment History
+	- Refund Payment
+- Applied clean architecture principles by separating UI, business logic, and payment gateway implementations.
+- Improved code reusability and maintainability using helper classes and common validation logic.
+
+
 ## Project Structure
 
 ```
@@ -149,7 +165,15 @@ CMIntern4
 	└── Model
 	└── Services
 	└── Program.cs
-└── LINQ-Basics
+└── Interfaces-Abstraction
+    ├── Models
+    ├── Interfaces
+    ├── Services
+    ├── Helpers
+    ├── Configuration
+    ├── Enums
+    ├── UI
+    └── Program.cs
 
 
 
