@@ -4,7 +4,7 @@ namespace Linq_Basics.Services
 {
     public class StudentService
     {
-        private readonly List<Student> _students;
+        private readonly IEnumerable<Student> _students;
 
         public StudentService(List<Student> students)
         {
