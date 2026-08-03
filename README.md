@@ -122,6 +122,26 @@ Added comments and documentation for better code readability and maintainability
   - Updated employee information
   - Deleted employee records.
 
+ ### Issue #14 - Mini Project (Student Management System)
+- Built a Student Management System console application using OOP, LINQ, and List<T>.
+	- Implemented complete CRUD operations:
+	- Add Student
+	- View Students
+	- Search Student by ID
+	- Update Student
+	- Delete Student
+- Implemented additional LINQ features:
+	- Search Student by Name
+	- Show Top Students
+	- Show Students by Department
+	- Show Students Above Marks
+	- Group Students by Department
+	- Student Statistics (Highest, Lowest, Average, Department-wise Count)
+- Separated the project into Models, Services, DTOs, Helpers, Constants, Enums, Interfaces, and Seeders.
+- Applied object-oriented design principles and interface-based architecture using IStudentService and IDepartmentService.
+- Used LINQ Join to combine Student and Department data through StudentDepartmentDto.
+- Returned read-only collections using IReadOnlyList<T> where appropriate.
+- Applied input validation, reusable helper methods, and clean project organization following professional coding practices.
 ## Project Structure
 
 ```
@@ -143,6 +163,16 @@ CMIntern4
 	└── Model
 	└── Services
 	└── Program.cs
+└── MiniProject-StudentManagementSys
+    ├── Constants
+    ├── DTOs
+    ├── Enums
+    ├── Helpers
+    ├── Interfaces
+    ├── Models
+    ├── Seeders
+    ├── Services
+    └── Program.cs
 
 
 
