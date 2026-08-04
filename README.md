@@ -172,6 +172,12 @@ Added comments and documentation for better code readability and maintainability
 - Read configuration values in `Program.cs` using `builder.Configuration`.
 - Verified that configuration values were loaded successfully at runtime.
 
+### Issue #19 - Middleware
+- Reviewed the ASP.NET Core middleware pipeline and request flow.
+- Explored the built-in middleware configured in `Program.cs`.
+- Implemented a custom middleware to measure HTTP request processing time.
+- Logged the request path and execution time for each incoming request.
+- Verified that the middleware executed successfully for every request.
 ## Project Structure
 
 ```
