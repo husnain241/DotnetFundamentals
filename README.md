@@ -1,4 +1,4 @@
-# CMIntern4
+﻿# CMIntern4
 
 ## Development Environment
 
@@ -164,6 +164,13 @@ Added comments and documentation for better code readability and maintainability
 - Verified the default MVC service registration using `AddControllersWithViews()`.
 - Reviewed the HTTP request pipeline and default route configuration.
 - Built and ran the application successfully without errors.
+
+### Issue #18 - Configuration
+- Reviewed the ASP.NET Core configuration system.
+- Explored the `appsettings.json` and `appsettings.Development.json` files.
+- Added custom application settings in `appsettings.json`.
+- Read configuration values in `Program.cs` using `builder.Configuration`.
+- Verified that configuration values were loaded successfully at runtime.
 
 ## Project Structure
 

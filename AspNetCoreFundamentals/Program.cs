@@ -1,5 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
+string appName = builder.Configuration["ApplicationSettings:ApplicationName"] ?? "Unknown";
+
+Console.WriteLine($"Application Name: {appName}");
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
