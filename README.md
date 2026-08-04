@@ -142,6 +142,15 @@ Added comments and documentation for better code readability and maintainability
 - Applied clean architecture principles by separating UI, business logic, and payment gateway implementations.
 - Improved code reusability and maintainability using helper classes and common validation logic.
 
+#### -------------- Start ASP.NET Core Fundamentals ----------------- ###
+
+### Issue #15 - Project Setup
+- Created a new ASP.NET Core MVC solution and project.
+- Configured the project using the .NET framework.
+- Explored the basic ASP.NET Core MVC project structure.
+- Built and ran the application successfully.
+- Verified the default ASP.NET Core MVC application in the browser.
+- Prepared a working project skeleton for upcoming ASP.NET Core Fundamentals issues.
 
 ## Project Structure
 
@@ -173,6 +182,7 @@ CMIntern4
     ├── Enums
     ├── UI
     └── Program.cs
+└── AspNetCoreFundamentals
 
 
 
