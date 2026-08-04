@@ -152,6 +152,12 @@ Added comments and documentation for better code readability and maintainability
 - Verified the default ASP.NET Core MVC application in the browser.
 - Prepared a working project skeleton for upcoming ASP.NET Core Fundamentals issues.
 
+### Issue #16 - Project Structure
+- Organized the project using the default ASP.NET Core MVC folder structure.
+- Verified the `Controllers`, `Models`, and `Views` folders following ASP.NET Core conventions.
+- Reviewed the purpose and responsibility of each folder.
+- Maintained a clean and organized project structure for future development.
+
 ## Project Structure
 
 ```
