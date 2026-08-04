@@ -158,6 +158,13 @@ Added comments and documentation for better code readability and maintainability
 - Reviewed the purpose and responsibility of each folder.
 - Maintained a clean and organized project structure for future development.
 
+### Issue #17 - Program.cs
+- Reviewed the `Program.cs` file as the application's entry point.
+- Understood the application startup flow, including host creation, service registration, and application initialization.
+- Verified the default MVC service registration using `AddControllersWithViews()`.
+- Reviewed the HTTP request pipeline and default route configuration.
+- Built and ran the application successfully without errors.
+
 ## Project Structure
 
 ```
