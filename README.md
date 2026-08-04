@@ -178,6 +178,13 @@ Added comments and documentation for better code readability and maintainability
 - Implemented a custom middleware to measure HTTP request processing time.
 - Logged the request path and execution time for each incoming request.
 - Verified that the middleware executed successfully for every request.
+
+### Issue #20 - Controllers
+- Created a new `StudentController` following ASP.NET Core MVC conventions.
+- Implemented action methods to handle HTTP requests.
+- Used conventional routing to access controller actions.
+- Verified that the controller responded successfully to browser requests.
+- Explored the role of controllers in handling requests and returning responses.
 ## Project Structure
 
 ```
