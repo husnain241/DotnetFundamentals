@@ -6,12 +6,12 @@ namespace AspNetCoreFundamentals.Controllers
     {
         public IActionResult Index()
         {
-            return Content("Student Controller Working");
+            return View();
         }
 
         public IActionResult Details()
         {
-            return Content("Student Details");
+            return View();
         }
     }
 }

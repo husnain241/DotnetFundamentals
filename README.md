@@ -185,6 +185,14 @@ Added comments and documentation for better code readability and maintainability
 - Used conventional routing to access controller actions.
 - Verified that the controller responded successfully to browser requests.
 - Explored the role of controllers in handling requests and returning responses.
+
+### Issue #21 - Views
+- Created a Razor view for the `StudentController` `Index` action.
+- Implemented the default MVC view folder structure using `Views/Student/Index.cshtml`.
+- Returned the view from the controller using the `View()` method.
+- Verified that the view rendered successfully in the browser.
+- Explored the interaction between controllers and views in the ASP.NET Core MVC request flow.
+
 ## Project Structure
 
 ```
