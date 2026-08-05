@@ -1,5 +1,27 @@
-﻿<h1>Student Management System</h1>
+﻿@{
+    ViewData["Title"] = "Student List";
+}
 
-<p>Welcome to the Student Management System.</p>
+@* This is a Razor comment. It will not appear in the browser. *@
 
-<p>This page is returned from the StudentController.</p>
+<h1>@ViewBag.Title</h1>
+
+<h3>@ViewData["Message"]</h3>
+
+<p><strong>Current Date & Time:</strong> @DateTime.Now</p>
+
+@if (ViewBag.Students.Count > 0)
+{
+    <p>Total Students: @ViewBag.Students.Count</p>
+
+    <ul>
+        @foreach (var student in ViewBag.Students)
+        {
+            <li>@student</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No students found.</p>
+}

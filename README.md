@@ -193,6 +193,13 @@ Added comments and documentation for better code readability and maintainability
 - Verified that the view rendered successfully in the browser.
 - Explored the interaction between controllers and views in the ASP.NET Core MVC request flow.
 
+### Issue #22 - Razor Syntax
+- Practiced Razor syntax in ASP.NET Core MVC views.
+- Used Razor expressions, code blocks, and conditional statements.
+- Displayed dynamic data using `ViewBag` and `ViewData`.
+- Rendered collections using `@foreach`.
+- Verified that Razor views compiled and rendered successfully.
+
 ## Project Structure
 
 ```
