@@ -207,6 +207,14 @@ Added comments and documentation for better code readability and maintainability
 - Verified that multiple views shared the same layout.
 - Reviewed the use of `@RenderBody()` and `_ViewStart.cshtml` in applying the shared layout.
 
+### Issue #24 - Partial Views
+- Reviewed the purpose of Partial Views in ASP.NET Core MVC.
+- Created a reusable `_StudentList.cshtml` partial view.
+- Passed student data from the controller to the partial view.
+- Rendered the partial view using the `<partial>` tag helper.
+- Displayed a list of students using a strongly typed model in the partial view.
+- Verified that the partial view rendered correctly and could be reused across multiple views.
+
 ## Project Structure
 
 ```

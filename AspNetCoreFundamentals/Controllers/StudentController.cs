@@ -8,12 +8,12 @@ namespace AspNetCoreFundamentals.Controllers
         public IActionResult Index()
         {
             ViewBag.Title = "Student Management System";
-            ViewBag.Students = new List<string>
+            ViewBag.Students = new Dictionary<int, string>
     {
-        "Ali Husnain",
-        "Ahmed Raza",
-        "Usman Ali",
-        "Bilal Ahmed"
+        { 1, "Ali Husnain" },
+        { 2, "Ahmed Raza" },
+        { 3, "Usman Ali" },
+        { 4, "Bilal Ahmed" }
     };
             return View();
         }
