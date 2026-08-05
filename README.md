@@ -200,6 +200,13 @@ Added comments and documentation for better code readability and maintainability
 - Rendered collections using `@foreach`.
 - Verified that Razor views compiled and rendered successfully.
 
+### Issue #23 - Layouts
+- Reviewed the purpose of shared layouts in ASP.NET Core MVC.
+- Explored the default `_Layout.cshtml` file and its role in providing a consistent UI.
+- Customized the shared layout by updating the header, navigation menu, and footer.
+- Verified that multiple views shared the same layout.
+- Reviewed the use of `@RenderBody()` and `_ViewStart.cshtml` in applying the shared layout.
+
 ## Project Structure
 
 ```
