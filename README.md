@@ -105,7 +105,6 @@ Added comments and documentation for better code readability and maintainability
   - Clean and maintainable project structure
 	
 
-=======
 ### Issue #9 - Encapsulation and Properties
 - Created an Employee Management System
 - Implemented encapsulation in the Employee class
@@ -121,6 +120,39 @@ Added comments and documentation for better code readability and maintainability
   - Searched employees by Employee ID
   - Updated employee information
   - Deleted employee records.
+### Issue #13 - Git Workflow
+- Created and switched to a feature branch.
+- Made changes to the `README.md` file and committed the changes.
+- Practiced the Git workflow by pushing changes to the remote repository and creating a Merge Request.
+- Learned how to merge changes from one branch into another using `git merge`.
+- Understood merge conflicts and practiced resolving them.
+- Learned how to copy a specific commit from one branch to another using `git cherry-pick`.
+- Practiced undoing committed changes safely using `git revert`.
+- Practiced restoring uncommitted changes using `git restore`.
+- Followed Git best practices, including meaningful commit messages, feature branch workflow, and keeping the local `main` branch up to date before starting new work.
+
+  
+### Issue #10 - Interfaces & Abstraction
+- Designed and implemented a Payment System using interfaces and abstract classes.
+- Created the IPaymentProcessor interface and PaymentProcessorBase abstract class.
+- Implemented multiple payment gateways:
+	- PayPal
+	- Stripe
+	- SecureNet
+	- We can add more payment gateways in the future by implementing the IPaymentProcessor interface like Credit Card, Jazzcash, EasyPaisa etc.
+- Applied runtime polymorphism to process payments through different payment processors.
+- Integrated the Stripe .NET SDK with the Stripe Test API.
+- Processed real test payments using Stripe test tokens (tok_visa).
+- Implemented payment refund functionality using the Stripe API.
+- Developed payment management features:
+	- Create Payment
+	- Process Payment
+	- View Payment History
+	- Refund Payment
+- Applied clean architecture principles by separating UI, business logic, and payment gateway implementations.
+- Improved code reusability and maintainability using helper classes and common validation logic.
+
+
 	
 ### Issue #12 - Advanced LINQ
 - Implemented advanced LINQ operations for searching, grouping, counting, and data aggregation.
@@ -151,6 +183,16 @@ CMIntern4
 	└── Services
 	└── Program.cs
 └── Advanced-LINQ
+
+└── Interfaces-Abstraction
+    ├── Models
+    ├── Interfaces
+    ├── Services
+    ├── Helpers
+    ├── Configuration
+    ├── Enums
+    ├── UI
+    └── Program.cs
 
 
 
