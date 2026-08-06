@@ -215,6 +215,15 @@ Added comments and documentation for better code readability and maintainability
 - Displayed a list of students using a strongly typed model in the partial view.
 - Verified that the partial view rendered correctly and could be reused across multiple views.
 
+### Issue #25 - Static Files
+- Reviewed the purpose of static files in ASP.NET Core MVC.
+- Configured the Static File Middleware using `app.UseStaticFiles()`.
+- Created and organized static assets inside the `wwwroot` folder (`css`, `js`, and `images`).
+- Added a custom CSS file to style the Student page.
+- Added a JavaScript file and verified it loaded successfully.
+- Displayed an image from the `wwwroot/images` folder.
+- Verified that CSS, JavaScript, and image files were served and loaded correctly in the browser.
+
 ## Project Structure
 
 ```

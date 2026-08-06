@@ -1,5 +1,23 @@
-﻿<h1>Student Management System</h1>
+﻿@{
+    ViewData["Title"] = ViewBag.Title;
+}
 
-<p>Welcome to the Student page.</p>
+<link rel="stylesheet" href="~/css/student.css" />
 
-<partial name="_StudentList" model="ViewBag.Students" />
+<div class="student-container">
+
+    <h1 class="student-title">@ViewBag.Title</h1>
+
+    <div class="text-center">
+        <img src="~/images/school.jfif"
+             alt="Student"
+             width="120" />
+    </div>
+
+    
+
+    <partial name="_StudentList" model="ViewBag.Students" />
+
+</div>
+
+<script src="~/js/student.js"></script>

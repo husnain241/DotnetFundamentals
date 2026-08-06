@@ -38,7 +38,8 @@ app.Use(async (context, next) =>
 
     Console.WriteLine($"Outgoing Response: {context.Response.StatusCode}");
 });
-    
+app.UseStaticFiles();
+
 app.UseRouting();
 
 app.UseAuthorization();
