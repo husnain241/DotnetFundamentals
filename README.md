@@ -104,6 +104,7 @@ Added comments and documentation for better code readability and maintainability
   - Reusable helper methods
   - Clean and maintainable project structure
 
+
 ### Issue #9 - Encapsulation and Properties
 - Created an Employee Management System
 - Implemented encapsulation in the Employee class
@@ -139,6 +140,13 @@ Added comments and documentation for better code readability and maintainability
 	- Refund Payment
 - Applied clean architecture principles by separating UI, business logic, and payment gateway implementations.
 - Improved code reusability and maintainability using helper classes and common validation logic.
+	
+### Issue #12 - Advanced LINQ
+- Implemented advanced LINQ operations for searching, grouping, counting, and data aggregation.
+- Applied LINQ methods such as Any, All, Count, Sum, GroupBy, Distinct, Skip, Take, Contains, LastOrDefault, SingleOrDefault, and Join.
+- Refactored the project by separating Student and Department models and establishing relationships using DepartmentId.
+- Used LINQ Join to combine student and department data through a `StudentDepartmentDto`, `GetAverageMarksByDepartment`.
+- Improved the project structure by updating the seeders, services, helpers, and program flow to support a clean, maintainable, and scalable design.
 
 ### Issue #13 - Git Workflow
 - Created and switched to a feature branch.
@@ -192,7 +200,7 @@ CMIntern4
 	└── Model
 	└── Services
 	└── Program.cs
-└── Interfaces-Abstraction
+	└── Interfaces-Abstraction
     ├── Models
     ├── Interfaces
     ├── Services
@@ -201,6 +209,7 @@ CMIntern4
     ├── Enums
     ├── UI
     └── Program.cs
+└── Advanced-LINQ
 └── MiniProject-StudentManagementSys
     ├── Constants
     ├── DTOs
@@ -211,6 +220,8 @@ CMIntern4
     ├── Seeders
     ├── Services
     └── Program.cs
+
+
 
 
 
