@@ -32,10 +32,7 @@ public class StudentService : IStudentService
 
     public bool UpdateStudent(int id, string name, double marks, int departmentId)
     {
-        var student = GetById(id);
-
-        if (student is null)
-            return false;
+      
 
         student.UpdateName(name);
         student.UpdateMarks(marks);
