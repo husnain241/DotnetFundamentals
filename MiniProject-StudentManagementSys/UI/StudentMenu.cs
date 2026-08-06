@@ -119,7 +119,12 @@ public class StudentMenu
 
         int id = ConsoleHelper.ReadInt(Messages.PromptStudentId);
 
-        if (!ValidationHelper.IsPositiveId(id) || _studentService.IsIdTaken(id))
+        if (!ValidationHelper.IsPositiveId(id){
+            ConsoleHelper.PrintError(Messages.InvalidNumberInput);
+            return;
+        }
+
+        if(_studentService.IsIdTaken(id))
         {
             ConsoleHelper.PrintError(Messages.DuplicateId);
             return;
