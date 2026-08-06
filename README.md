@@ -120,6 +120,17 @@ Added comments and documentation for better code readability and maintainability
   - Searched employees by Employee ID
   - Updated employee information
   - Deleted employee records.
+### Issue #13 - Git Workflow
+- Created and switched to a feature branch.
+- Made changes to the `README.md` file and committed the changes.
+- Practiced the Git workflow by pushing changes to the remote repository and creating a Merge Request.
+- Learned how to merge changes from one branch into another using `git merge`.
+- Understood merge conflicts and practiced resolving them.
+- Learned how to copy a specific commit from one branch to another using `git cherry-pick`.
+- Practiced undoing committed changes safely using `git revert`.
+- Practiced restoring uncommitted changes using `git restore`.
+- Followed Git best practices, including meaningful commit messages, feature branch workflow, and keeping the local `main` branch up to date before starting new work.
+
   
 ### Issue #10 - Interfaces & Abstraction
 - Designed and implemented a Payment System using interfaces and abstract classes.
