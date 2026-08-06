@@ -184,12 +184,6 @@ public class StudentMenu
 
         int id = ConsoleHelper.ReadInt(Messages.PromptStudentId);
 
-        if (_studentService.GetById(id) is null)
-        {
-            ConsoleHelper.PrintError(Messages.StudentNotFound);
-            return;
-        }
-
         string name = ConsoleHelper.ReadNonEmptyString(Messages.PromptStudentName);
 
         double marks = ConsoleHelper.ReadDouble(Messages.PromptMarks);
@@ -208,11 +202,14 @@ public class StudentMenu
             return;
         }
 
-        _studentService.UpdateStudent(id, name, marks, departmentId);
+        if (!_studentService.UpdateStudent(id, name, marks, departmentId))
+        {
+            ConsoleHelper.PrintError(Messages.StudentNotFound);
+            return;
+        }
 
         ConsoleHelper.PrintSuccess(Messages.StudentUpdated);
     }
-
     private void DeleteStudent()
     {
         int id = ConsoleHelper.ReadInt(Messages.PromptStudentId);
@@ -295,13 +292,14 @@ public class StudentMenu
     {
         ConsoleHelper.PrintHeader(Messages.HeaderStatistics);
 
-        if (_studentService.GetTotalStudents() == 0)
+        var totalStudents = _studentService.GetTotalStudents();
+        if (totalStudents == 0)
         {
             ConsoleHelper.PrintError(Messages.NoStudentsFound);
             return;
         }
 
-        Console.WriteLine($"Total Students : {_studentService.GetTotalStudents()}");
+        Console.WriteLine($"Total Students : {totalStudents}");
         Console.WriteLine($"Highest Marks  : {_studentService.GetHighestMarks():F2}");
         Console.WriteLine($"Lowest Marks   : {_studentService.GetLowestMarks():F2}");
         Console.WriteLine($"Average Marks  : {_studentService.GetAverageMarks():F2}");
