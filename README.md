@@ -163,6 +163,17 @@ Added comments and documentation for better code readability and maintainability
 - Reviewed the purpose of the `wwwroot`, `Program.cs`, and `appsettings.json` files.
 - Verified the final project structure and prepared it for upcoming ASP.NET Core MVC development.
 
+Issue #17 - Program.cs
+- Reviewed and configured the Program.cs file as the application entry point.
+- Configured the ASP.NET Core application builder and host.
+- Registered MVC services using AddControllersWithViews().
+- Configured the application middleware pipeline.
+- Enabled HTTPS redirection and static file handling.
+- Configured MVC controller routing with the default route.
+- Started the application using app.Run().
+- Built and ran the application successfully without errors.
+- Verified that the ASP.NET Core MVC application starts and works correct
+
 ## Project Structure
 
 ```
