@@ -174,6 +174,13 @@ Issue #17 - Program.cs
 - Built and ran the application successfully without errors.
 - Verified that the ASP.NET Core MVC application starts and works correct
 
+Issue #18 - Configuration
+- Configured application settings using appsettings.json and environment-specific settings.
+- Practiced IConfiguration, environment variables, connection strings, API settings, and feature flags.
+- Implemented strongly typed configuration using the Options Pattern.
+- Configured User Secrets for sensitive development settings.
+- Verified that configuration loads correctly without errors.
+
 ## Project Structure
 
 ```

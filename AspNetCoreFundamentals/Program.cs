@@ -1,11 +1,25 @@
+using AspNetCoreFundamentals.Configuration;
 using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string appName = builder.Configuration["ApplicationSettings:ApplicationName"] ?? "Unknown";
+var appName =
+    builder.Configuration["ApplicationSettings:ApplicationName"];
 
-Console.WriteLine($"Application Name: {appName}");
-// Add services to the container.
+var version =
+    builder.Configuration["ApplicationSettings:Version"];
+
+var apiUrl =
+    builder.Configuration["ExternalServices:ApiUrl"];
+
+
+
+var connectionString =
+    builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.Configure<ApplicationSettings>(
+    builder.Configuration.GetSection("ApplicationSettings"));
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
