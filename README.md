@@ -224,6 +224,16 @@ Added comments and documentation for better code readability and maintainability
 - Bootstrap-based responsive UI for Student CRUD pages
 - Create, Edit, Details, and Delete actions integrated with the existing StudentController
 
+### Issue #22 — Razor Syntax
+- Practiced Razor expressions using @.
+- Created and used variables inside Razor code blocks.
+- Used if, else, and nested conditions.
+- Used foreach and for loops.
+- Combined HTML with nested C# logic.
+- Used Model, ViewBag, and ViewData with Razor.
+- Implemented a practical Student listing using Razor syntax.
+- Rendered student data dynamically with conditions and loops.
+
 ## Project Structure
 
 ```
@@ -255,6 +265,20 @@ CMIntern4
     ├── UI
     └── Program.cs
 └── AspNetCoreFundamentals
+    ├── Connected Services
+    ├── Dependencies
+    ├── Properties
+    ├── wwwroot
+    ├── Configuration
+    ├── Controllers
+    ├── Filters
+    ├── Interface
+    ├── Middleware
+    ├── Models
+    ├── Service
+    ├── Views
+    ├── appsettings.json
+    └── Program.cs
 
 
 
