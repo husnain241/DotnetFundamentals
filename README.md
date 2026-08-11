@@ -204,6 +204,26 @@ Added comments and documentation for better code readability and maintainability
 - Explored exception handling using try-catch, Exception Filters, and Exception Middleware.
 - Implemented centralized error handling and local exception recovery scenarios.
 
+### Issue #21 - Views
+- Strongly typed Razor Views using @model
+- View discovery and MVC view conventions
+- Model-to-View data passing
+- Student list rendering with Razor
+- Student details view
+- Create Student form
+- Edit Student form
+- Form submission using Tag Helpers
+- Model binding for Student properties
+- Model validation and validation error display
+- HTML Helpers such as DisplayFor and DisplayNameFor
+- Tag Helpers such as asp-for, asp-action, asp-route-id, and asp-validation-for
+- ViewBag, ViewData, and TempData usage
+- Success messages using TempData after CRUD operations
+- HTML encoding and basic XSS protection concepts
+- Clean View practices by keeping business logic outside Views
+- Bootstrap-based responsive UI for Student CRUD pages
+- Create, Edit, Details, and Delete actions integrated with the existing StudentController
+
 ## Project Structure
 
 ```

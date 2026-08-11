@@ -4,10 +4,28 @@ using System.Xml.Linq;
 
 public class StudentService : IStudentService
 {
-    private readonly List<Student> _students = new();
 
-    public IEnumerable<Student> GetAll()
+    private readonly List<Student> _students = new List<Student>()
     {
+          new Student
+        {
+            Id = 1,
+            Name = "Ali",
+            Age = 22,
+            Email = "ali@example.com",
+            IsActive = true
+        },
+        new Student
+        {
+            Id = 2,
+            Name = "Ahmed",
+            Age = 23,
+            Email = "ahmed@example.com",
+            IsActive = true
+        }
+    };
+    public IEnumerable<Student> GetAll()
+    {       
         return _students;
     }
 
