@@ -25,7 +25,7 @@ builder.Services.Configure<ApplicationSettings>(
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddSingleton<IStudentService, StudentService>();
 
 builder.Services.AddScoped<LoggingFilter>();
 var app = builder.Build();
@@ -69,6 +69,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+app.MapControllers();
 
 app.MapControllerRoute(
     name: "default",

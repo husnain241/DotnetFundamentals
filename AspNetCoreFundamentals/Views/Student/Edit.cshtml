@@ -1,31 +1,35 @@
 ﻿@model AspNetCoreFundamentals.Models.Student
 
 @{
-    ViewData["Title"] = "Create Student";
+    ViewData["Title"] = "Edit Student";
 }
 
 <div class="container mt-4">
 
     <div class="mb-4">
-        <h1 class="fw-bold">Create Student</h1>
+        <h1 class="fw-bold">Edit Student</h1>
         <p class="text-muted">
-            Add a new student
+            Update student information
         </p>
     </div>
 
     <div class="card shadow-sm">
 
-        <div class="card-header bg-primary text-white">
+        <div class="card-header bg-warning">
             <h5 class="mb-0">Student Information</h5>
         </div>
 
         <div class="card-body">
 
-            <form asp-action="Create" method="post">
+            <form asp-action="Edit"
+                  asp-route-id="@Model.Id"
+                  method="post">
 
                 <div asp-validation-summary="ModelOnly"
                      class="alert alert-danger">
                 </div>
+
+                <input asp-for="Id" type="hidden" />
 
                 <div class="mb-3">
 
@@ -34,8 +38,7 @@
                     </label>
 
                     <input asp-for="Name"
-                           class="form-control"
-                           placeholder="Enter student name" />
+                           class="form-control" />
 
                     <span asp-validation-for="Name"
                           class="text-danger">
@@ -50,8 +53,7 @@
                     </label>
 
                     <input asp-for="Age"
-                           class="form-control"
-                           placeholder="Enter student age" />
+                           class="form-control" />
 
                     <span asp-validation-for="Age"
                           class="text-danger">
@@ -66,8 +68,7 @@
                     </label>
 
                     <input asp-for="Email"
-                           class="form-control"
-                           placeholder="Enter student email" />
+                           class="form-control" />
 
                     <span asp-validation-for="Email"
                           class="text-danger">
@@ -89,8 +90,8 @@
                 <div class="d-flex gap-2">
 
                     <button type="submit"
-                            class="btn btn-primary">
-                        Create Student
+                            class="btn btn-warning">
+                        Update Student
                     </button>
 
                     <a asp-action="Index"

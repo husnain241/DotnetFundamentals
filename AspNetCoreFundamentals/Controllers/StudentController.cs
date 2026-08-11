@@ -23,13 +23,14 @@ namespace AspNetCoreFundamentals.Controllers
             _logger = logger;
         }
 
-        // GET /students
         [HttpGet]
         public IActionResult Index()
         {
             var students = _studentService.GetAll();
 
-            return View(students);
+            Console.WriteLine($"Students: {students.Count()}");
+
+            return View("Index", students);
         }
 
         // GET /students/5
