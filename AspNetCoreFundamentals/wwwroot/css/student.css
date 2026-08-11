@@ -1,0 +1,30 @@
+﻿body {
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+}
+
+.student-container {
+    width: 700px;
+    margin: 30px auto;
+}
+
+.student-title {
+    color: darkblue;
+    text-align: center;
+}
+
+.student-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+    .student-card ul {
+        padding-left: 20px;
+    }
+
+    .student-card li {
+        margin-bottom: 10px;
+    }

@@ -1,4 +1,4 @@
-# CMIntern4
+﻿# CMIntern4
 
 ## Development Environment
 
@@ -179,6 +179,19 @@ Added comments and documentation for better code readability and maintainability
 - Used LINQ Join to combine Student and Department data through StudentDepartmentDto.
 - Returned read-only collections using IReadOnlyList<T> where appropriate.
 - Applied input validation, reusable helper methods, and clean project organization following professional coding practices.
+
+
+
+
+#### -------------- Start ASP.NET Core Fundamentals ----------------- ###
+
+### Issue #15 - Project Setup
+- Created a new ASP.NET Core MVC solution and project.
+- Configured the project using the .NET framework.
+- Explored the basic ASP.NET Core MVC project structure.
+- Built and ran the application successfully.
+- Verified the default ASP.NET Core MVC application in the browser.
+- Prepared a working project skeleton for upcoming ASP.NET Core Fundamentals issues.
 ## Project Structure
 
 ```
@@ -220,10 +233,7 @@ CMIntern4
     ├── Seeders
     ├── Services
     └── Program.cs
-
-└── Advanced-LINQ
-
-
+└── AspNetCoreFundamentals
 
 
 
