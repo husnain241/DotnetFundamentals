@@ -249,6 +249,18 @@ Added comments and documentation for better code readability and maintainability
 - Implemented dynamic page titles using `ViewData["Title"]`.
 - Learned common Layout mistakes and best practices.
 
+### Issue #24 — Partial Views
+- Created and used Partial Views for reusable UI components.
+- Learned what Partial Views are and why they are used.
+- Created reusable `_StudentList.cshtml`.
+- Passed `IEnumerable<Student>` to the Partial View.
+- Used the `<partial>` Tag Helper.
+- Practiced passing single objects and collections.
+- Reused the same Partial View with different data.
+- Learned Partial Views with Layouts and nested Partial Views.
+- Learned common mistakes and best practices.
+- Used `PartialView()` from a Controller action.
+
 ## Project Structure
 
 ```
