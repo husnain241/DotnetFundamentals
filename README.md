@@ -234,6 +234,21 @@ Added comments and documentation for better code readability and maintainability
 - Implemented a practical Student listing using Razor syntax.
 - Rendered student data dynamically with conditions and loops.
 
+### Issue #23 — Layouts
+- Created and configured `_Layout.cshtml` for shared page structure.
+- Implemented shared Navbar, Footer, CSS, and JavaScript.
+- Used `@RenderBody()` to render View-specific content.
+- Used `@RenderSectionAsync()` for optional page-specific content.
+- Practiced required and optional sections.
+- Explored `_ViewStart.cshtml` for selecting default Layouts.
+- Created `_AdminLayout.cshtml` for Admin pages.
+- Implemented multiple Layouts for normal and Admin Views.
+- Practiced Layout overriding at the View level.
+- Learned nested Layouts.
+- Used `ViewData` / `ViewBag` with Layouts.
+- Implemented dynamic page titles using `ViewData["Title"]`.
+- Learned common Layout mistakes and best practices.
+
 ## Project Structure
 
 ```
