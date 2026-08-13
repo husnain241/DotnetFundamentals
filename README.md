@@ -148,6 +148,17 @@ Added comments and documentation for better code readability and maintainability
 - Used LINQ Join to combine student and department data through a `StudentDepartmentDto`, `GetAverageMarksByDepartment`.
 - Improved the project structure by updating the seeders, services, helpers, and program flow to support a clean, maintainable, and scalable design.
 
+#### -------------- Start ASP.NET Core Fundamentals ----------------- ###
+
+### Issue #15 - Project Setup
+- Created a new ASP.NET Core MVC solution and project.
+- Configured the project using the .NET framework.
+- Explored the basic ASP.NET Core MVC project structure.
+- Built and ran the application successfully.
+- Verified the default ASP.NET Core MVC application in the browser.
+- Prepared a working project skeleton for upcoming ASP.NET Core Fundamentals issues.
+
+
 ### Issue #13 - Git Workflow
 - Created and switched to a feature branch.
 - Made changes to the `README.md` file and committed the changes.
@@ -192,6 +203,18 @@ Added comments and documentation for better code readability and maintainability
 - Built and ran the application successfully.
 - Verified the default ASP.NET Core MVC application in the browser.
 - Prepared a working project skeleton for upcoming ASP.NET Core Fundamentals issues.
+
+### Issue #16 - Project Structure
+- Organized the ASP.NET Core MVC project according to standard conventions.
+- Created and organized the `Models` folder for application data models.
+- Created and organized the `Controllers` folder for handling requests and application logic.
+- Created and organized the `Views` folder for Razor views and UI pages.
+- Created a basic Model, Controller, and View to understand their relationship.
+- Verified the Controller-to-View flow using MVC conventions.
+- Reviewed the purpose of the `wwwroot`, `Program.cs`, and `appsettings.json` files.
+- Verified the final project structure and prepared it for upcoming ASP.NET Core MVC development.
+
+
 ## Project Structure
 
 ```
