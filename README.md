@@ -249,6 +249,9 @@ Added comments and documentation for better code readability and maintainability
 - Implemented dynamic page titles using `ViewData["Title"]`.
 - Learned common Layout mistakes and best practices.
 
+### Issue #24 — Partial Views
+- Created and used Partial Views for reusable UI components.
+
 ## Project Structure
 
 ```
