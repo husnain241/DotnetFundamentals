@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="AspNetCoreFundamentals/AspNetCoreFundamentals.csproj" />
+  <Project Path="mini-project-SMS/mini-project-SMS.csproj" Id="4da460ae-7390-40a2-b0f6-244a9f3e11b4" />
 </Solution>
