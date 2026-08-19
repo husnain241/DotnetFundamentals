@@ -261,6 +261,13 @@ Added comments and documentation for better code readability and maintainability
 - Learned common mistakes and best practices.
 - Used `PartialView()` from a Controller action.
 
+### Issue #25 — Static Files
+- Configured static file middleware using `UseStaticFiles()`.
+- Created static CSS and JavaScript files inside `wwwroot`.
+- Added and tested an image from `wwwroot/images`.
+- Linked static files to Razor Views.
+- Verified that static files load correctly in the browser.
+
 ## Project Structure
 
 ```
