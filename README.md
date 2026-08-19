@@ -140,24 +140,12 @@ Added comments and documentation for better code readability and maintainability
 	- Refund Payment
 - Applied clean architecture principles by separating UI, business logic, and payment gateway implementations.
 - Improved code reusability and maintainability using helper classes and common validation logic.
-	
 ### Issue #12 - Advanced LINQ
 - Implemented advanced LINQ operations for searching, grouping, counting, and data aggregation.
 - Applied LINQ methods such as Any, All, Count, Sum, GroupBy, Distinct, Skip, Take, Contains, LastOrDefault, SingleOrDefault, and Join.
 - Refactored the project by separating Student and Department models and establishing relationships using DepartmentId.
 - Used LINQ Join to combine student and department data through a `StudentDepartmentDto`, `GetAverageMarksByDepartment`.
 - Improved the project structure by updating the seeders, services, helpers, and program flow to support a clean, maintainable, and scalable design.
-
-#### -------------- Start ASP.NET Core Fundamentals ----------------- ###
-
-### Issue #15 - Project Setup
-- Created a new ASP.NET Core MVC solution and project.
-- Configured the project using the .NET framework.
-- Explored the basic ASP.NET Core MVC project structure.
-- Built and ran the application successfully.
-- Verified the default ASP.NET Core MVC application in the browser.
-- Prepared a working project skeleton for upcoming ASP.NET Core Fundamentals issues.
-
 
 ### Issue #13 - Git Workflow
 - Created and switched to a feature branch.
@@ -191,9 +179,6 @@ Added comments and documentation for better code readability and maintainability
 - Returned read-only collections using IReadOnlyList<T> where appropriate.
 - Applied input validation, reusable helper methods, and clean project organization following professional coding practices.
 
-
-
-
 #### -------------- Start ASP.NET Core Fundamentals ----------------- ###
 
 ### Issue #15 - Project Setup
@@ -205,6 +190,7 @@ Added comments and documentation for better code readability and maintainability
 - Prepared a working project skeleton for upcoming ASP.NET Core Fundamentals issues.
 
 ### Issue #16 - Project Structure
+
 - Organized the ASP.NET Core MVC project according to standard conventions.
 - Created and organized the `Models` folder for application data models.
 - Created and organized the `Controllers` folder for handling requests and application logic.
@@ -214,6 +200,16 @@ Added comments and documentation for better code readability and maintainability
 - Reviewed the purpose of the `wwwroot`, `Program.cs`, and `appsettings.json` files.
 - Verified the final project structure and prepared it for upcoming ASP.NET Core MVC development.
 
+Issue #17 - Program.cs
+- Reviewed and configured the Program.cs file as the application entry point.
+- Configured the ASP.NET Core application builder and host.
+- Registered MVC services using AddControllersWithViews().
+- Configured the application middleware pipeline.
+- Enabled HTTPS redirection and static file handling.
+- Configured MVC controller routing with the default route.
+- Started the application using app.Run().
+- Built and ran the application successfully without errors.
+- Verified that the ASP.NET Core MVC application starts and works correct
 
 ## Project Structure
 
@@ -245,20 +241,6 @@ CMIntern4
     ├── Enums
     ├── UI
     └── Program.cs
-└── Advanced-LINQ
-└── MiniProject-StudentManagementSys
-    ├── Constants
-    ├── DTOs
-    ├── Enums
-    ├── Helpers
-    ├── Interfaces
-    ├── Models
-    ├── Seeders
-    ├── Services
-    └── Program.cs
-└── AspNetCoreFundamentals
-
-
 
 
 
