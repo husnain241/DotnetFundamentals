@@ -103,9 +103,8 @@ Added comments and documentation for better code readability and maintainability
   - Single Responsibility Principle (SRP)
   - Reusable helper methods
   - Clean and maintainable project structure
-	
 
-=======
+
 ### Issue #9 - Encapsulation and Properties
 - Created an Employee Management System
 - Implemented encapsulation in the Employee class
@@ -141,6 +140,76 @@ Added comments and documentation for better code readability and maintainability
 	- Refund Payment
 - Applied clean architecture principles by separating UI, business logic, and payment gateway implementations.
 - Improved code reusability and maintainability using helper classes and common validation logic.
+### Issue #12 - Advanced LINQ
+- Implemented advanced LINQ operations for searching, grouping, counting, and data aggregation.
+- Applied LINQ methods such as Any, All, Count, Sum, GroupBy, Distinct, Skip, Take, Contains, LastOrDefault, SingleOrDefault, and Join.
+- Refactored the project by separating Student and Department models and establishing relationships using DepartmentId.
+- Used LINQ Join to combine student and department data through a `StudentDepartmentDto`, `GetAverageMarksByDepartment`.
+- Improved the project structure by updating the seeders, services, helpers, and program flow to support a clean, maintainable, and scalable design.
+
+### Issue #13 - Git Workflow
+- Created and switched to a feature branch.
+- Made changes to the `README.md` file and committed the changes.
+- Practiced the Git workflow by pushing changes to the remote repository and creating a Merge Request.
+- Learned how to merge changes from one branch into another using `git merge`.
+- Understood merge conflicts and practiced resolving them.
+- Learned how to copy a specific commit from one branch to another using `git cherry-pick`.
+- Practiced undoing committed changes safely using `git revert`.
+- Practiced restoring uncommitted changes using `git restore`.
+- Followed Git best practices, including meaningful commit messages, feature branch workflow, and keeping the local `main` branch up to date before starting new work.
+
+ ### Issue #14 - Mini Project (Student Management System)
+- Built a Student Management System console application using OOP, LINQ, and List<T>.
+	- Implemented complete CRUD operations:
+	- Add Student
+	- View Students
+	- Search Student by ID
+	- Update Student
+	- Delete Student
+- Implemented additional LINQ features:
+	- Search Student by Name
+	- Show Top Students
+	- Show Students by Department
+	- Show Students Above Marks
+	- Group Students by Department
+	- Student Statistics (Highest, Lowest, Average, Department-wise Count)
+- Separated the project into Models, Services, DTOs, Helpers, Constants, Enums, Interfaces, and Seeders.
+- Applied object-oriented design principles and interface-based architecture using IStudentService and IDepartmentService.
+- Used LINQ Join to combine Student and Department data through StudentDepartmentDto.
+- Returned read-only collections using IReadOnlyList<T> where appropriate.
+- Applied input validation, reusable helper methods, and clean project organization following professional coding practices.
+
+#### -------------- Start ASP.NET Core Fundamentals ----------------- ###
+
+### Issue #15 - Project Setup
+- Created a new ASP.NET Core MVC solution and project.
+- Configured the project using the .NET framework.
+- Explored the basic ASP.NET Core MVC project structure.
+- Built and ran the application successfully.
+- Verified the default ASP.NET Core MVC application in the browser.
+- Prepared a working project skeleton for upcoming ASP.NET Core Fundamentals issues.
+
+### Issue #16 - Project Structure
+
+- Organized the ASP.NET Core MVC project according to standard conventions.
+- Created and organized the `Models` folder for application data models.
+- Created and organized the `Controllers` folder for handling requests and application logic.
+- Created and organized the `Views` folder for Razor views and UI pages.
+- Created a basic Model, Controller, and View to understand their relationship.
+- Verified the Controller-to-View flow using MVC conventions.
+- Reviewed the purpose of the `wwwroot`, `Program.cs`, and `appsettings.json` files.
+- Verified the final project structure and prepared it for upcoming ASP.NET Core MVC development.
+
+Issue #17 - Program.cs
+- Reviewed and configured the Program.cs file as the application entry point.
+- Configured the ASP.NET Core application builder and host.
+- Registered MVC services using AddControllersWithViews().
+- Configured the application middleware pipeline.
+- Enabled HTTPS redirection and static file handling.
+- Configured MVC controller routing with the default route.
+- Started the application using app.Run().
+- Built and ran the application successfully without errors.
+- Verified that the ASP.NET Core MVC application starts and works correct
 
 #### -------------- Start ASP.NET Core Fundamentals ----------------- ###
 
@@ -225,7 +294,7 @@ CMIntern4
 	└── Model
 	└── Services
 	└── Program.cs
-└── Interfaces-Abstraction
+	└── Interfaces-Abstraction
     ├── Models
     ├── Interfaces
     ├── Services
@@ -237,6 +306,8 @@ CMIntern4
 └── AspNetCoreFundamentals
 
 
+=======
+>>>>>>> README.md
 
 
 

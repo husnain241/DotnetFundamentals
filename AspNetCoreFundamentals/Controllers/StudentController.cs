@@ -49,7 +49,12 @@ namespace AspNetCoreFundamentals.Controllers
         // GET /students/create
         [HttpGet("create")]
         public IActionResult Create()
-        {
+    {
+        { 1, "Ali Husnain" },
+        { 2, "Ahmed Raza" },
+        { 3, "Usman Ali" },
+        { 4, "Bilal Ahmed" }
+    };
             return View();
         }
 
@@ -136,7 +141,7 @@ namespace AspNetCoreFundamentals.Controllers
                 return RedirectToAction(nameof(Index));
             }
             catch (KeyNotFoundException)
-            {
+        {
                 return NotFound();
             }
         }
