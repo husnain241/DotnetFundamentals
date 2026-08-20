@@ -20,6 +20,8 @@ var connectionString =
 builder.Services.Configure<ApplicationSettings>(
     builder.Configuration.GetSection("ApplicationSettings"));
 
+Console.WriteLine($"Application Name: {appName}");
+// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
