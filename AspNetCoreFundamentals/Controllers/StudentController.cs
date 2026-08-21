@@ -23,6 +23,7 @@ namespace AspNetCoreFundamentals.Controllers
             _logger = logger;
         }
 
+        // GET /students
         [HttpGet]
         public IActionResult Index()
         {
@@ -137,7 +138,7 @@ namespace AspNetCoreFundamentals.Controllers
                 return RedirectToAction(nameof(Index));
             }
             catch (KeyNotFoundException)
-            {
+        {
                 return NotFound();
             }
         }

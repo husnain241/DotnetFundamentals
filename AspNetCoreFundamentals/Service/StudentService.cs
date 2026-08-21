@@ -4,6 +4,7 @@ using System.Xml.Linq;
 
 public class StudentService : IStudentService
 {
+    private readonly List<Student> _students = new();
 
     private readonly List<Student> _students = new List<Student>()
     {
@@ -25,7 +26,7 @@ public class StudentService : IStudentService
         }
     };
     public IEnumerable<Student> GetAll()
-    {       
+    {
         return _students;
     }
 
