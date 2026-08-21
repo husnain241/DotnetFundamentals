@@ -243,6 +243,7 @@ Added comments and documentation for better code readability and maintainability
 - Explored exception handling using try-catch, Exception Filters, and Exception Middleware.
 - Implemented centralized error handling and local exception recovery scenarios.
 
+
 ### Issue #21 - Views
 - Strongly typed Razor Views using @model
 - View discovery and MVC view conventions
@@ -262,6 +263,16 @@ Added comments and documentation for better code readability and maintainability
 - Clean View practices by keeping business logic outside Views
 - Bootstrap-based responsive UI for Student CRUD pages
 - Create, Edit, Details, and Delete actions integrated with the existing StudentController
+
+### Issue #22 — Razor Syntax
+- Practiced Razor expressions using @.
+- Created and used variables inside Razor code blocks.
+- Used if, else, and nested conditions.
+- Used foreach and for loops.
+- Combined HTML with nested C# logic.
+- Used Model, ViewBag, and ViewData with Razor.
+- Implemented a practical Student listing using Razor syntax.
+- Rendered student data dynamically with conditions and loops.
 
 ## Project Structure
 
