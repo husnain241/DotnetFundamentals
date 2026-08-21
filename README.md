@@ -139,7 +139,8 @@ Added comments and documentation for better code readability and maintainability
 	- View Payment History
 	- Refund Payment
 - Applied clean architecture principles by separating UI, business logic, and payment gateway implementations.
-- Improved code reusability and maintainability using helper classes and common validation logic.
+- Improved code reusability and maintainability using helper classes and common validation logic
+
 ### Issue #12 - Advanced LINQ
 - Implemented advanced LINQ operations for searching, grouping, counting, and data aggregation.
 - Applied LINQ methods such as Any, All, Count, Sum, GroupBy, Distinct, Skip, Take, Contains, LastOrDefault, SingleOrDefault, and Join.
@@ -158,7 +159,8 @@ Added comments and documentation for better code readability and maintainability
 - Practiced restoring uncommitted changes using `git restore`.
 - Followed Git best practices, including meaningful commit messages, feature branch workflow, and keeping the local `main` branch up to date before starting new work.
 
- ### Issue #14 - Mini Project (Student Management System)
+
+### Issue #14 - Mini Project (Student Management System)
 - Built a Student Management System console application using OOP, LINQ, and List<T>.
 	- Implemented complete CRUD operations:
 	- Add Student
@@ -178,7 +180,6 @@ Added comments and documentation for better code readability and maintainability
 - Used LINQ Join to combine Student and Department data through StudentDepartmentDto.
 - Returned read-only collections using IReadOnlyList<T> where appropriate.
 - Applied input validation, reusable helper methods, and clean project organization following professional coding practices.
-
 #### -------------- Start ASP.NET Core Fundamentals ----------------- ###
 
 ### Issue #15 - Project Setup
@@ -200,18 +201,7 @@ Added comments and documentation for better code readability and maintainability
 - Reviewed the purpose of the `wwwroot`, `Program.cs`, and `appsettings.json` files.
 - Verified the final project structure and prepared it for upcoming ASP.NET Core MVC development.
 
-Issue #17 - Program.cs
-- Reviewed and configured the Program.cs file as the application entry point.
-- Configured the ASP.NET Core application builder and host.
-- Registered MVC services using AddControllersWithViews().
-- Configured the application middleware pipeline.
-- Enabled HTTPS redirection and static file handling.
-- Configured MVC controller routing with the default route.
-- Started the application using app.Run().
-- Built and ran the application successfully without errors.
-- Verified that the ASP.NET Core MVC application starts and works correct
-
-Issue #17 - Program.cs
+### Issue #17 - Program.cs
 - Reviewed and configured the Program.cs file as the application entry point.
 - Configured the ASP.NET Core application builder and host.
 - Registered MVC services using AddControllersWithViews().
@@ -238,6 +228,7 @@ Issue #17 - Program.cs
 - Practiced short-circuiting and conditional middleware branches.
 - Verified request and response flow through the middleware pipeline.
 
+
 ### Issue #20 - Controllers
 - Implemented and explored ASP.NET Core MVC controllers and controller actions.
 - Practiced action methods with IActionResult, View(), RedirectToAction(), NotFound(), and BadRequest().
@@ -251,6 +242,26 @@ Issue #17 - Program.cs
 - Practiced Action Filters and understood Middleware vs Filters.
 - Explored exception handling using try-catch, Exception Filters, and Exception Middleware.
 - Implemented centralized error handling and local exception recovery scenarios.
+
+### Issue #21 - Views
+- Strongly typed Razor Views using @model
+- View discovery and MVC view conventions
+- Model-to-View data passing
+- Student list rendering with Razor
+- Student details view
+- Create Student form
+- Edit Student form
+- Form submission using Tag Helpers
+- Model binding for Student properties
+- Model validation and validation error display
+- HTML Helpers such as DisplayFor and DisplayNameFor
+- Tag Helpers such as asp-for, asp-action, asp-route-id, and asp-validation-for
+- ViewBag, ViewData, and TempData usage
+- Success messages using TempData after CRUD operations
+- HTML encoding and basic XSS protection concepts
+- Clean View practices by keeping business logic outside Views
+- Bootstrap-based responsive UI for Student CRUD pages
+- Create, Edit, Details, and Delete actions integrated with the existing StudentController
 
 ## Project Structure
 
@@ -283,6 +294,7 @@ CMIntern4
     ├── UI
     └── Program.cs
 └── AspNetCoreFundamentals
+
 
 
 
