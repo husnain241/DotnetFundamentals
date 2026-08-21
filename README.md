@@ -180,6 +180,7 @@ Added comments and documentation for better code readability and maintainability
 - Used LINQ Join to combine Student and Department data through StudentDepartmentDto.
 - Returned read-only collections using IReadOnlyList<T> where appropriate.
 - Applied input validation, reusable helper methods, and clean project organization following professional coding practices.
+
 #### -------------- Start ASP.NET Core Fundamentals ----------------- ###
 
 ### Issue #15 - Project Setup
@@ -228,7 +229,6 @@ Added comments and documentation for better code readability and maintainability
 - Practiced short-circuiting and conditional middleware branches.
 - Verified request and response flow through the middleware pipeline.
 
-
 ### Issue #20 - Controllers
 - Implemented and explored ASP.NET Core MVC controllers and controller actions.
 - Practiced action methods with IActionResult, View(), RedirectToAction(), NotFound(), and BadRequest().
@@ -242,8 +242,6 @@ Added comments and documentation for better code readability and maintainability
 - Practiced Action Filters and understood Middleware vs Filters.
 - Explored exception handling using try-catch, Exception Filters, and Exception Middleware.
 - Implemented centralized error handling and local exception recovery scenarios.
-
-
 
 ### Issue #21 - Views
 - Strongly typed Razor Views using @model
