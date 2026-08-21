@@ -49,7 +49,7 @@ namespace AspNetCoreFundamentals.Controllers
         // GET /students/create
         [HttpGet("create")]
         public IActionResult Create()
-        {
+        { 
             return View();
         }
 
