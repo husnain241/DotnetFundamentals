@@ -1,0 +1,144 @@
+﻿@model IEnumerable<mini_project_SMS.Models.Student>
+
+@{
+    ViewData["Title"] = "Students";
+
+}
+
+<div class="student-page">
+
+    <div class="page-header">
+        <div>
+            <h1>Student Management</h1>
+            <p>Manage all registered students.</p>
+        </div>
+
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i>
+            Add Student
+        </a>
+    </div>
+    <div class="search-bar mb-3">
+        <form asp-action="Index" method="get" class="d-flex gap-2">
+
+            <input type="text"
+                   name="search"
+                   value="@ViewBag.Search"
+                   class="form-control"
+                   placeholder="Search by name or email..." />
+
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-search"></i>
+                Search
+            </button>
+
+            @if (!string.IsNullOrWhiteSpace(ViewBag.Search))
+            {
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    Clear
+                </a>
+            }
+
+        </form>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <h4>No Students Found</h4>
+            <p>There are currently no students in the system.</p>
+
+        </div>
+    }
+    else
+    {
+        <div class="student-card">
+
+            <div class="table-responsive">
+                <table class="table student-table align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Student</th>
+                            <th>Email</th>
+                            <th>Age</th>
+                            <th>Department</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var student in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="student-id">
+                                        #@student.Id
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="student-info">
+
+                                        @if (!string.IsNullOrEmpty(student.ImagePath))
+                                        {
+                                            <img src="@student.ImagePath"
+                                                 alt="@student.Name"
+                                                 class="student-avatar" />
+                                        }
+                                        else
+                                        {
+                                            <div class="student-avatar-placeholder">
+                                                @student.Name.Substring(0, 1).ToUpper()
+                                            </div>
+                                        }
+
+                                        <strong>@student.Name</strong>
+                                    </div>
+                                </td>
+
+                                <td>@student.Email</td>
+
+                                <td>@student.Age</td>
+
+                                <td>
+                                    <span class="department-badge">
+                                        @(ViewBag.DepartmentNames[student.DepartmentId])
+                                    </span>
+                                </td>
+
+                                <td class="text-end">
+                                    <div class="action-buttons">
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@student.Id"
+                                           class="btn btn-sm btn-outline-primary">
+                                            Details
+                                        </a>
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@student.Id"
+                                           class="btn btn-sm btn-outline-success">
+                                            Edit
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@student.Id"
+                                           class="btn btn-sm btn-outline-danger">
+                                            Delete
+                                        </a>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    }
+
+</div>

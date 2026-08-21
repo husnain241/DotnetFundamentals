@@ -1,0 +1,59 @@
+﻿@model mini_project_SMS.Models.Student
+
+@{
+    ViewData["Title"] = "Delete Student";
+}
+
+<div class="student-page">
+
+    <div class="page-header">
+        <div>
+            <h1>Delete Student</h1>
+            <p>Confirm student deletion.</p>
+        </div>
+    </div>
+
+    <div class="form-card">
+
+        <div class="alert alert-danger">
+            Are you sure you want to delete
+            <strong>@Model.Name</strong>?
+        </div>
+
+        <dl class="row">
+            <dt class="col-sm-3">ID</dt>
+            <dd class="col-sm-9">@Model.Id</dd>
+
+            <dt class="col-sm-3">Name</dt>
+            <dd class="col-sm-9">@Model.Name</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Department</dt>
+            <dd class="col-sm-9">@Model.DepartmentId</dd>
+        </dl>
+
+        <form asp-action="DeleteConfirmed" method="post">
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-actions">
+
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="btn btn-danger">
+                    Delete Student
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
