@@ -1,5 +1,7 @@
 using AspNetCoreFundamentals.Configuration;
+using AspNetCoreFundamentals.Interface;
 using AspNetCoreFundamentals.Middleware;
+using AspNetCoreFundamentals.Filters;
 using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,17 +27,20 @@ Console.WriteLine($"Application Name: {appName}");
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<IStudentService, StudentService>();
+
+builder.Services.AddScoped<LoggingFilter>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+//if (!app.Environment.IsDevelopment())
+//{
+//    //app.UseExceptionHandler("/Home/Error");
+//    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+//    app.UseHsts();
 
 
-}
+//}
 app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.Use(async (context, next) =>
