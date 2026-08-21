@@ -1,23 +1,61 @@
-﻿@{
-    ViewData["Title"] = ViewBag.Title;
+﻿@model IEnumerable<Student>
+
+<h2>Students</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div>
+        @TempData["Success"]
+    </div>
 }
 
-<link rel="stylesheet" href="~/css/student.css" />
+<a asp-action="Create">
+    Create Student
+</a>
 
-<div class="student-container">
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
 
-    <h1 class="student-title">@ViewBag.Title</h1>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.Id</td>
+                <td>@student.Name</td>
+                <td>@student.Age</td>
+                <td>@student.Email</td>
 
-    <div class="text-center">
-        <img src="~/images/school.jfif"
-             alt="Student"
-             width="120" />
-    </div>
-
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@student.Id">
+                        Details
+                    </a>
     
+                    <a asp-action="Edit"
+                       asp-route-id="@student.Id">
+                        Edit
+                    </a>
 
-    <partial name="_StudentList" model="ViewBag.Students" />
+                    <form asp-action="Delete"
+                          asp-route-id="@student.Id"
+                          method="post"
+                          style="display:inline">
 
-</div>
+                        <button type="submit">
+                            Delete
+                        </button>
 
-<script src="~/js/student.js"></script>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

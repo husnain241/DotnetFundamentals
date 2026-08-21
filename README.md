@@ -211,8 +211,16 @@ Issue #17 - Program.cs
 - Built and ran the application successfully without errors.
 - Verified that the ASP.NET Core MVC application starts and works correct
 
-
-
+Issue #17 - Program.cs
+- Reviewed and configured the Program.cs file as the application entry point.
+- Configured the ASP.NET Core application builder and host.
+- Registered MVC services using AddControllersWithViews().
+- Configured the application middleware pipeline.
+- Enabled HTTPS redirection and static file handling.
+- Configured MVC controller routing with the default route.
+- Started the application using app.Run().
+- Built and ran the application successfully without errors.
+- Verified that the ASP.NET Core MVC application starts and works correct
 
 ### Issue #18 - Configuration
 - Configured application settings using appsettings.json and environment-specific settings.
@@ -223,13 +231,26 @@ Issue #17 - Program.cs
 
 ### Issue #19 - Middleware
 
-* Implemented and explored the ASP.NET Core middleware pipeline.
-* Practiced middleware execution order using `Use()`, `Run()`, `Map()`, and `MapWhen()`.
-* Created custom middleware for request logging and request timing.
-* Implemented exception handling middleware using `try-catch`.
-* Practiced short-circuiting and conditional middleware branches.
-* Verified request and response flow through the middleware pipeline.
+- Implemented and explored the ASP.NET Core middleware pipeline.
+- Practiced middleware execution order using `Use()`, `Run()`, `Map()`, and `MapWhen()`.
+- Created custom middleware for request logging and request timing.
+- Implemented exception handling middleware using `try-catch`.
+- Practiced short-circuiting and conditional middleware branches.
+- Verified request and response flow through the middleware pipeline.
 
+### Issue #20 - Controllers
+- Implemented and explored ASP.NET Core MVC controllers and controller actions.
+- Practiced action methods with IActionResult, View(), RedirectToAction(), NotFound(), and BadRequest().
+- Practiced model binding, Data Annotations, and ModelState validation.
+- Explored data passing using Models, ViewBag, ViewData, and TempData.
+- Implemented CRUD controller patterns using GET and POST actions.
+- Practiced attribute routing and route parameters.
+- Implemented Controller → Service architecture using Dependency Injection and interfaces.
+- Explored controller context including HttpContext, Request, Response, User, RouteData, and ModelState.
+- Implemented the Post/Redirect/Get (PRG) pattern using RedirectToAction().
+- Practiced Action Filters and understood Middleware vs Filters.
+- Explored exception handling using try-catch, Exception Filters, and Exception Middleware.
+- Implemented centralized error handling and local exception recovery scenarios.
 
 ## Project Structure
 
