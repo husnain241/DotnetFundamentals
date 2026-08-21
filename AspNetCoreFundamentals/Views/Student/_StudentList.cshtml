@@ -32,7 +32,30 @@
                     </span>
                 }
 
+                <!-- Show / Hide Button -->
+                <button type="button"
+                        class="btn btn-info mt-3"
+                        onclick="toggleDetails('@student.Id')">
+                    Show Details
+                </button>
+
+                <!-- Student Details -->
+                <div id="student-details-@student.Id"
+                     style="display: none;"
+                     class="mt-3">
+
+                    <p>
+                        Age: @student.Age
+                    </p>
+
+                    <p>
+                        Email: @student.Email
+                    </p>
+
+                </div>
+
                 <div class="mt-3">
+
 
                     <!-- Edit -->
                     <a asp-action="Edit"
@@ -62,3 +85,17 @@
 
     </div>
 }
+
+<script>
+    function toggleDetails(studentId) {
+
+        var details = document.getElementById("student-details-" + studentId);
+
+        if (details.style.display === "none") {
+            details.style.display = "block";
+        }
+        else {
+            details.style.display = "none";
+        }
+    }
+</script>
