@@ -4,7 +4,6 @@ using System.Xml.Linq;
 
 public class StudentService : IStudentService
 {
-    private readonly List<Student> _students = new();
 
     private readonly List<Student> _students = new List<Student>()
     {

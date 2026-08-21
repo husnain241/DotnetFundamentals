@@ -29,8 +29,6 @@ namespace AspNetCoreFundamentals.Controllers
         {
             var students = _studentService.GetAll();
 
-            Console.WriteLine($"Students: {students.Count()}");
-
             return View("Index", students);
         }
 
