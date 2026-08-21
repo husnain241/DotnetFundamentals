@@ -24,6 +24,8 @@ namespace mini_project_SMS.Controllers
 
         public IActionResult Index(string? search)
         {
+
+
             var students = _studentService.Search(search ?? "");
 
             var departments = _departmentService.GetAll();

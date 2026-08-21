@@ -1,8 +1,12 @@
 using mini_project_SMS.Services;
 using mini_project_SMS.Services.Interfaces;
+using mini_project_SMS.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<CustomExceptionFilter>();
+});
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -12,14 +16,20 @@ builder.Services.AddScoped<IImageService, ImageService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();  
+    // Catches unhandled exceptions and redirects to /Shared/Error or /Home/Error
+    app.UseExceptionHandler("/Student/Error"); 
+    app.UseHsts();
 }
-
+else
+{
+    // For testing in local Development environment, you can point exception handler to:
+    app.UseExceptionHandler("/Student/Error");
+    
+    // Or keep UseDeveloperExceptionPage() during active debugging
+    // app.UseDeveloperExceptionPage();
+}
 app.UseHttpsRedirection();
 app.UseRouting();
 
