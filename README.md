@@ -307,6 +307,25 @@ Added comments and documentation for better code readability and maintainability
 - Linked static files to Razor Views.
 - Verified that static files load correctly in the browser.
 
+### Issue #25 — Static Files
+
+- Configured static file middleware using `UseStaticFiles()`.
+- Added and served static files from the `wwwroot` folder.
+- Implemented student image upload and display functionality.
+- Added image validation, replacement, and deletion.
+
+### Issue #26 — Mini Project: Student Management System
+
+- Built a Student Management System using ASP.NET Core MVC fundamentals.
+- Implemented Student CRUD operations with validation.
+- Created a separate Department model and Department service.
+- Connected students with departments using `DepartmentId`.
+- Implemented a separate Image Service for student image management.
+- Added department dropdowns in Create and Edit.
+- Implemented department name display instead of showing `DepartmentId`.
+- Currently working on student search/filter functionality.
+
+
 ## Project Structure
 
 ```

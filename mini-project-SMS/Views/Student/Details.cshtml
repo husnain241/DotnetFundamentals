@@ -1,0 +1,84 @@
+﻿@model mini_project_SMS.Models.Student
+
+@{
+    ViewData["Title"] = "Student Details";
+}
+
+<div class="student-page">
+
+    <div class="page-header">
+        <div>
+            <h1>Student Details</h1>
+            <p>View student information.</p>
+        </div>
+
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            Back to Students
+        </a>
+    </div>
+
+    <div class="form-card">
+
+        <div class="student-info mb-4">
+
+            @if (!string.IsNullOrEmpty(Model.ImagePath))
+            {
+                <img src="@Model.ImagePath"
+                     alt="@Model.Name"
+                     class="student-avatar" />
+            }
+            else
+            {
+                <div class="student-avatar-placeholder">
+                    @Model.Name.Substring(0, 1).ToUpper()
+                </div>
+            }
+
+            <div>
+                <h3 class="mb-1">@Model.Name</h3>
+                <span class="department-badge">
+                    @Model.DepartmentId
+                </span>
+            </div>
+
+        </div>
+
+        <hr />
+
+        <dl class="row mt-4">
+
+            <dt class="col-sm-3">Student ID</dt>
+            <dd class="col-sm-9">#@Model.Id</dd>
+
+            <dt class="col-sm-3">Name</dt>
+            <dd class="col-sm-9">@Model.Name</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Age</dt>
+            <dd class="col-sm-9">@Model.Age</dd>
+
+            <dt class="col-sm-3">Department</dt>
+            <dd class="col-sm-9">@Model.DepartmentId</dd>
+
+        </dl>
+
+        <div class="form-actions">
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.Id"
+               class="btn btn-success">
+                Edit Student
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
