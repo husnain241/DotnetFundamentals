@@ -32,7 +32,10 @@
     @if (students.Any())
 {
         <div class="row">
+            @* partial view here start *@
+            <partial name="_StudentList" model="students" />
 
+        </div>
             <!-- foreach -->
             @foreach (var student in students)
     {
