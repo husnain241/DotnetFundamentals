@@ -2,6 +2,7 @@
 using mini_project_SMS.Models;
 using mini_project_SMS.Services;
 using mini_project_SMS.Services.Interfaces;
+using mini_project_SMS.ViewModels;
 
 namespace mini_project_SMS.Controllers
 {
@@ -21,49 +22,52 @@ namespace mini_project_SMS.Controllers
             _departmentService = departmentService;
         }
 
-public IActionResult Index(string? search)
-{
-    var students = _studentService.Search(search ?? "");
+        public IActionResult Index(string? search)
+        {
+            var students = _studentService.Search(search ?? "");
 
-    var departments = _departmentService.GetAll();
+            var departments = _departmentService.GetAll();
 
-    var departmentNames = departments.ToDictionary(
-        d => d.Id,
-        d => d.Name);
+            var departmentNames = departments.ToDictionary(
+                d => d.Id,
+                d => d.Name);
 
-    ViewBag.DepartmentNames = departmentNames;
-    ViewBag.Search = search;
+            ViewBag.DepartmentNames = departmentNames;
+            ViewBag.Search = search;
 
-    return View(students);
-}
+            return View(students);
+        }
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Departments = _departmentService.GetAll();
+            var model = new StudentViewModel
+            {
+                Departments = _departmentService.GetAll()
+            };
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-     Student student,
-     IFormFile? image)
+        public async Task<IActionResult> Create(StudentViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(student);
+                model.Departments = _departmentService.GetAll();
+
+                return View(model);
             }
 
             try
             {
-                if (image != null)
+                if (model.Image != null)
                 {
-                    student.ImagePath =
-                        await _imageService.SaveImageAsync(image);
+                    model.Student.ImagePath =
+                        await _imageService.SaveImageAsync(model.Image);
                 }
 
-                _studentService.Add(student);
+                _studentService.Add(model.Student);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -71,7 +75,9 @@ public IActionResult Index(string? search)
             {
                 ModelState.AddModelError("Image", ex.Message);
 
-                return View(student);
+                model.Departments = _departmentService.GetAll();
+
+                return View(model);
             }
         }
 
@@ -112,7 +118,7 @@ public IActionResult Index(string? search)
             if (!ModelState.IsValid)
             {
                 ViewBag.Departments = _departmentService.GetAll();
-    
+
                 return View(student);
             }
 
