@@ -211,28 +211,7 @@ Issue #17 - Program.cs
 - Built and ran the application successfully without errors.
 - Verified that the ASP.NET Core MVC application starts and works correct
 
-#### -------------- Start ASP.NET Core Fundamentals ----------------- ###
-
-### Issue #15 - Project Setup
-- Created a new ASP.NET Core MVC solution and project.
-- Configured the project using the .NET framework.
-- Explored the basic ASP.NET Core MVC project structure.
-- Built and ran the application successfully.
-- Verified the default ASP.NET Core MVC application in the browser.
-- Prepared a working project skeleton for upcoming ASP.NET Core Fundamentals issues.
-
-### Issue #16 - Project Structure
-
-- Organized the ASP.NET Core MVC project according to standard conventions.
-- Created and organized the `Models` folder for application data models.
-- Created and organized the `Controllers` folder for handling requests and application logic.
-- Created and organized the `Views` folder for Razor views and UI pages.
-- Created a basic Model, Controller, and View to understand their relationship.
-- Verified the Controller-to-View flow using MVC conventions.
-- Reviewed the purpose of the `wwwroot`, `Program.cs`, and `appsettings.json` files.
-- Verified the final project structure and prepared it for upcoming ASP.NET Core MVC development.
-
-### Issue #17 - Program.cs
+Issue #17 - Program.cs
 - Reviewed and configured the Program.cs file as the application entry point.
 - Configured the ASP.NET Core application builder and host.
 - Registered MVC services using AddControllersWithViews().
@@ -305,9 +284,6 @@ CMIntern4
     └── Program.cs
 └── AspNetCoreFundamentals
 
-
-=======
->>>>>>> README.md
 
 
 
