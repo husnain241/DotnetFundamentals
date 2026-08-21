@@ -180,6 +180,7 @@ Added comments and documentation for better code readability and maintainability
 - Used LINQ Join to combine Student and Department data through StudentDepartmentDto.
 - Returned read-only collections using IReadOnlyList<T> where appropriate.
 - Applied input validation, reusable helper methods, and clean project organization following professional coding practices.
+
 #### -------------- Start ASP.NET Core Fundamentals ----------------- ###
 
 ### Issue #15 - Project Setup
@@ -228,7 +229,6 @@ Added comments and documentation for better code readability and maintainability
 - Practiced short-circuiting and conditional middleware branches.
 - Verified request and response flow through the middleware pipeline.
 
-
 ### Issue #20 - Controllers
 - Implemented and explored ASP.NET Core MVC controllers and controller actions.
 - Practiced action methods with IActionResult, View(), RedirectToAction(), NotFound(), and BadRequest().
@@ -242,28 +242,6 @@ Added comments and documentation for better code readability and maintainability
 - Practiced Action Filters and understood Middleware vs Filters.
 - Explored exception handling using try-catch, Exception Filters, and Exception Middleware.
 - Implemented centralized error handling and local exception recovery scenarios.
-
-
-### Issue #21 - Views
-- Strongly typed Razor Views using @model
-- View discovery and MVC view conventions
-- Model-to-View data passing
-- Student list rendering with Razor
-- Student details view
-- Create Student form
-- Edit Student form
-- Form submission using Tag Helpers
-- Model binding for Student properties
-- Model validation and validation error display
-- HTML Helpers such as DisplayFor and DisplayNameFor
-- Tag Helpers such as asp-for, asp-action, asp-route-id, and asp-validation-for
-- ViewBag, ViewData, and TempData usage
-- Success messages using TempData after CRUD operations
-- HTML encoding and basic XSS protection concepts
-- Clean View practices by keeping business logic outside Views
-- Bootstrap-based responsive UI for Student CRUD pages
-- Create, Edit, Details, and Delete actions integrated with the existing StudentController
-
 
 ### Issue #21 - Views
 - Strongly typed Razor Views using @model
@@ -310,6 +288,18 @@ Added comments and documentation for better code readability and maintainability
 - Implemented dynamic page titles using `ViewData["Title"]`.
 - Learned common Layout mistakes and best practices.
 
+### Issue #24 — Partial Views
+- Created and used Partial Views for reusable UI components.
+- Learned what Partial Views are and why they are used.
+- Created reusable `_StudentList.cshtml`.
+- Passed `IEnumerable<Student>` to the Partial View.
+- Used the `<partial>` Tag Helper.
+- Practiced passing single objects and collections.
+- Reused the same Partial View with different data.
+- Learned Partial Views with Layouts and nested Partial Views.
+- Learned common mistakes and best practices.
+- Used `PartialView()` from a Controller action.
+
 ## Project Structure
 
 ```
@@ -339,6 +329,21 @@ CMIntern4
     ├── Configuration
     ├── Enums
     ├── UI
+    └── Program.cs
+└── AspNetCoreFundamentals
+    ├── Connected Services
+    ├── Dependencies
+    ├── Properties
+    ├── wwwroot
+    ├── Configuration
+    ├── Controllers
+    ├── Filters
+    ├── Interface
+    ├── Middleware
+    ├── Models
+    ├── Service
+    ├── Views
+    ├── appsettings.json
     └── Program.cs
 
 

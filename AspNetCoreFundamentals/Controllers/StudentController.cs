@@ -51,16 +51,7 @@ namespace AspNetCoreFundamentals.Controllers
         // GET /students/create
         [HttpGet("create")]
         public IActionResult Create()
-<<<<<<<<< Temporary merge branch 1
         {
-=========
-    {
-        { 1, "Ali Husnain" },
-        { 2, "Ahmed Raza" },
-        { 3, "Usman Ali" },
-        { 4, "Bilal Ahmed" }
-    };
->>>>>>>>> Temporary merge branch 2
             return View();
         }
 
