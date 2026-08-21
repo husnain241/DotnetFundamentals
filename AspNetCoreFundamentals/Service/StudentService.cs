@@ -25,7 +25,7 @@ public class StudentService : IStudentService
         }
     };
     public IEnumerable<Student> GetAll()
-    {       
+    {
         return _students;
     }
 
