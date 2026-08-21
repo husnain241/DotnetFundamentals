@@ -264,6 +264,27 @@ Added comments and documentation for better code readability and maintainability
 - Bootstrap-based responsive UI for Student CRUD pages
 - Create, Edit, Details, and Delete actions integrated with the existing StudentController
 
+
+### Issue #21 - Views
+- Strongly typed Razor Views using @model
+- View discovery and MVC view conventions
+- Model-to-View data passing
+- Student list rendering with Razor
+- Student details view
+- Create Student form
+- Edit Student form
+- Form submission using Tag Helpers
+- Model binding for Student properties
+- Model validation and validation error display
+- HTML Helpers such as DisplayFor and DisplayNameFor
+- Tag Helpers such as asp-for, asp-action, asp-route-id, and asp-validation-for
+- ViewBag, ViewData, and TempData usage
+- Success messages using TempData after CRUD operations
+- HTML encoding and basic XSS protection concepts
+- Clean View practices by keeping business logic outside Views
+- Bootstrap-based responsive UI for Student CRUD pages
+- Create, Edit, Details, and Delete actions integrated with the existing StudentController
+
 ### Issue #22 — Razor Syntax
 - Practiced Razor expressions using @.
 - Created and used variables inside Razor code blocks.
@@ -273,6 +294,21 @@ Added comments and documentation for better code readability and maintainability
 - Used Model, ViewBag, and ViewData with Razor.
 - Implemented a practical Student listing using Razor syntax.
 - Rendered student data dynamically with conditions and loops.
+
+### Issue #23 — Layouts
+- Created and configured `_Layout.cshtml` for shared page structure.
+- Implemented shared Navbar, Footer, CSS, and JavaScript.
+- Used `@RenderBody()` to render View-specific content.
+- Used `@RenderSectionAsync()` for optional page-specific content.
+- Practiced required and optional sections.
+- Explored `_ViewStart.cshtml` for selecting default Layouts.
+- Created `_AdminLayout.cshtml` for Admin pages.
+- Implemented multiple Layouts for normal and Admin Views.
+- Practiced Layout overriding at the View level.
+- Learned nested Layouts.
+- Used `ViewData` / `ViewBag` with Layouts.
+- Implemented dynamic page titles using `ViewData["Title"]`.
+- Learned common Layout mistakes and best practices.
 
 ## Project Structure
 
@@ -304,7 +340,6 @@ CMIntern4
     ├── Enums
     ├── UI
     └── Program.cs
-└── AspNetCoreFundamentals
 
 
 
