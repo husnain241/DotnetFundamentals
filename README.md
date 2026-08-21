@@ -103,9 +103,8 @@ Added comments and documentation for better code readability and maintainability
   - Single Responsibility Principle (SRP)
   - Reusable helper methods
   - Clean and maintainable project structure
-	
 
-=======
+
 ### Issue #9 - Encapsulation and Properties
 - Created an Employee Management System
 - Implemented encapsulation in the Employee class
@@ -140,8 +139,47 @@ Added comments and documentation for better code readability and maintainability
 	- View Payment History
 	- Refund Payment
 - Applied clean architecture principles by separating UI, business logic, and payment gateway implementations.
-- Improved code reusability and maintainability using helper classes and common validation logic.
+- Improved code reusability and maintainability using helper classes and common validation logic
 
+### Issue #12 - Advanced LINQ
+- Implemented advanced LINQ operations for searching, grouping, counting, and data aggregation.
+- Applied LINQ methods such as Any, All, Count, Sum, GroupBy, Distinct, Skip, Take, Contains, LastOrDefault, SingleOrDefault, and Join.
+- Refactored the project by separating Student and Department models and establishing relationships using DepartmentId.
+- Used LINQ Join to combine student and department data through a `StudentDepartmentDto`, `GetAverageMarksByDepartment`.
+- Improved the project structure by updating the seeders, services, helpers, and program flow to support a clean, maintainable, and scalable design.
+
+### Issue #13 - Git Workflow
+- Created and switched to a feature branch.
+- Made changes to the `README.md` file and committed the changes.
+- Practiced the Git workflow by pushing changes to the remote repository and creating a Merge Request.
+- Learned how to merge changes from one branch into another using `git merge`.
+- Understood merge conflicts and practiced resolving them.
+- Learned how to copy a specific commit from one branch to another using `git cherry-pick`.
+- Practiced undoing committed changes safely using `git revert`.
+- Practiced restoring uncommitted changes using `git restore`.
+- Followed Git best practices, including meaningful commit messages, feature branch workflow, and keeping the local `main` branch up to date before starting new work.
+
+
+### Issue #14 - Mini Project (Student Management System)
+- Built a Student Management System console application using OOP, LINQ, and List<T>.
+	- Implemented complete CRUD operations:
+	- Add Student
+	- View Students
+	- Search Student by ID
+	- Update Student
+	- Delete Student
+- Implemented additional LINQ features:
+	- Search Student by Name
+	- Show Top Students
+	- Show Students by Department
+	- Show Students Above Marks
+	- Group Students by Department
+	- Student Statistics (Highest, Lowest, Average, Department-wise Count)
+- Separated the project into Models, Services, DTOs, Helpers, Constants, Enums, Interfaces, and Seeders.
+- Applied object-oriented design principles and interface-based architecture using IStudentService and IDepartmentService.
+- Used LINQ Join to combine Student and Department data through StudentDepartmentDto.
+- Returned read-only collections using IReadOnlyList<T> where appropriate.
+- Applied input validation, reusable helper methods, and clean project organization following professional coding practices.
 #### -------------- Start ASP.NET Core Fundamentals ----------------- ###
 
 ### Issue #15 - Project Setup
@@ -190,6 +228,7 @@ Added comments and documentation for better code readability and maintainability
 - Practiced short-circuiting and conditional middleware branches.
 - Verified request and response flow through the middleware pipeline.
 
+
 ### Issue #20 - Controllers
 - Implemented and explored ASP.NET Core MVC controllers and controller actions.
 - Practiced action methods with IActionResult, View(), RedirectToAction(), NotFound(), and BadRequest().
@@ -203,6 +242,7 @@ Added comments and documentation for better code readability and maintainability
 - Practiced Action Filters and understood Middleware vs Filters.
 - Explored exception handling using try-catch, Exception Filters, and Exception Middleware.
 - Implemented centralized error handling and local exception recovery scenarios.
+
 
 ### Issue #21 - Views
 - Strongly typed Razor Views using @model
@@ -255,7 +295,7 @@ CMIntern4
 	└── Model
 	└── Services
 	└── Program.cs
-└── Interfaces-Abstraction
+	└── Interfaces-Abstraction
     ├── Models
     ├── Interfaces
     ├── Services
@@ -265,20 +305,6 @@ CMIntern4
     ├── UI
     └── Program.cs
 └── AspNetCoreFundamentals
-    ├── Connected Services
-    ├── Dependencies
-    ├── Properties
-    ├── wwwroot
-    ├── Configuration
-    ├── Controllers
-    ├── Filters
-    ├── Interface
-    ├── Middleware
-    ├── Models
-    ├── Service
-    ├── Views
-    ├── appsettings.json
-    └── Program.cs
 
 
 
