@@ -139,25 +139,14 @@ Added comments and documentation for better code readability and maintainability
 	- View Payment History
 	- Refund Payment
 - Applied clean architecture principles by separating UI, business logic, and payment gateway implementations.
-- Improved code reusability and maintainability using helper classes and common validation logic.
-	
+- Improved code reusability and maintainability using helper classes and common validation logic
+
 ### Issue #12 - Advanced LINQ
 - Implemented advanced LINQ operations for searching, grouping, counting, and data aggregation.
 - Applied LINQ methods such as Any, All, Count, Sum, GroupBy, Distinct, Skip, Take, Contains, LastOrDefault, SingleOrDefault, and Join.
 - Refactored the project by separating Student and Department models and establishing relationships using DepartmentId.
 - Used LINQ Join to combine student and department data through a `StudentDepartmentDto`, `GetAverageMarksByDepartment`.
 - Improved the project structure by updating the seeders, services, helpers, and program flow to support a clean, maintainable, and scalable design.
-
-#### -------------- Start ASP.NET Core Fundamentals ----------------- ###
-
-### Issue #15 - Project Setup
-- Created a new ASP.NET Core MVC solution and project.
-- Configured the project using the .NET framework.
-- Explored the basic ASP.NET Core MVC project structure.
-- Built and ran the application successfully.
-- Verified the default ASP.NET Core MVC application in the browser.
-- Prepared a working project skeleton for upcoming ASP.NET Core Fundamentals issues.
-
 
 ### Issue #13 - Git Workflow
 - Created and switched to a feature branch.
@@ -170,7 +159,8 @@ Added comments and documentation for better code readability and maintainability
 - Practiced restoring uncommitted changes using `git restore`.
 - Followed Git best practices, including meaningful commit messages, feature branch workflow, and keeping the local `main` branch up to date before starting new work.
 
- ### Issue #14 - Mini Project (Student Management System)
+
+### Issue #14 - Mini Project (Student Management System)
 - Built a Student Management System console application using OOP, LINQ, and List<T>.
 	- Implemented complete CRUD operations:
 	- Add Student
@@ -191,9 +181,6 @@ Added comments and documentation for better code readability and maintainability
 - Returned read-only collections using IReadOnlyList<T> where appropriate.
 - Applied input validation, reusable helper methods, and clean project organization following professional coding practices.
 
-
-
-
 #### -------------- Start ASP.NET Core Fundamentals ----------------- ###
 
 ### Issue #15 - Project Setup
@@ -205,6 +192,7 @@ Added comments and documentation for better code readability and maintainability
 - Prepared a working project skeleton for upcoming ASP.NET Core Fundamentals issues.
 
 ### Issue #16 - Project Structure
+
 - Organized the ASP.NET Core MVC project according to standard conventions.
 - Created and organized the `Models` folder for application data models.
 - Created and organized the `Controllers` folder for handling requests and application logic.
@@ -213,6 +201,129 @@ Added comments and documentation for better code readability and maintainability
 - Verified the Controller-to-View flow using MVC conventions.
 - Reviewed the purpose of the `wwwroot`, `Program.cs`, and `appsettings.json` files.
 - Verified the final project structure and prepared it for upcoming ASP.NET Core MVC development.
+
+### Issue #17 - Program.cs
+- Reviewed and configured the Program.cs file as the application entry point.
+- Configured the ASP.NET Core application builder and host.
+- Registered MVC services using AddControllersWithViews().
+- Configured the application middleware pipeline.
+- Enabled HTTPS redirection and static file handling.
+- Configured MVC controller routing with the default route.
+- Started the application using app.Run().
+- Built and ran the application successfully without errors.
+- Verified that the ASP.NET Core MVC application starts and works correct
+
+### Issue #18 - Configuration
+- Configured application settings using appsettings.json and environment-specific settings.
+- Practiced IConfiguration, environment variables, connection strings, API settings, and feature flags.
+- Implemented strongly typed configuration using the Options Pattern.
+- Configured User Secrets for sensitive development settings.
+- Verified that configuration loads correctly without errors.
+
+### Issue #19 - Middleware
+
+- Implemented and explored the ASP.NET Core middleware pipeline.
+- Practiced middleware execution order using `Use()`, `Run()`, `Map()`, and `MapWhen()`.
+- Created custom middleware for request logging and request timing.
+- Implemented exception handling middleware using `try-catch`.
+- Practiced short-circuiting and conditional middleware branches.
+- Verified request and response flow through the middleware pipeline.
+
+### Issue #20 - Controllers
+- Implemented and explored ASP.NET Core MVC controllers and controller actions.
+- Practiced action methods with IActionResult, View(), RedirectToAction(), NotFound(), and BadRequest().
+- Practiced model binding, Data Annotations, and ModelState validation.
+- Explored data passing using Models, ViewBag, ViewData, and TempData.
+- Implemented CRUD controller patterns using GET and POST actions.
+- Practiced attribute routing and route parameters.
+- Implemented Controller → Service architecture using Dependency Injection and interfaces.
+- Explored controller context including HttpContext, Request, Response, User, RouteData, and ModelState.
+- Implemented the Post/Redirect/Get (PRG) pattern using RedirectToAction().
+- Practiced Action Filters and understood Middleware vs Filters.
+- Explored exception handling using try-catch, Exception Filters, and Exception Middleware.
+- Implemented centralized error handling and local exception recovery scenarios.
+
+### Issue #21 - Views
+- Strongly typed Razor Views using @model
+- View discovery and MVC view conventions
+- Model-to-View data passing
+- Student list rendering with Razor
+- Student details view
+- Create Student form
+- Edit Student form
+- Form submission using Tag Helpers
+- Model binding for Student properties
+- Model validation and validation error display
+- HTML Helpers such as DisplayFor and DisplayNameFor
+- Tag Helpers such as asp-for, asp-action, asp-route-id, and asp-validation-for
+- ViewBag, ViewData, and TempData usage
+- Success messages using TempData after CRUD operations
+- HTML encoding and basic XSS protection concepts
+- Clean View practices by keeping business logic outside Views
+- Bootstrap-based responsive UI for Student CRUD pages
+- Create, Edit, Details, and Delete actions integrated with the existing StudentController
+
+### Issue #22 — Razor Syntax
+- Practiced Razor expressions using @.
+- Created and used variables inside Razor code blocks.
+- Used if, else, and nested conditions.
+- Used foreach and for loops.
+- Combined HTML with nested C# logic.
+- Used Model, ViewBag, and ViewData with Razor.
+- Implemented a practical Student listing using Razor syntax.
+- Rendered student data dynamically with conditions and loops.
+
+### Issue #23 — Layouts
+- Created and configured `_Layout.cshtml` for shared page structure.
+- Implemented shared Navbar, Footer, CSS, and JavaScript.
+- Used `@RenderBody()` to render View-specific content.
+- Used `@RenderSectionAsync()` for optional page-specific content.
+- Practiced required and optional sections.
+- Explored `_ViewStart.cshtml` for selecting default Layouts.
+- Created `_AdminLayout.cshtml` for Admin pages.
+- Implemented multiple Layouts for normal and Admin Views.
+- Practiced Layout overriding at the View level.
+- Learned nested Layouts.
+- Used `ViewData` / `ViewBag` with Layouts.
+- Implemented dynamic page titles using `ViewData["Title"]`.
+- Learned common Layout mistakes and best practices.
+
+### Issue #24 — Partial Views
+- Created and used Partial Views for reusable UI components.
+- Learned what Partial Views are and why they are used.
+- Created reusable `_StudentList.cshtml`.
+- Passed `IEnumerable<Student>` to the Partial View.
+- Used the `<partial>` Tag Helper.
+- Practiced passing single objects and collections.
+- Reused the same Partial View with different data.
+- Learned Partial Views with Layouts and nested Partial Views.
+- Learned common mistakes and best practices.
+- Used `PartialView()` from a Controller action.
+
+### Issue #25 — Static Files
+- Configured static file middleware using `UseStaticFiles()`.
+- Created static CSS and JavaScript files inside `wwwroot`.
+- Added and tested an image from `wwwroot/images`.
+- Linked static files to Razor Views.
+- Verified that static files load correctly in the browser.
+
+### Issue #25 — Static Files
+
+- Configured static file middleware using `UseStaticFiles()`.
+- Added and served static files from the `wwwroot` folder.
+- Implemented student image upload and display functionality.
+- Added image validation, replacement, and deletion.
+
+### Issue #26 — Mini Project: Student Management System
+
+- Built a Student Management System using ASP.NET Core MVC fundamentals.
+- Implemented Student CRUD operations with validation.
+- Created a separate Department model and Department service.
+- Connected students with departments using `DepartmentId`.
+- Implemented a separate Image Service for student image management.
+- Added department dropdowns in Create and Edit.
+- Implemented department name display instead of showing `DepartmentId`.
+- Currently working on student search/filter functionality.
 
 
 ### Issue #25 — Static Files
@@ -264,20 +375,21 @@ CMIntern4
     ├── Enums
     ├── UI
     └── Program.cs
-└── Advanced-LINQ
-└── MiniProject-StudentManagementSys
-    ├── Constants
-    ├── DTOs
-    ├── Enums
-    ├── Helpers
-    ├── Interfaces
-    ├── Models
-    ├── Seeders
-    ├── Services
-    └── Program.cs
 └── AspNetCoreFundamentals
-
-
+    ├── Connected Services
+    ├── Dependencies
+    ├── Properties
+    ├── wwwroot
+    ├── Configuration
+    ├── Controllers
+    ├── Filters
+    ├── Interface
+    ├── Middleware
+    ├── Models
+    ├── Service
+    ├── Views
+    ├── appsettings.json
+    └── Program.cs
 
 
 
