@@ -5,7 +5,21 @@ namespace RepositoryPatternDemo.Repositories
 {
     public class StudentRepository : IStudentRepository
     {
-        private readonly List<Student> _students = new();
+        private readonly List<Student> _students = new()
+{
+    new Student
+    {
+        Id = 1,
+        Name = "Ali",
+        Email = "ali@example.com"
+    },
+    new Student
+    {
+        Id = 2,
+        Name = "Ahmed",
+        Email = "ahmed@example.com"
+    }
+};
 
         public List<Student> GetAll()
         {
