@@ -1,11 +1,14 @@
 using RepositoryPatternDemo.Repositories;
 using RepositoryPatternDemo.Repositories.Interfaces;
+using RepositoryPatternDemo.Services;
+using RepositoryPatternDemo.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 var app = builder.Build();
 
