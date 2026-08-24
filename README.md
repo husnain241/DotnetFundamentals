@@ -343,7 +343,8 @@ Added comments and documentation for better code readability and maintainability
 - Added department dropdowns in Create and Edit.
 - Implemented department name display instead of showing `DepartmentId`.
 - Currently working on student search/filter functionality.
-
+- Issue # 30: Implement ViewModels for Student and Department to separate UI concerns from data models.
+- Issue # 36: Implemented logging for various operations.
 
 ## Project Structure
 

@@ -3,6 +3,9 @@ using mini_project_SMS.Services.Interfaces;
 using mini_project_SMS.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add<CustomExceptionFilter>();
