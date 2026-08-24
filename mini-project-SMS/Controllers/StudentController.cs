@@ -11,19 +11,24 @@ namespace mini_project_SMS.Controllers
         private readonly IStudentService _studentService;
         private readonly IDepartmentService _departmentService;
         private readonly IImageService _imageService;
+        private readonly ILogger<StudentController> _logger;
+
 
         public StudentController(
     IStudentService studentService,
     IImageService imageService,
-    IDepartmentService departmentService)
+    IDepartmentService departmentService,
+    ILogger<StudentController> logger)
         {
             _studentService = studentService;
             _imageService = imageService;
             _departmentService = departmentService;
+            _logger = logger;
         }
 
         public IActionResult Index(string? search)
         {
+            _logger.LogInformation("Student list requested. Search: {Search}", search);
 
 
             var students = _studentService.Search(search ?? "");
@@ -75,6 +80,8 @@ namespace mini_project_SMS.Controllers
             }
             catch (ArgumentException ex)
             {
+                _logger.LogError(ex, "Error occurred while creating a student.");
+
                 ModelState.AddModelError("Image", ex.Message);
 
                 model.Departments = _departmentService.GetAll();
