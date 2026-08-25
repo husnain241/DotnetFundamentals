@@ -1,25 +1,31 @@
 @model RepositoryPatternDemo.Models.Student
+using Microsoft.AspNetCore.Mvc.Rendering
 
 <h2>Create Student</h2>
 
 <form asp-action="Create" method="post">
 
     <div class="mb-3">
-        <label asp-for="Id" class="form-label"></label>
-        <input asp-for="Id" class="form-control" />
-    </div>
-
-    <div class="mb-3">
         <label asp-for="Name" class="form-label"></label>
         <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Email" class="form-label"></label>
         <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-success">Create</button>
+    <div class="mb-3">
+        <label asp-for="DepartmentId" class="form-label">Department</label>
+        <select asp-for="DepartmentId" class="form-select" asp-items="@(new SelectList(ViewBag.Departments, "Id", "Name"))">
+            <option value="">-- Select Department --</option>
+        </select>
+        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 
 </form>

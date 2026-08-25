@@ -10,6 +10,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Department</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
                 <td>@student.Id</td>
                 <td>@student.Name</td>
                 <td>@student.Email</td>
+                <td>@(student.Department?.Name ?? "N/A")</td>
                 <td>
                     <a asp-action="Details" asp-route-id="@student.Id">Details</a> |
                     <a asp-action="Edit" asp-route-id="@student.Id">Edit</a> |

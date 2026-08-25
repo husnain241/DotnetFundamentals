@@ -6,20 +6,22 @@ namespace RepositoryPatternDemo.Repositories
     public class StudentRepository : IStudentRepository
     {
         private readonly List<Student> _students = new()
-{
-    new Student
-    {
-        Id = 1,
-        Name = "Ali",
-        Email = "ali@example.com"
-    },
-    new Student
-    {
-        Id = 2,
-        Name = "Ahmed",
-        Email = "ahmed@example.com"
-    }
-};
+        {
+            new Student
+            {
+                Id = 1,
+                Name = "Ali",
+                Email = "ali@example.com",
+                DepartmentId = 1
+            },
+            new Student
+            {
+                Id = 2,
+                Name = "Ahmed",
+                Email = "ahmed@example.com",
+                DepartmentId = 2
+            }
+        };
 
         public List<Student> GetAll()
         {
@@ -48,6 +50,7 @@ namespace RepositoryPatternDemo.Repositories
             {
                 existingStudent.Name = student.Name;
                 existingStudent.Email = student.Email;
+                existingStudent.DepartmentId = student.DepartmentId;
             }
         }
 

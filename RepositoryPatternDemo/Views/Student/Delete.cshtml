@@ -8,6 +8,7 @@
     <p><strong>Id:</strong> @Model.Id</p>
     <p><strong>Name:</strong> @Model.Name</p>
     <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Department:</strong> @(Model.Department?.Name ?? "N/A")</p>
 </div>
 
 <form asp-action="DeleteConfirmed" method="post">

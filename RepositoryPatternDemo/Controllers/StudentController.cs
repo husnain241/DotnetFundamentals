@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using RepositoryPatternDemo.Models;
 using RepositoryPatternDemo.Services.Interfaces;
 
@@ -7,10 +7,12 @@ namespace RepositoryPatternDemo.Controllers
     public class StudentController : Controller
     {
         private readonly IStudentService _studentService;
+        private readonly IDepartmentService _departmentService;
 
-        public StudentController(IStudentService studentService)
+        public StudentController(IStudentService studentService, IDepartmentService departmentService)
         {
             _studentService = studentService;
+            _departmentService = departmentService;
         }
 
         // Read - Get all students
@@ -38,6 +40,7 @@ namespace RepositoryPatternDemo.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Departments = _departmentService.GetAll();
             return View();
         }
 
@@ -48,6 +51,7 @@ namespace RepositoryPatternDemo.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Departments = _departmentService.GetAll();
                 return View(student);
             }
 
@@ -67,6 +71,7 @@ namespace RepositoryPatternDemo.Controllers
                 return NotFound();
             }
 
+            ViewBag.Departments = _departmentService.GetAll();
             return View(student);
         }
 
@@ -77,6 +82,7 @@ namespace RepositoryPatternDemo.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Departments = _departmentService.GetAll();
                 return View(student);
             }
 

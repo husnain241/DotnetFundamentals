@@ -15,12 +15,22 @@ namespace RepositoryPatternDemo.Services
 
         public List<Student> GetAll()
         {
-            return _unitOfWork.Students.GetAll();
+            var students = _unitOfWork.Students.GetAll();
+            foreach (var student in students)
+            {
+                PopulateDepartment(student);
+            }
+            return students;
         }
 
         public Student? GetById(int id)
         {
-            return _unitOfWork.Students.GetById(id);
+            var student = _unitOfWork.Students.GetById(id);
+            if (student != null)
+            {
+                PopulateDepartment(student);
+            }
+            return student;
         }
 
         public void Add(Student student)
@@ -50,11 +60,22 @@ namespace RepositoryPatternDemo.Services
                 throw new Exception("Department not found.");
             }
 
+            student.DepartmentId = departmentId;
+            student.Department = department;
+
             _unitOfWork.Students.Add(student);
             _unitOfWork.Save();
 
             Console.WriteLine(
                 $"Student {student.Name} added to department {department.Name}");
+        }
+
+        private void PopulateDepartment(Student student)
+        {
+            if (student.DepartmentId.HasValue)
+            {
+                student.Department = _unitOfWork.Departments.GetById(student.DepartmentId.Value);
+            }
         }
     }
 }
