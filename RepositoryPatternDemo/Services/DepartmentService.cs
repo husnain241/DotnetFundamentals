@@ -1,4 +1,4 @@
-﻿using RepositoryPatternDemo.Models;
+using RepositoryPatternDemo.Models;
 using RepositoryPatternDemo.Repositories.Interfaces;
 using RepositoryPatternDemo.Services.Interfaces;
 
@@ -6,36 +6,39 @@ namespace RepositoryPatternDemo.Services
 {
     public class DepartmentService : IDepartmentService
     {
-        private readonly IDepartmentRepository _departmentRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DepartmentService(IDepartmentRepository departmentRepository)
+        public DepartmentService(IUnitOfWork unitOfWork)
         {
-            _departmentRepository = departmentRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public List<Department> GetAll()
         {
-            return _departmentRepository.GetAll();
+            return _unitOfWork.Departments.GetAll();
         }
 
         public Department? GetById(int id)
         {
-            return _departmentRepository.GetById(id);
+            return _unitOfWork.Departments.GetById(id);
         }
 
         public void Add(Department department)
         {
-            _departmentRepository.Add(department);
+            _unitOfWork.Departments.Add(department);
+            _unitOfWork.Save();
         }
 
         public void Update(Department department)
         {
-            _departmentRepository.Update(department);
+            _unitOfWork.Departments.Update(department);
+            _unitOfWork.Save();
         }
 
         public void Delete(int id)
         {
-            _departmentRepository.Delete(id);
+            _unitOfWork.Departments.Delete(id);
+            _unitOfWork.Save();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using RepositoryPatternDemo.Models;
+using RepositoryPatternDemo.Models;
 using RepositoryPatternDemo.Repositories.Interfaces;
 
 namespace RepositoryPatternDemo.Repositories
@@ -31,6 +31,10 @@ namespace RepositoryPatternDemo.Repositories
 
         public void Add(Department department)
         {
+            if (department.Id == 0)
+            {
+                department.Id = _departments.Any() ? _departments.Max(d => d.Id) + 1 : 1;
+            }
             _departments.Add(department);
         }
 
