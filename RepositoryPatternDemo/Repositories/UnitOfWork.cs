@@ -1,27 +1,30 @@
+using RepositoryPatternDemo.Data;
 using RepositoryPatternDemo.Repositories.Interfaces;
 
 namespace RepositoryPatternDemo.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
+        private readonly ApplicationDbContext _context;
+
         public IStudentRepository Students { get; }
         public IDepartmentRepository Departments { get; }
 
-        public UnitOfWork(IStudentRepository studentRepository, IDepartmentRepository departmentRepository)
+        public UnitOfWork(ApplicationDbContext context, IStudentRepository studentRepository, IDepartmentRepository departmentRepository)
         {
+            _context = context;
             Students = studentRepository;
             Departments = departmentRepository;
         }
 
         public void Save()
         {
-            // In-memory Save implementation
+            _context.SaveChanges();
         }
 
         public int Complete()
         {
-            Save();
-            return 1;
+            return _context.SaveChanges();
         }
     }
 }

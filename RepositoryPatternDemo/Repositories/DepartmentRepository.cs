@@ -1,3 +1,4 @@
+using RepositoryPatternDemo.Data;
 using RepositoryPatternDemo.Models;
 using RepositoryPatternDemo.Repositories.Interfaces;
 
@@ -5,47 +6,31 @@ namespace RepositoryPatternDemo.Repositories
 {
     public class DepartmentRepository : IDepartmentRepository
     {
-        private readonly List<Department> _departments = new()
+        private readonly ApplicationDbContext _context;
+
+        public DepartmentRepository(ApplicationDbContext context)
         {
-            new Department
-            {
-                Id = 1,
-                Name = "Computer Science"
-            },
-            new Department
-            {
-                Id = 2,
-                Name = "Software Engineering"
-            }
-        };
+            _context = context;
+        }
 
         public List<Department> GetAll()
         {
-            return _departments;
+            return _context.Departments.ToList();
         }
 
         public Department? GetById(int id)
         {
-            return _departments.FirstOrDefault(d => d.Id == id);
+            return _context.Departments.FirstOrDefault(d => d.Id == id);
         }
 
         public void Add(Department department)
         {
-            if (department.Id == 0)
-            {
-                department.Id = _departments.Any() ? _departments.Max(d => d.Id) + 1 : 1;
-            }
-            _departments.Add(department);
+            _context.Departments.Add(department);
         }
 
         public void Update(Department department)
         {
-            var existingDepartment = GetById(department.Id);
-
-            if (existingDepartment != null)
-            {
-                existingDepartment.Name = department.Name;
-            }
+            _context.Departments.Update(department);
         }
 
         public void Delete(int id)
@@ -54,7 +39,7 @@ namespace RepositoryPatternDemo.Repositories
 
             if (department != null)
             {
-                _departments.Remove(department);
+                _context.Departments.Remove(department);
             }
         }
     }
