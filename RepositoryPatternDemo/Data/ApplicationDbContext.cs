@@ -18,8 +18,8 @@ namespace RepositoryPatternDemo.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Department>().HasData(
-                new Department { Id = 1, Name = "Computer Science" },
-                new Department { Id = 2, Name = "Software Engineering" }
+                new Department { Id = 1, Name = "Computer Science", StudentCount = 1 },
+                new Department { Id = 2, Name = "Software Engineering", StudentCount = 1 }
             );
 
             modelBuilder.Entity<Student>().HasData(

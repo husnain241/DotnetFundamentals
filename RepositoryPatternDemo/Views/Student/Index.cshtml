@@ -14,7 +14,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Department</th>
-                    <th class="text-end" style="width: 220px;">Actions</th>
+                    <th class="text-end" style="width: 280px;">Actions</th>
                 </tr>
             </thead>
 
@@ -38,6 +38,7 @@
                                 }
                             </td>
                             <td class="text-end">
+                                <a asp-action="Transfer" asp-route-id="@student.Id" class="btn btn-sm btn-outline-primary me-1">Transfer UoW</a>
                                 <a asp-action="Details" asp-route-id="@student.Id" class="btn btn-sm btn-outline-info me-1">Details</a>
                                 <a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-sm btn-outline-warning me-1">Edit</a>
                                 <a asp-action="Delete" asp-route-id="@student.Id" class="btn btn-sm btn-outline-danger">Delete</a>
