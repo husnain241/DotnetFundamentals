@@ -325,6 +325,13 @@ Added comments and documentation for better code readability and maintainability
 - Implemented department name display instead of showing `DepartmentId`.
 - Currently working on student search/filter functionality.
 
+### Issue # 48 - Repository Pattern
+- Implemented the Repository Pattern for data access abstraction.
+- Created generic repository interfaces and concrete implementations for Student entity.
+- Implemented CRUD operations through the repository layer.
+- Created the Service layer (IStudentService and StudentService).
+- Connected Controller → Service → Repository.
+
 
 ## Project Structure
 
