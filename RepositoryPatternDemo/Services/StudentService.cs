@@ -36,38 +36,19 @@ namespace RepositoryPatternDemo.Services
         public void Add(Student student)
         {
             _unitOfWork.Students.Add(student);
-            _unitOfWork.Save();
+            _unitOfWork.Complete();
         }
 
         public void Update(Student student)
         {
             _unitOfWork.Students.Update(student);
-            _unitOfWork.Save();
+            _unitOfWork.Complete();
         }
 
         public void Delete(int id)
         {
             _unitOfWork.Students.Delete(id);
-            _unitOfWork.Save();
-        }
-
-        public void AddStudentWithDepartment(Student student, int departmentId)
-        {
-            var department = _unitOfWork.Departments.GetById(departmentId);
-
-            if (department == null)
-            {
-                throw new Exception("Department not found.");
-            }
-
-            student.DepartmentId = departmentId;
-            student.Department = department;
-
-            _unitOfWork.Students.Add(student);
-            _unitOfWork.Save();
-
-            Console.WriteLine(
-                $"Student {student.Name} added to department {department.Name}");
+            _unitOfWork.Complete();
         }
 
         private void PopulateDepartment(Student student)

@@ -15,7 +15,13 @@ namespace RepositoryPatternDemo.Repositories
 
         public void Save()
         {
-            // Simple in-memory Save implementation
+            // In-memory Save implementation
+        }
+
+        public int Complete()
+        {
+            Save();
+            return 1;
         }
     }
 }

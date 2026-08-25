@@ -26,19 +26,19 @@ namespace RepositoryPatternDemo.Services
         public void Add(Department department)
         {
             _unitOfWork.Departments.Add(department);
-            _unitOfWork.Save();
+            _unitOfWork.Complete();
         }
 
         public void Update(Department department)
         {
             _unitOfWork.Departments.Update(department);
-            _unitOfWork.Save();
+            _unitOfWork.Complete();
         }
 
         public void Delete(int id)
         {
             _unitOfWork.Departments.Delete(id);
-            _unitOfWork.Save();
+            _unitOfWork.Complete();
         }
     }
 }
