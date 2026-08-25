@@ -12,6 +12,7 @@
                 <tr>
                     <th style="width: 80px;">Id</th>
                     <th>Department Name</th>
+                    <th>Student Count</th>
                     <th class="text-end" style="width: 220px;">Actions</th>
                 </tr>
             </thead>
@@ -24,6 +25,9 @@
                         <tr>
                             <td>@department.Id</td>
                             <td class="fw-semibold">@department.Name</td>
+                            <td>
+                                <span class="badge bg-primary rounded-pill">@department.StudentCount Enrolled</span>
+                            </td>
                             <td class="text-end">
                                 <a asp-action="Details" asp-route-id="@department.Id" class="btn btn-sm btn-outline-info me-1">Details</a>
                                 <a asp-action="Edit" asp-route-id="@department.Id" class="btn btn-sm btn-outline-warning me-1">Edit</a>
@@ -35,7 +39,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="3" class="text-center py-3 text-muted">No departments found.</td>
+                        <td colspan="4" class="text-center py-3 text-muted">No departments found.</td>
                     </tr>
                 }
             </tbody>

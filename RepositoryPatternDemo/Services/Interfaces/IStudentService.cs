@@ -1,4 +1,4 @@
-﻿using RepositoryPatternDemo.Models;
+using RepositoryPatternDemo.Models;
 
 namespace RepositoryPatternDemo.Services.Interfaces
 {
@@ -9,5 +9,6 @@ namespace RepositoryPatternDemo.Services.Interfaces
         void Add(Student student);
         void Update(Student student);
         void Delete(int id);
+        void TransferDepartment(int studentId, int newDepartmentId);
     }
 }

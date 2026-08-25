@@ -98,6 +98,45 @@ namespace RepositoryPatternDemo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Transfer Department - GET
+        [HttpGet]
+        public IActionResult Transfer(int id)
+        {
+            var student = _studentService.GetById(id);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Departments = _departmentService.GetAll();
+            return View(student);
+        }
+
+        // Transfer Department - POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Transfer(int id, int newDepartmentId)
+        {
+            var student = _studentService.GetById(id);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            if (newDepartmentId <= 0)
+            {
+                ModelState.AddModelError("", "Please select a valid department.");
+                ViewBag.Departments = _departmentService.GetAll();
+                return View(student);
+            }
+
+            _studentService.TransferDepartment(id, newDepartmentId);
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // Delete - GET
         [HttpGet]
         public IActionResult Delete(int id)
