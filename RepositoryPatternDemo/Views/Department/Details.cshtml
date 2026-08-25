@@ -1,16 +1,24 @@
 @model RepositoryPatternDemo.Models.Department
 
-<h2>Department Details</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm mt-3">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">Department Details</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Id:</dt>
+                    <dd class="col-sm-8">@Model.Id</dd>
 
-<div>
-    <p><strong>Id:</strong> @Model.Id</p>
-    <p><strong>Name:</strong> @Model.Name</p>
+                    <dt class="col-sm-4">Name:</dt>
+                    <dd class="col-sm-8">@Model.Name</dd>
+                </dl>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit Department</a>
+            </div>
+        </div>
+    </div>
 </div>
-
-<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
-    Edit
-</a>
-
-<a asp-action="Index" class="btn btn-secondary">
-    Back
-</a>
