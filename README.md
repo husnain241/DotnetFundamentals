@@ -340,6 +340,13 @@ Added comments and documentation for better code readability and maintainability
 - Atomic Unit of Work Transactions: Learned how Unit of Work to coordinate multiple entity updates (e.g., updating Student department while syncing department StudentCount) so all changes succeed or fail together.
 - Replaced In-Memory Lists with Real Local DB: Integrated Entity Framework Core (ApplicationDbContext) to practice real database context persistence and SaveChanges() execution.
 - 
+### Issue # 50 Weekly Assignment - Routes & DI
+- Implemented Attribute Routing (`[Route]`, `[HttpGet]`, `[HttpPost]`) across controllers for explicit URL mapping.
+- Added route constraints (`:int`, `:min(1)`), default parameter values, and optional parameters for robust URL handling.
+- Configured Named Routes (`Name = "..."`) to decouple link generation in Razor Views and controller redirects.
+- Registered Repositories, Unit of Work, and Service dependencies in `Program.cs` using the IoC container (`AddScoped`).
+- Decoupled controller logic by using Constructor Injection for `IStudentService` and `IDepartmentService`.
+
 ## Project Structure
 
 ```
