@@ -4,6 +4,7 @@ using RepositoryPatternDemo.Services.Interfaces;
 
 namespace RepositoryPatternDemo.Controllers
 {
+    [Route("students")]
     public class StudentController : Controller
     {
         private readonly IStudentService _studentService;
@@ -16,6 +17,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Read - Get all students
+        [HttpGet("")]
         public IActionResult Index()
         {
             var students = _studentService.GetAll();
@@ -24,6 +26,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Read - Get single student
+        [HttpGet("details/{id:int}")]
         public IActionResult Details(int id)
         {
             var student = _studentService.GetById(id);
@@ -37,7 +40,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Create - GET
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             ViewBag.Departments = _departmentService.GetAll();
@@ -45,7 +48,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Create - POST
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Student student)
         {
@@ -61,7 +64,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Update - GET
-        [HttpGet]
+        [HttpGet("edit/{id:int}")]
         public IActionResult Edit(int id)
         {
             var student = _studentService.GetById(id);
@@ -76,7 +79,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Update - POST
-        [HttpPost]
+        [HttpPost("edit")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Student student)
         {
@@ -99,7 +102,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Transfer Department - GET
-        [HttpGet]
+        [HttpGet("transfer/{id:int}")]
         public IActionResult Transfer(int id)
         {
             var student = _studentService.GetById(id);
@@ -114,7 +117,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Transfer Department - POST
-        [HttpPost]
+        [HttpPost("transfer/{id:int}")]
         [ValidateAntiForgeryToken]
         public IActionResult Transfer(int id, int newDepartmentId)
         {
@@ -138,7 +141,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Delete - GET
-        [HttpGet]
+        [HttpGet("delete/{id:int}")]
         public IActionResult Delete(int id)
         {
             var student = _studentService.GetById(id);
@@ -152,7 +155,8 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Delete - POST
-        [HttpPost]
+        [HttpPost("delete/{id:int}")]
+
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {

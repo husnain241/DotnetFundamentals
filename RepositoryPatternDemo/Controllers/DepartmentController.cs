@@ -4,6 +4,7 @@ using RepositoryPatternDemo.Services.Interfaces;
 
 namespace RepositoryPatternDemo.Controllers
 {
+    [Route("departments")]
     public class DepartmentController : Controller
     {
         private readonly IDepartmentService _departmentService;
@@ -14,6 +15,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Read - Get all departments
+        [HttpGet("")]
         public IActionResult Index()
         {
             var departments = _departmentService.GetAll();
@@ -21,6 +23,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Read - Get single department
+        [HttpGet("details/{id:int}")]
         public IActionResult Details(int id)
         {
             var department = _departmentService.GetById(id);
@@ -34,14 +37,14 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Create - GET
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             return View();
         }
 
         // Create - POST
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Department department)
         {
@@ -56,7 +59,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Update - GET
-        [HttpGet]
+        [HttpGet("edit/{id:int}")]
         public IActionResult Edit(int id)
         {
             var department = _departmentService.GetById(id);
@@ -70,7 +73,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Update - POST
-        [HttpPost]
+        [HttpPost("edit")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Department department)
         {
@@ -92,7 +95,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Delete - GET
-        [HttpGet]
+        [HttpGet("delete/{id:int}")]
         public IActionResult Delete(int id)
         {
             var department = _departmentService.GetById(id);
@@ -106,7 +109,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Delete - POST
-        [HttpPost]
+        [HttpPost("delete/{id:int}")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
