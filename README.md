@@ -332,7 +332,14 @@ Added comments and documentation for better code readability and maintainability
 - Created the Service layer (IStudentService and StudentService).
 - Connected Controller → Service → Repository.
 
-
+### Issue # 49 - Unit of Work 
+- Implemented Unit of Work Pattern: Integrated IUnitOfWork and UnitOfWork to centralize access to StudentRepository and DepartmentRepository.
+- Completed Student–Department Relationship: Connected Student and Department models with Foreign Keys, navigation properties, and dynamic dropdown selections.
+- Full CRUD Operations: Updated controllers, services, and views to handle complete CRUD flows for both Students and Departments cleanly.
+- Understood End-to-End Data Flow: Mastered how request data flows through Controller → Service → Unit of Work → Repository → Database.
+- Atomic Unit of Work Transactions: Learned how Unit of Work to coordinate multiple entity updates (e.g., updating Student department while syncing department StudentCount) so all changes succeed or fail together.
+- Replaced In-Memory Lists with Real Local DB: Integrated Entity Framework Core (ApplicationDbContext) to practice real database context persistence and SaveChanges() execution.
+- 
 ## Project Structure
 
 ```
