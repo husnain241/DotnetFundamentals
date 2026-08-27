@@ -7,6 +7,9 @@ namespace RepositoryPatternDemo.Controllers
     [Route("students")]
     public class StudentController : Controller
     {
+        // Dependency injection for services
+
+        // DI for IStudentService and IDepartmentService
         private readonly IStudentService _studentService;
         private readonly IDepartmentService _departmentService;
 

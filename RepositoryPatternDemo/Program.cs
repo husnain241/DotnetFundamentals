@@ -14,6 +14,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseInMemoryDatabase("RepositoryPatternDemoDb"));
 
+// Register repositories and services for dependency injection
+// AddScoped is used to create a new instance of the service for each HTTP request
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
