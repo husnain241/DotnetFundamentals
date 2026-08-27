@@ -378,7 +378,36 @@ CMIntern4
     ├── Views
     ├── appsettings.json
     └── Program.cs
-
+└── RepositoryPattern
+    ├── Controllers/
+    │   ├── DepartmentController.cs
+    │   ├── HomeController.cs
+    │   └── StudentController.cs
+    ├── Data/
+    │   └── ApplicationDbContext.cs
+    ├── Models/
+    │   ├── Department.cs
+    │   ├── ErrorViewModel.cs
+    │   └── Student.cs
+    ├── Repositories/
+    │   ├── Interfaces/
+    │   │   ├── IDepartmentRepository.cs
+    │   │   └── IStudentRepository.cs
+    │   ├── DepartmentRepository.cs
+    │   └── StudentRepository.cs
+    ├── Services/
+    │   ├── Interfaces/
+    │   │   ├── IDepartmentService.cs
+    │   │   └── IStudentService.cs
+    │   ├── DepartmentService.cs
+    │   └── StudentService.cs
+    ├── Views/
+    │   ├── Department/
+    │   ├── Home/
+    │   ├── Student/
+    │   └── Shared/
+    ├── appsettings.json
+    └── Program.cs
 
 
 
