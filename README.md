@@ -353,6 +353,15 @@ Added comments and documentation for better code readability and maintainability
 - Improved UI in Student and Department Views with tables, forms, and validation messages.
 - Made the application mobile-friendly and visually appealing.
 
+### Issue # 52 - Bootstap Integration
+- Right-clicked the project → Add → Client-Side Library.
+- Selected cdnjs as the provider.
+- Selected Bootstrap and its required files.
+- Set the target location to wwwroot/lib/bootstrap.
+- Added Bootstrap CSS and JS references in _Layout.cshtml.
+- Used Bootstrap classes throughout the application for layout, navbar, cards, buttons, forms, tables, and responsive styling.
+- Added Bootstrap Icons through CDN and used them across the UI.
+- 
 ## Project Structure
 
 ```
