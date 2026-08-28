@@ -1,38 +1,81 @@
+```cshtml
 @{
     ViewData["Title"] = "Dashboard";
 }
 
+@* Bootstrap: text alignment and spacing *@
 <div class="text-center mb-5 mt-4">
+
+    @* Bootstrap: heading typography and color *@
     <h1 class="display-4 fw-bold text-primary mb-3">
+
+        @* Bootstrap Icons: graduation icon *@
         <i class="bi bi-mortarboard-fill"></i> Welcome to the Student Portal
     </h1>
+
+    @* Bootstrap: lead text and muted color *@
     <p class="lead text-muted">Manage your students and departments efficiently using the Repository and Unit of Work patterns.</p>
 </div>
 
+@* Bootstrap: responsive row *@
 <div class="row justify-content-center">
+
+    @* Bootstrap: responsive column *@
     <div class="col-md-5 mb-4">
+
+        @* Bootstrap: card, border and shadow *@
         <div class="card shadow-sm h-100 border-0 border-top border-primary border-4">
+
+            @* Bootstrap: card body and spacing *@
             <div class="card-body text-center py-5">
+
+                @* Bootstrap Icons + Bootstrap: icon styling *@
                 <i class="bi bi-people display-1 text-primary mb-3"></i>
+
+                @* Bootstrap: card title *@
                 <h3 class="card-title">Students</h3>
+
+                @* Bootstrap: card text and spacing *@
                 <p class="card-text text-muted mb-4">Manage student records, enrollments, and execute department transfers.</p>
+
+                @* Bootstrap: primary button *@
                 <a asp-controller="Student" asp-action="Index" class="btn btn-primary btn-lg px-4 rounded-pill">
-                    Manage Students <i class="bi bi-arrow-right ms-2"></i>
+                    Manage Students
+
+                    @* Bootstrap Icons + Bootstrap: arrow and spacing *@
+                    <i class="bi bi-arrow-right ms-2"></i>
                 </a>
             </div>
         </div>
     </div>
 
+    @* Bootstrap: responsive column *@
     <div class="col-md-5 mb-4">
+
+        @* Bootstrap: card, border and shadow *@
         <div class="card shadow-sm h-100 border-0 border-top border-success border-4">
+
+            @* Bootstrap: card body and spacing *@
             <div class="card-body text-center py-5">
+
+                @* Bootstrap Icons + Bootstrap: icon styling *@
                 <i class="bi bi-building display-1 text-success mb-3"></i>
+
+                @* Bootstrap: card title *@
                 <h3 class="card-title">Departments</h3>
+
+                @* Bootstrap: card text and spacing *@
                 <p class="card-text text-muted mb-4">Manage academic departments and view total student enrollments.</p>
+
+                @* Bootstrap: success button *@
                 <a asp-controller="Department" asp-action="Index" class="btn btn-success btn-lg px-4 rounded-pill">
-                    Manage Departments <i class="bi bi-arrow-right ms-2"></i>
+                    Manage Departments
+
+                    @* Bootstrap Icons + Bootstrap: arrow and spacing *@
+                    <i class="bi bi-arrow-right ms-2"></i>
                 </a>
             </div>
         </div>
     </div>
 </div>
+```
