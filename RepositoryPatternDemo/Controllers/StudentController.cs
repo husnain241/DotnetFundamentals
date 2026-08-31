@@ -46,7 +46,7 @@ namespace RepositoryPatternDemo.Controllers
         [HttpGet("create")]
         public IActionResult Create()
         {
-            ViewBag.Departments = _departmentService.GetAll();
+            LoadDepartments();
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace RepositoryPatternDemo.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Departments = _departmentService.GetAll();
+                LoadDepartments();
                 return View(student);
             }
 
@@ -77,7 +77,7 @@ namespace RepositoryPatternDemo.Controllers
                 return NotFound();
             }
 
-            ViewBag.Departments = _departmentService.GetAll();
+            LoadDepartments();
             return View(student);
         }
 
@@ -88,7 +88,7 @@ namespace RepositoryPatternDemo.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Departments = _departmentService.GetAll();
+                LoadDepartments();
                 return View(student);
             }
 
@@ -115,7 +115,7 @@ namespace RepositoryPatternDemo.Controllers
                 return NotFound();
             }
 
-            ViewBag.Departments = _departmentService.GetAll();
+            LoadDepartments();
             return View(student);
         }
 
@@ -134,7 +134,7 @@ namespace RepositoryPatternDemo.Controllers
             if (newDepartmentId <= 0)
             {
                 ModelState.AddModelError("", "Please select a valid department.");
-                ViewBag.Departments = _departmentService.GetAll();
+                LoadDepartments();
                 return View(student);
             }
 
@@ -173,6 +173,12 @@ namespace RepositoryPatternDemo.Controllers
             _studentService.Delete(id);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        //private method 
+        private void LoadDepartments()
+        {
+            ViewBag.Departments = _departmentService.GetAll();
         }
     }
 }
