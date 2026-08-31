@@ -40,12 +40,7 @@ namespace RepositoryPatternDemo.Services
             // Increment StudentCount for the selected department
             if (student.DepartmentId.HasValue)
             {
-                var dept = _unitOfWork.Departments.GetById(student.DepartmentId.Value);
-                if (dept != null)
-                {
-                    dept.StudentCount++;
-                    _unitOfWork.Departments.Update(dept);
-                }
+                UpdateDepartmentStudentCount(student.DepartmentId.Value, 1);
             }
 
             _unitOfWork.Complete();
@@ -64,12 +59,7 @@ namespace RepositoryPatternDemo.Services
             {
                 if (student.DepartmentId.HasValue)
                 {
-                    var dept = _unitOfWork.Departments.GetById(student.DepartmentId.Value);
-                    if (dept != null && dept.StudentCount > 0)
-                    {
-                        dept.StudentCount--;
-                        _unitOfWork.Departments.Update(dept);
-                    }
+                    UpdateDepartmentStudentCount(student.DepartmentId.Value, -1);
                 }
                 _unitOfWork.Students.Delete(id);
                 _unitOfWork.Complete();
@@ -79,6 +69,7 @@ namespace RepositoryPatternDemo.Services
         public void TransferDepartment(int studentId, int newDepartmentId)
         {
             var student = _unitOfWork.Students.GetById(studentId);
+
             if (student == null)
             {
                 throw new Exception("Student not found.");
@@ -86,36 +77,29 @@ namespace RepositoryPatternDemo.Services
 
             if (student.DepartmentId == newDepartmentId)
             {
-                return; // Already in target department
+                return;
             }
 
-            // 1. Decrease old department StudentCount
-            if (student.DepartmentId.HasValue)
-            {
-                var oldDept = _unitOfWork.Departments.GetById(student.DepartmentId.Value);
-                if (oldDept != null && oldDept.StudentCount > 0)
-                {
-                    oldDept.StudentCount--;
-                    _unitOfWork.Departments.Update(oldDept);
-                }
-            }
+            var newDepartment = _unitOfWork.Departments.GetById(newDepartmentId);
 
-            // 2. Increase new department StudentCount
-            var newDept = _unitOfWork.Departments.GetById(newDepartmentId);
-            if (newDept == null)
+            if (newDepartment == null)
             {
                 throw new Exception("Target department not found.");
             }
-            newDept.StudentCount++;
-            _unitOfWork.Departments.Update(newDept);
 
-            // 3. Update student's DepartmentId
+            if (student.DepartmentId.HasValue)
+            {
+                UpdateDepartmentStudentCount(student.DepartmentId.Value, -1);
+            }
+
+            UpdateDepartmentStudentCount(newDepartmentId, 1);
+
             student.DepartmentId = newDepartmentId;
             _unitOfWork.Students.Update(student);
 
-            // 4. Save ALL changes together as ONE Unit of Work
             _unitOfWork.Complete();
         }
+        //private
 
         private void PopulateDepartment(Student student)
         {
@@ -124,5 +108,20 @@ namespace RepositoryPatternDemo.Services
                 student.Department = _unitOfWork.Departments.GetById(student.DepartmentId.Value);
             }
         }
+
+        private void UpdateDepartmentStudentCount(int departmentId, int change)
+        {
+            var department = _unitOfWork.Departments.GetById(departmentId);
+
+            if (department == null)
+            {
+                return;
+            }
+
+            department.StudentCount += change;
+            _unitOfWork.Departments.Update(department);
+        }
+
+
     }
 }
