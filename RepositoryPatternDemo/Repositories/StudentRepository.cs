@@ -20,7 +20,7 @@ namespace RepositoryPatternDemo.Repositories
 
         public Student? GetById(int id)
         {
-            return _context.Students.FirstOrDefault(s => s.Id == id);
+            return _context.Students.Find(id);
         }
 
         public void Add(Student student)

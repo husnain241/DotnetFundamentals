@@ -20,7 +20,7 @@ namespace RepositoryPatternDemo.Repositories
 
         public Department? GetById(int id)
         {
-            return _context.Departments.FirstOrDefault(d => d.Id == id);
+            return _context.Departments.Find(id);
         }
 
         public void Add(Department department)
