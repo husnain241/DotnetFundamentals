@@ -17,11 +17,6 @@ namespace RepositoryPatternDemo.Repositories
             Departments = departmentRepository;
         }
 
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
-
         public int Complete()
         {
             return _context.SaveChanges();
