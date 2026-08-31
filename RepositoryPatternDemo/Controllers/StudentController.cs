@@ -92,9 +92,7 @@ namespace RepositoryPatternDemo.Controllers
                 return View(student);
             }
 
-            var existingStudent = _studentService.GetById(student.Id);
-
-            if (existingStudent == null)
+            if (_studentService.GetById(student.Id) == null)
             {
                 return NotFound();
             }
