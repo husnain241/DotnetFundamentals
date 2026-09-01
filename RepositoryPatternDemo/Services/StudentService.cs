@@ -37,7 +37,6 @@ namespace RepositoryPatternDemo.Services
         {
             _unitOfWork.Students.Add(student);
 
-            // Increment StudentCount for the selected department
             if (student.DepartmentId.HasValue)
             {
                 UpdateDepartmentStudentCount(student.DepartmentId.Value, 1);
@@ -99,7 +98,6 @@ namespace RepositoryPatternDemo.Services
 
             _unitOfWork.Complete();
         }
-        //private
 
         private void PopulateDepartment(Student student)
         {

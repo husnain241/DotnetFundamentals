@@ -7,19 +7,17 @@ namespace RepositoryPatternDemo.Controllers
     [Route("students")]
     public class StudentController : Controller
     {
-        // Dependency injection for services
-
-        // DI for IStudentService and IDepartmentService
         private readonly IStudentService _studentService;
         private readonly IDepartmentService _departmentService;
 
-        public StudentController(IStudentService studentService, IDepartmentService departmentService)
+        public StudentController(
+            IStudentService studentService,
+            IDepartmentService departmentService)
         {
             _studentService = studentService;
             _departmentService = departmentService;
         }
 
-        // Read - Get all students
         [HttpGet("")]
         public IActionResult Index()
         {
@@ -28,7 +26,6 @@ namespace RepositoryPatternDemo.Controllers
             return View(students);
         }
 
-        // Read - Get single student
         [HttpGet("details/{id:int}")]
         public IActionResult Details(int id)
         {
@@ -42,7 +39,6 @@ namespace RepositoryPatternDemo.Controllers
             return View(student);
         }
 
-        // Create - GET
         [HttpGet("create")]
         public IActionResult Create()
         {
@@ -50,7 +46,6 @@ namespace RepositoryPatternDemo.Controllers
             return View();
         }
 
-        // Create - POST
         [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Student student)
@@ -66,7 +61,6 @@ namespace RepositoryPatternDemo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Update - GET
         [HttpGet("edit/{id:int}")]
         public IActionResult Edit(int id)
         {
@@ -81,7 +75,6 @@ namespace RepositoryPatternDemo.Controllers
             return View(student);
         }
 
-        // Update - POST
         [HttpPost("edit")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Student student)
@@ -102,7 +95,6 @@ namespace RepositoryPatternDemo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Transfer Department - GET
         [HttpGet("transfer/{id:int}")]
         public IActionResult Transfer(int id)
         {
@@ -117,7 +109,6 @@ namespace RepositoryPatternDemo.Controllers
             return View(student);
         }
 
-        // Transfer Department - POST
         [HttpPost("transfer/{id:int}")]
         [ValidateAntiForgeryToken]
         public IActionResult Transfer(int id, int newDepartmentId)
@@ -141,7 +132,6 @@ namespace RepositoryPatternDemo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Delete - GET
         [HttpGet("delete/{id:int}")]
         public IActionResult Delete(int id)
         {
@@ -155,7 +145,6 @@ namespace RepositoryPatternDemo.Controllers
             return View(student);
         }
 
-        // Delete - POST
         [HttpPost("delete/{id:int}")]
 
         [ValidateAntiForgeryToken]
@@ -173,7 +162,6 @@ namespace RepositoryPatternDemo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //private method 
         private void LoadDepartments()
         {
             ViewBag.Departments = _departmentService.GetAll();
