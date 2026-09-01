@@ -361,7 +361,13 @@ Added comments and documentation for better code readability and maintainability
 - Added Bootstrap CSS and JS references in _Layout.cshtml.
 - Used Bootstrap classes throughout the application for layout, navbar, cards, buttons, forms, tables, and responsive styling.
 - Added Bootstrap Icons through CDN and used them across the UI.
-- 
+
+### Issue # 53 - Refactoring
+- StudentController: Moved repeated ViewBag code into a private LoadDepartments() helper method and inlined the GetById check directly within the if condition.
+- StudentService: Created a centralized helper method to eliminate duplicate department count updates and improved the operation order in TransferDepartment().
+- Repositories: Replaced FirstOrDefault with EF Core's Find() method to optimize primary key database lookups.
+- UnitOfWork: Removed the redundant Save() method and standardized transaction completion on Complete().
+
 ## Project Structure
 
 ```
