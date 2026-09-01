@@ -368,6 +368,12 @@ Added comments and documentation for better code readability and maintainability
 - Repositories: Replaced FirstOrDefault with EF Core's Find() method to optimize primary key database lookups.
 - UnitOfWork: Removed the redundant Save() method and standardized transaction completion on Complete().
 
+### Issue #54 – Code Cleanup
+
+- Removed unnecessary comments and redundant code from the controller and service layers.
+- Cleaned up formatting and unused/redundant code while keeping the existing functionality unchanged.
+- Removed the extra error model file related to the default ASP.NET Core MVC template.
+
 ## Project Structure
 
 ```
