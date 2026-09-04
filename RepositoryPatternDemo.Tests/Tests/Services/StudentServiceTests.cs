@@ -292,6 +292,278 @@ public class StudentServiceTests
             Times.Once);
     }
 
+    // =========================================================
+    // TransferDepartment()
+    // =========================================================
 
+    [Fact]
+    public void TransferDepartment_ShouldTransferStudentSuccessfully()
+    {
+        // Arrange
+        var student = new Student
+        {
+            Id = 1,
+            Name = "Ali",
+            DepartmentId = 1
+        };
 
+        var oldDepartment = new Department
+        {
+            Id = 1,
+            Name = "Computer Science",
+            StudentCount = 5
+        };
+
+        var newDepartment = new Department
+        {
+            Id = 2,
+            Name = "Software Engineering",
+            StudentCount = 3
+        };
+
+        _studentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(student);
+
+        _departmentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(oldDepartment);
+
+        _departmentRepositoryMock
+            .Setup(x => x.GetById(2))
+            .Returns(newDepartment);
+
+        // Act
+        _studentService.TransferDepartment(1, 2);
+
+        // Assert
+        Assert.Equal(2, student.DepartmentId);
+        Assert.Equal(4, oldDepartment.StudentCount);
+        Assert.Equal(4, newDepartment.StudentCount);
+
+        _studentRepositoryMock.Verify(
+            x => x.Update(student),
+            Times.Once);
+
+        _unitOfWorkMock.Verify(
+            x => x.Complete(),
+            Times.Once);
+    }
+
+    [Fact]
+    public void TransferDepartment_ShouldDecreaseOldDepartmentCount()
+    {
+        // Arrange
+        var student = new Student
+        {
+            Id = 1,
+            DepartmentId = 1
+        };
+
+        var oldDepartment = new Department
+        {
+            Id = 1,
+            StudentCount = 5
+        };
+
+        var newDepartment = new Department
+        {
+            Id = 2,
+            StudentCount = 3
+        };
+
+        _studentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(student);
+
+        _departmentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(oldDepartment);
+
+        _departmentRepositoryMock
+            .Setup(x => x.GetById(2))
+            .Returns(newDepartment);
+
+        // Act
+        _studentService.TransferDepartment(1, 2);
+
+        // Assert
+        Assert.Equal(4, oldDepartment.StudentCount);
+    }
+
+    [Fact]
+    public void TransferDepartment_ShouldIncreaseNewDepartmentCount()
+    {
+        // Arrange
+        var student = new Student
+        {
+            Id = 1,
+            DepartmentId = 1
+        };
+
+        var oldDepartment = new Department
+        {
+            Id = 1,
+            StudentCount = 5
+        };
+
+        var newDepartment = new Department
+        {
+            Id = 2,
+            StudentCount = 3
+        };
+
+        _studentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(student);
+
+        _departmentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(oldDepartment);
+
+        _departmentRepositoryMock
+            .Setup(x => x.GetById(2))
+            .Returns(newDepartment);
+
+        // Act
+        _studentService.TransferDepartment(1, 2);
+
+        // Assert
+        Assert.Equal(4, newDepartment.StudentCount);
+    }
+
+    [Fact]
+    public void TransferDepartment_ShouldUpdateStudentDepartmentId()
+    {
+        // Arrange
+        var student = new Student
+        {
+            Id = 1,
+            DepartmentId = 1
+        };
+
+        var newDepartment = new Department
+        {
+            Id = 2,
+            StudentCount = 3
+        };
+
+        _studentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(student);
+
+        _departmentRepositoryMock
+            .Setup(x => x.GetById(2))
+            .Returns(newDepartment);
+
+        // Act
+        _studentService.TransferDepartment(1, 2);
+
+        // Assert
+        Assert.Equal(2, student.DepartmentId);
+    }
+
+    [Fact]
+    public void TransferDepartment_ShouldThrowException_WhenStudentDoesNotExist()
+    {
+        // Arrange
+        _studentRepositoryMock
+            .Setup(x => x.GetById(99))
+            .Returns((Student?)null);
+
+        // Act & Assert
+        var exception = Assert.Throws<Exception>(
+            () => _studentService.TransferDepartment(99, 2));
+
+        Assert.Equal("Student not found.", exception.Message);
+    }
+
+    [Fact]
+    public void TransferDepartment_ShouldThrowException_WhenTargetDepartmentDoesNotExist()
+    {
+        // Arrange
+        var student = new Student
+        {
+            Id = 1,
+            DepartmentId = 1
+        };
+
+        _studentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(student);
+
+        _departmentRepositoryMock
+            .Setup(x => x.GetById(2))
+            .Returns((Department?)null);
+
+        // Act & Assert
+        var exception = Assert.Throws<Exception>(
+            () => _studentService.TransferDepartment(1, 2));
+
+        Assert.Equal("Target department not found.", exception.Message);
+    }
+
+    [Fact]
+    public void TransferDepartment_ShouldDoNothing_WhenDepartmentIsSame()
+    {
+        // Arrange
+        var student = new Student
+        {
+            Id = 1,
+            DepartmentId = 1
+        };
+
+        _studentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(student);
+
+        // Act
+        _studentService.TransferDepartment(1, 1);
+
+        // Assert
+        _studentRepositoryMock.Verify(
+            x => x.Update(It.IsAny<Student>()),
+            Times.Never);
+
+        _departmentRepositoryMock.Verify(
+            x => x.GetById(It.IsAny<int>()),
+            Times.Never);
+
+        _unitOfWorkMock.Verify(
+            x => x.Complete(),
+            Times.Never);
+    }
+
+    [Fact]
+    public void TransferDepartment_ShouldCallComplete_WhenTransferSucceeds()
+    {
+        // Arrange
+        var student = new Student
+        {
+            Id = 1,
+            DepartmentId = 1
+        };
+
+        var newDepartment = new Department
+        {
+            Id = 2,
+            StudentCount = 3
+        };
+
+        _studentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(student);
+
+        _departmentRepositoryMock
+            .Setup(x => x.GetById(2))
+            .Returns(newDepartment);
+
+        // Act
+        _studentService.TransferDepartment(1, 2);
+
+        // Assert
+        _unitOfWorkMock.Verify(
+            x => x.Complete(),
+            Times.Once);
+    }
 }
