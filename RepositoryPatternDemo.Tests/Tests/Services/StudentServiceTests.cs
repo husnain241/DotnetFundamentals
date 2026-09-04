@@ -180,6 +180,118 @@ public class StudentServiceTests
             x => x.Complete(),
             Times.Once);
     }
+    // =========================================================
+    // Delete()
+    // =========================================================
+
+    [Fact]
+    public void Delete_ShouldDeleteStudent_WhenStudentExists()
+    {
+        // Arrange
+        var student = new Student
+        {
+            Id = 1,
+            Name = "Ali"
+        };
+
+        _studentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(student);
+
+        // Act
+        _studentService.Delete(1);
+
+        // Assert
+        _studentRepositoryMock.Verify(
+            x => x.Delete(1),
+            Times.Once);
+
+        _unitOfWorkMock.Verify(
+            x => x.Complete(),
+            Times.Once);
+    }
+
+    [Fact]
+    public void Delete_ShouldDecreaseDepartmentStudentCount_WhenStudentHasDepartment()
+    {
+        // Arrange
+        var department = new Department
+        {
+            Id = 1,
+            Name = "Computer Science",
+            StudentCount = 5
+        };
+
+        var student = new Student
+        {
+            Id = 1,
+            Name = "Ali",
+            DepartmentId = 1
+        };
+
+        _studentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(student);
+
+        _departmentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(department);
+
+        // Act
+        _studentService.Delete(1);
+
+        // Assert
+        Assert.Equal(4, department.StudentCount);
+
+        _departmentRepositoryMock.Verify(
+            x => x.Update(department),
+            Times.Once);
+    }
+
+    [Fact]
+    public void Delete_ShouldDoNothing_WhenStudentDoesNotExist()
+    {
+        // Arrange
+        _studentRepositoryMock
+            .Setup(x => x.GetById(99))
+            .Returns((Student?)null);
+
+        // Act
+        _studentService.Delete(99);
+
+        // Assert
+        _studentRepositoryMock.Verify(
+            x => x.Delete(99),
+            Times.Never);
+
+        _unitOfWorkMock.Verify(
+            x => x.Complete(),
+            Times.Never);
+    }
+
+    [Fact]
+    public void Delete_ShouldCallComplete_WhenStudentExists()
+    {
+        // Arrange
+        var student = new Student
+        {
+            Id = 1,
+            Name = "Ali"
+        };
+
+        _studentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(student);
+
+        // Act
+        _studentService.Delete(1);
+
+        // Assert
+        _unitOfWorkMock.Verify(
+            x => x.Complete(),
+            Times.Once);
+    }
+
 
 
 }
