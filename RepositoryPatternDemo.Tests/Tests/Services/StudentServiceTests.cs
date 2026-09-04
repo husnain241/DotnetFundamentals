@@ -139,5 +139,47 @@ public class StudentServiceTests
         Assert.Equal(1, result.Department.Id);
         Assert.Equal("Computer Science", result.Department.Name);
     }
+    // =========================================================
+    // Update()
+    // =========================================================
+
+    [Fact]
+    public void Update_ShouldUpdateStudent()
+    {
+        // Arrange
+        var student = new Student
+        {
+            Id = 1,
+            Name = "Ali Updated"
+        };
+
+        // Act
+        _studentService.Update(student);
+
+        // Assert
+        _studentRepositoryMock.Verify(
+            x => x.Update(student),
+            Times.Once);
+    }
+
+    [Fact]
+    public void Update_ShouldCallComplete()
+    {
+        // Arrange
+        var student = new Student
+        {
+            Id = 1,
+            Name = "Ali Updated"
+        };
+
+        // Act
+        _studentService.Update(student);
+
+        // Assert
+        _unitOfWorkMock.Verify(
+            x => x.Complete(),
+            Times.Once);
+    }
+
 
 }
