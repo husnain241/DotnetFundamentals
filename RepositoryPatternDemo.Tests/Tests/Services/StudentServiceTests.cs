@@ -52,16 +52,32 @@ public class StudentServiceTests
     [Fact]
     public void GetAll_ShouldReturnEmptyList_WhenNoStudentsExist()
     {
-        // Arrange (Dabbe mein kuch nahi rakha - khali list set ki)
         _studentRepositoryMock
             .Setup(x => x.GetAll())
             .Returns(new List<Student>());
 
-        // Act (GetAll call kiya)
         var result = _studentService.GetAll();
 
-        // Assert (Check kiya ke result null na ho aur list khali ho)
         Assert.NotNull(result);
         Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetById_ShouldReturnStudent_WhenStudentExists()
+    {
+        // Arrange
+        var testStudent = new Student { Id = 1, Name = "Ali" };
+
+        _studentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(testStudent);
+
+        // Act
+        var result = _studentService.GetById(1);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(1, result.Id);
+        Assert.Equal("Ali", result.Name);
     }
 }
