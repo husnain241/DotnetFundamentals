@@ -62,15 +62,24 @@ public class StudentServiceTests
         Assert.Empty(result);
     }
 
+
+    // =========================================================
+    // GetById()
+    // =========================================================
+
     [Fact]
     public void GetById_ShouldReturnStudent_WhenStudentExists()
     {
         // Arrange
-        var testStudent = new Student { Id = 1, Name = "Ali" };
+        var student = new Student
+        {
+            Id = 1,
+            Name = "Ali"
+        };
 
         _studentRepositoryMock
             .Setup(x => x.GetById(1))
-            .Returns(testStudent);
+            .Returns(student);
 
         // Act
         var result = _studentService.GetById(1);
@@ -80,4 +89,55 @@ public class StudentServiceTests
         Assert.Equal(1, result.Id);
         Assert.Equal("Ali", result.Name);
     }
+
+    [Fact]
+    public void GetById_ShouldReturnNull_WhenStudentDoesNotExist()
+    {
+        // Arrange
+        _studentRepositoryMock
+            .Setup(x => x.GetById(99))
+            .Returns((Student?)null);
+
+        // Act
+        var result = _studentService.GetById(99);
+
+        // Assert
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public void GetById_ShouldPopulateDepartment_WhenStudentHasDepartment()
+    {
+        // Arrange
+        var department = new Department
+        {
+            Id = 1,
+            Name = "Computer Science"
+        };
+
+        var student = new Student
+        {
+            Id = 1,
+            Name = "Ali",
+            DepartmentId = 1
+        };
+
+        _studentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(student);
+
+        _departmentRepositoryMock
+            .Setup(x => x.GetById(1))
+            .Returns(department);
+
+        // Act
+        var result = _studentService.GetById(1);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.NotNull(result.Department);
+        Assert.Equal(1, result.Department.Id);
+        Assert.Equal("Computer Science", result.Department.Name);
+    }
+
 }
