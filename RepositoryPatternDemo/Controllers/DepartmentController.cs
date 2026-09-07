@@ -76,20 +76,13 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Update - POST
-        [HttpPost("edit")]
+        [HttpPost("edit/{id:int}")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Department department)
         {
             if (!ModelState.IsValid)
             {
                 return View(department);
-            }
-
-            var existingDepartment = _departmentService.GetById(department.Id);
-
-            if (existingDepartment == null)
-            {
-                return NotFound();
             }
 
             _departmentService.Update(department);
