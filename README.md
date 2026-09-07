@@ -379,6 +379,13 @@ Added comments and documentation for better code readability and maintainability
 - Implemented unit tests for StudentService methods.
 - Covered success, failure, and edge-case scenarios.
 - Implemented 23 test cases following the Arrange → Act → Assert pattern.
+### Issue #56 – Bug Fixes
+Fixed HTTP 405 errors in Edit and Delete routes.
+Resolved EF Core tracking conflicts.
+Fixed service and route mismatches.
+Added null checks and explicit asp-route-id passing.
+Verified the corrected Edit and Delete flows.
+
 ## Project Structure
 
 ```
