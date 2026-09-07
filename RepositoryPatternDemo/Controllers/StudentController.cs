@@ -75,19 +75,18 @@ namespace RepositoryPatternDemo.Controllers
             return View(student);
         }
 
-        [HttpPost("edit")]
+        [HttpPost("edit/{id:int}")]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Student student)
+        public IActionResult Edit(int id, Student student)
         {
+            if (id != student.Id)
+            {
+                return BadRequest();
+            }
             if (!ModelState.IsValid)
             {
                 LoadDepartments();
                 return View(student);
-            }
-
-            if (_studentService.GetById(student.Id) == null)
-            {
-                return NotFound();
             }
 
             _studentService.Update(student);
