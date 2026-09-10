@@ -1,6 +1,5 @@
 ﻿using Auth.DTOs;
-using Auth.Models;
-using Microsoft.AspNetCore.Identity;
+using Auth.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Controllers
@@ -9,53 +8,82 @@ namespace Auth.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IAuthService _authService;
 
-        public AuthController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+        public AuthController(IAuthService authService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _authService = authService;
         }
 
+        // 1. User Register Endpoint
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var user = new ApplicationUser
-            {
-                UserName = dto.UserName,
-                Email = dto.Email
-            };
-
-            var result = await _userManager.CreateAsync(user, dto.Password);
-
-            if (!result.Succeeded)
-                return BadRequest(result.Errors);
+            var result = await _authService.RegisterUserAsync(dto);
+            if (!result)
+                return BadRequest(new { Message = "Registration failed. User might already exist." });
 
             return Ok(new { Message = "User registered successfully!" });
         }
 
+        // 2. User Login Endpoint
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _signInManager.PasswordSignInAsync(
-                dto.UserName,
-                dto.Password,
-                isPersistent: false,
-                lockoutOnFailure: false);
-
-            if (!result.Succeeded)
+            var result = await _authService.LoginUserAsync(dto);
+            if (!result)
                 return Unauthorized(new { Message = "Invalid username or password." });
 
             return Ok(new { Message = "Login successful!" });
+        }
+
+        // 3. Create Role Endpoint (RoleManager Test)
+        [HttpPost("create-role")]
+        public async Task<IActionResult> CreateRole([FromBody] CreateRoleDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.CreateRoleAsync(dto.RoleName);
+            if (!result)
+                return BadRequest(new { Message = "Role creation failed or role already exists." });
+
+            return Ok(new { Message = $"Role '{dto.RoleName}' created successfully!" });
+        }
+
+        // 4. Add Custom Claim to User Endpoint (Claims Test)
+        [HttpPost("add-claim")]
+        public async Task<IActionResult> AddClaim([FromBody] UserClaimDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.AddClaimToUserAsync(dto);
+            if (!result)
+                return BadRequest(new { Message = "Failed to add claim. Invalid UserId or Claim format." });
+
+            return Ok(new { Message = "Claim added to user successfully!" });
+        }
+
+        // 5. Get User Claims Endpoint
+        [HttpGet("user-claims/{userId}")]
+        public async Task<IActionResult> GetUserClaims(string userId)
+        {
+            var claims = await _authService.GetUserClaimsAsync(userId);
+
+            var claimsResponse = claims.Select(c => new
+            {
+                Type = c.Type,
+                Value = c.Value
+            });
+
+            return Ok(claimsResponse);
         }
     }
 }
