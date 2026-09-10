@@ -11,14 +11,17 @@ namespace Auth.Services
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
 
+        private readonly IJwtTokenService _jwtTokenService;
         public AuthService(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            RoleManager<ApplicationRole> roleManager)
+            RoleManager<ApplicationRole> roleManager,
+            IJwtTokenService jwtTokenService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _jwtTokenService = jwtTokenService;
         }
 
         // 1. User Registration Logic
@@ -41,15 +44,37 @@ namespace Auth.Services
         }
 
         // 2. User Login Logic
-        public async Task<bool> LoginUserAsync(LoginDto dto)
+        public async Task<AuthResponseDto> LoginUserAsync(LoginDto dto)
         {
-            var result = await _signInManager.PasswordSignInAsync(
-                dto.UserName,
-                dto.Password,
-                isPersistent: false,
-                lockoutOnFailure: false);
+            var user = await _userManager.FindByNameAsync(dto.UserName);
+            if (user == null)
+            {
+                return new AuthResponseDto { IsSuccess = false, Message = "Invalid username or password." };
+            }
 
-            return result.Succeeded;
+            var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, lockoutOnFailure: false);
+            if (!result.Succeeded)
+            {
+                return new AuthResponseDto { IsSuccess = false, Message = "Invalid username or password." };
+            }
+
+            // Load Roles & Claims from Issue #64
+            var roles = await _userManager.GetRolesAsync(user);
+            var claims = await _userManager.GetClaimsAsync(user);
+
+            // Generate Access & Refresh Tokens
+            var accessToken = _jwtTokenService.GenerateAccessToken(user, roles, claims);
+            var refreshToken = _jwtTokenService.GenerateRefreshToken(user.Id);
+
+            // TODO: Save refreshToken in Database (In Phase 4/Refresh Endpoint step)
+
+            return new AuthResponseDto
+            {
+                IsSuccess = true,
+                Message = "Login successful!",
+                AccessToken = accessToken,
+                RefreshToken = refreshToken.Token
+            };
         }
 
         // 3. Role Creation Logic

@@ -37,10 +37,10 @@ namespace Auth.Controllers
                 return BadRequest(ModelState);
 
             var result = await _authService.LoginUserAsync(dto);
-            if (!result)
-                return Unauthorized(new { Message = "Invalid username or password." });
+            if (!result.IsSuccess)
+                return Unauthorized(new { Message = result.Message });
 
-            return Ok(new { Message = "Login successful!" });
+            return Ok(result);
         }
 
         // 3. Create Role Endpoint (RoleManager Test)
@@ -54,7 +54,7 @@ namespace Auth.Controllers
             if (!result)
                 return BadRequest(new { Message = "Role creation failed or role already exists." });
 
-            return Ok(new { Message = $"Role '{dto.RoleName}' created successfully!" });
+            return Ok(new { Message = $"Role '{dto.RoleName}' creat ed successfully!" });
         }
 
         // 4. Add Custom Claim to User Endpoint (Claims Test)
