@@ -21,6 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 // Register Auth Services (Dependency Injection)
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
 // Register Identity with ApplicationUser and ApplicationRole
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
