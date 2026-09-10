@@ -1,5 +1,6 @@
 using Auth.Data;
 using Auth.Models;
+using Auth.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,15 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 // 1. Add DbContext with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// 2. Add ASP.NET Core Identity Services
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+// Register Auth Services (Dependency Injection)
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Register Identity with ApplicationUser and ApplicationRole
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
