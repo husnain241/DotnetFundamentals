@@ -347,6 +347,12 @@ Added comments and documentation for better code readability and maintainability
 - Registered Repositories, Unit of Work, and Service dependencies in `Program.cs` using the IoC container (`AddScoped`).
 - Decoupled controller logic by using Constructor Injection for `IStudentService` and `IDepartmentService`.
 
+### Issue # 51 UI Improvements
+- Implemented Bootstrap 5 for responsive and modern UI design.
+- Added navigation bar, footer, and consistent layout across all pages.
+- Improved UI in Student and Department Views with tables, forms, and validation messages.
+- Made the application mobile-friendly and visually appealing.
+
 ## Project Structure
 
 ```
