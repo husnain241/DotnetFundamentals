@@ -1,5 +1,6 @@
 ﻿using Auth.DTOs;
 using Auth.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Controllers
@@ -84,6 +85,36 @@ namespace Auth.Controllers
             });
 
             return Ok(claimsResponse);
+        }
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequestDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.RefreshTokenAsync(dto.RefreshToken);
+            if (!result.IsSuccess)
+                return Unauthorized(new { result.Message });
+
+            return Ok(result);
+        }
+
+        // NEW: Protected Endpoint for Testing JWT Authentication
+        [Authorize]
+        [HttpGet("profile")]
+        public IActionResult GetProfile()
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var username = User.Identity?.Name;
+            var claims = User.Claims.Select(c => new { c.Type, c.Value });
+
+            return Ok(new
+            {
+                Message = "You have accessed a protected endpoint!",
+                UserId = userId,
+                Username = username,
+                Claims = claims
+            });
         }
     }
 }

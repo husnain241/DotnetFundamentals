@@ -1,7 +1,9 @@
-﻿using Auth.DTOs;
+﻿using Auth.Data;
+using Auth.DTOs;
 using Auth.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace Auth.Services
 {
@@ -10,18 +12,21 @@ namespace Auth.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
-
         private readonly IJwtTokenService _jwtTokenService;
+        private readonly ApplicationDbContext _context; 
+
         public AuthService(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<ApplicationRole> roleManager,
-            IJwtTokenService jwtTokenService)
+            IJwtTokenService jwtTokenService,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _jwtTokenService = jwtTokenService;
+            _context = context;
         }
 
         // 1. User Registration Logic
@@ -58,15 +63,14 @@ namespace Auth.Services
                 return new AuthResponseDto { IsSuccess = false, Message = "Invalid username or password." };
             }
 
-            // Load Roles & Claims from Issue #64
             var roles = await _userManager.GetRolesAsync(user);
             var claims = await _userManager.GetClaimsAsync(user);
 
-            // Generate Access & Refresh Tokens
             var accessToken = _jwtTokenService.GenerateAccessToken(user, roles, claims);
             var refreshToken = _jwtTokenService.GenerateRefreshToken(user.Id);
 
-            // TODO: Save refreshToken in Database (In Phase 4/Refresh Endpoint step)
+            await _context.RefreshTokens.AddAsync(refreshToken);
+            await _context.SaveChangesAsync();
 
             return new AuthResponseDto
             {
@@ -105,6 +109,44 @@ namespace Auth.Services
             if (user == null) return new List<Claim>();
 
             return await _userManager.GetClaimsAsync(user);
+        }
+        public async Task<AuthResponseDto> RefreshTokenAsync(string token)
+        {
+            var storedToken = await _context.RefreshTokens
+                .FirstOrDefaultAsync(r => r.Token == token);
+
+            if (storedToken == null || !storedToken.IsActive)
+            {
+                return new AuthResponseDto { IsSuccess = false, Message = "Invalid or expired refresh token." };
+            }
+
+            var user = await _userManager.FindByIdAsync(storedToken.UserId);
+            if (user == null)
+            {
+                return new AuthResponseDto { IsSuccess = false, Message = "User not found." };
+            }
+
+            // Step A: REVOKE the old refresh token
+            var newRefreshToken = _jwtTokenService.GenerateRefreshToken(user.Id);
+            storedToken.RevokedAt = DateTime.UtcNow;
+            storedToken.ReplacedByToken = newRefreshToken.Token;
+
+            // Step B: Save NEW refresh token
+            await _context.RefreshTokens.AddAsync(newRefreshToken);
+            await _context.SaveChangesAsync();
+
+            // Step C: Generate NEW Access Token
+            var roles = await _userManager.GetRolesAsync(user);
+            var claims = await _userManager.GetClaimsAsync(user);
+            var newAccessToken = _jwtTokenService.GenerateAccessToken(user, roles, claims);
+
+            return new AuthResponseDto
+            {
+                IsSuccess = true,
+                Message = "Tokens refreshed successfully!",
+                AccessToken = newAccessToken,
+                RefreshToken = newRefreshToken.Token
+            };
         }
     }
 }

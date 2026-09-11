@@ -10,5 +10,8 @@ namespace Auth.Services
         Task<bool> CreateRoleAsync(string roleName);
         Task<bool> AddClaimToUserAsync(UserClaimDto dto);
         Task<IList<Claim>> GetUserClaimsAsync(string userId);
+
+        Task<AuthResponseDto> RefreshTokenAsync(string refreshToken); 
+        //Task<bool> RevokeTokenAsync(string refreshToken); 
     }
 }
