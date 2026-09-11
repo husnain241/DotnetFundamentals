@@ -1,25 +1,42 @@
 @model RepositoryPatternDemo.Models.Student
+@using Microsoft.AspNetCore.Mvc.Rendering
 
-<h2>Create Student</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm mt-3">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Create Student</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post">
 
-<form asp-action="Create" method="post">
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label font-weight-bold">Name</label>
+                        <input asp-for="Name" class="form-control" placeholder="Enter student name" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
 
-    <div class="mb-3">
-        <label asp-for="Id" class="form-label"></label>
-        <input asp-for="Id" class="form-control" />
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label font-weight-bold">Email</label>
+                        <input asp-for="Email" class="form-control" placeholder="Enter student email" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="DepartmentId" class="form-label font-weight-bold">Department</label>
+                        <select asp-for="DepartmentId" class="form-select" asp-items="@(new SelectList(ViewBag.Departments, "Id", "Name"))">
+                            <option value="">-- Select Department --</option>
+                        </select>
+                        <span asp-validation-for="DepartmentId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between pt-2">
+                        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Create Student</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </div>
-
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control" />
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label"></label>
-        <input asp-for="Email" class="form-control" />
-    </div>
-
-    <button type="submit" class="btn btn-success">Create</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-
-</form>
+</div>

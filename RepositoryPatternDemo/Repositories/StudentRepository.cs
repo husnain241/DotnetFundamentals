@@ -1,49 +1,43 @@
-﻿using RepositoryPatternDemo.Models;
+using RepositoryPatternDemo.Data;
+using RepositoryPatternDemo.Models;
 using RepositoryPatternDemo.Repositories.Interfaces;
 
 namespace RepositoryPatternDemo.Repositories
 {
     public class StudentRepository : IStudentRepository
     {
-        private readonly List<Student> _students = new()
-{
-    new Student
-    {
-        Id = 1,
-        Name = "Ali",
-        Email = "ali@example.com"
-    },
-    new Student
-    {
-        Id = 2,
-        Name = "Ahmed",
-        Email = "ahmed@example.com"
-    }
-};
+        private readonly ApplicationDbContext _context;
+
+        public StudentRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public List<Student> GetAll()
         {
-            return _students;
+            return _context.Students.ToList();
         }
 
         public Student? GetById(int id)
         {
-            return _students.FirstOrDefault(s => s.Id == id);
+            return _context.Students.FirstOrDefault(s => s.Id == id);
         }
 
         public void Add(Student student)
         {
-            _students.Add(student);
+            _context.Students.Add(student);
         }
 
         public void Update(Student student)
         {
-            var existingStudent = GetById(student.Id);
+            var existingStudent = _context.Students
+                .FirstOrDefault(s => s.Id == student.Id);
 
             if (existingStudent != null)
             {
                 existingStudent.Name = student.Name;
                 existingStudent.Email = student.Email;
+                existingStudent.DepartmentId = student.DepartmentId;
             }
         }
 
@@ -53,7 +47,7 @@ namespace RepositoryPatternDemo.Repositories
 
             if (student != null)
             {
-                _students.Remove(student);
+                _context.Students.Remove(student);
             }
         }
     }

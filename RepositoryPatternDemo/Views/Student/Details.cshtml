@@ -1,17 +1,39 @@
 @model RepositoryPatternDemo.Models.Student
 
-<h2>Student Details</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm mt-3">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">Student Details</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Id:</dt>
+                    <dd class="col-sm-8">@Model.Id</dd>
 
-<div>
-    <p><strong>Id:</strong> @Model.Id</p>
-    <p><strong>Name:</strong> @Model.Name</p>
-    <p><strong>Email:</strong> @Model.Email</p>
+                    <dt class="col-sm-4">Name:</dt>
+                    <dd class="col-sm-8">@Model.Name</dd>
+
+                    <dt class="col-sm-4">Email:</dt>
+                    <dd class="col-sm-8">@Model.Email</dd>
+
+                    <dt class="col-sm-4">Department:</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.Department != null)
+                        {
+                            <span class="badge bg-info text-dark">@Model.Department.Name</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">N/A</span>
+                        }
+                    </dd>
+                </dl>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit Student</a>
+            </div>
+        </div>
+    </div>
 </div>
-
-<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
-    Edit
-</a>
-
-<a asp-action="Index" class="btn btn-secondary">
-    Back
-</a>
