@@ -1,42 +1,60 @@
 @model RepositoryPatternDemo.Models.Student
 @using Microsoft.AspNetCore.Mvc.Rendering
 
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow-sm mt-3">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">Transfer Student Department</h4>
+<div class="row justify-content-center mt-4">
+    <div class="col-md-7">
+        <div class="card shadow-sm border-0 border-top border-primary border-4">
+            <div class="card-header bg-white py-3">
+                <h4 class="mb-0 text-primary"><i class="bi bi-arrow-left-right me-2"></i>Transfer Student</h4>
             </div>
-            <div class="card-body">
-                <div class="alert alert-info py-2 small mb-3">
-                    <strong>Unit of Work Transaction:</strong> Updating student department will decrease the old department count, increase the new department count, and assign the new department ID together in 1 atomic save.
+            <div class="card-body p-4">
+                <div class="alert alert-info py-3 small mb-4 d-flex align-items-center">
+                    <i class="bi bi-info-circle-fill fs-4 me-3"></i>
+                    <div>
+                        <strong>Unit of Work Transaction:</strong> Updating the student department will automatically sync the old and new department counts in a single atomic database save.
+                    </div>
                 </div>
 
-                <div class="mb-2">
-                    <label class="form-label text-muted mb-0">Student:</label>
-                    <p class="fw-bold mb-2">@Model.Name (@Model.Email)</p>
+                <div class="row mb-3 bg-light p-3 rounded">
+                    <div class="col-6">
+                        <label class="form-label text-muted mb-1"><i class="bi bi-person me-1"></i>Student</label>
+                        <p class="fw-bold fs-5 mb-0 text-dark">@Model.Name</p>
+                        <small class="text-muted">@Model.Email</small>
+                    </div>
+                    <div class="col-6 border-start">
+                        <label class="form-label text-muted mb-1"><i class="bi bi-building me-1"></i>Current Department</label>
+                        <p class="mb-0 mt-1">
+                            @if (Model.Department != null)
+                            {
+                                <span class="badge bg-secondary fs-6 rounded-pill px-3"><i class="bi bi-building me-1"></i>@Model.Department.Name</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary fs-6 rounded-pill px-3">None</span>
+                            }
+                        </p>
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label text-muted mb-0">Current Department:</label>
-                    <p class="mb-2">
-                        <span class="badge bg-secondary">@(Model.Department?.Name ?? "None")</span>
-                    </p>
-                </div>
-
-                <form asp-action="Transfer" method="post">
+                <form asp-action="Transfer" method="post" class="mt-4">
                     <input type="hidden" name="id" value="@Model.Id" />
 
-                    <div class="mb-3">
-                        <label class="form-label font-weight-bold">Select New Department:</label>
-                        <select name="newDepartmentId" class="form-select" asp-items="@(new SelectList(ViewBag.Departments, "Id", "Name", Model.DepartmentId))">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold"><i class="bi bi-building-add me-1"></i>Select New Department</label>
+                        <select name="newDepartmentId" class="form-select form-select-lg" asp-items="@(new SelectList(ViewBag.Departments, "Id", "Name", Model.DepartmentId))">
                             <option value="">-- Select New Department --</option>
                         </select>
                     </div>
 
-                    <div class="d-flex justify-content-between pt-2">
-                        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-                        <button type="submit" class="btn btn-primary">Execute Transfer (Unit of Work)</button>
+                    <hr class="my-4" />
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                            <i class="bi bi-x-circle me-1"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-lg px-4">
+                            <i class="bi bi-lightning-charge-fill me-1"></i>Execute Transfer
+                        </button>
                     </div>
                 </form>
             </div>

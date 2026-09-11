@@ -1,38 +1,44 @@
 @model RepositoryPatternDemo.Models.Student
 @using Microsoft.AspNetCore.Mvc.Rendering
 
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow-sm mt-3">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">Create Student</h4>
+<div class="row justify-content-center mt-4">
+    <div class="col-md-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white py-3">
+                <h4 class="mb-0"><i class="bi bi-person-plus-fill me-2"></i>Create Student</h4>
             </div>
-            <div class="card-body">
+            <div class="card-body p-4">
                 <form asp-action="Create" method="post">
 
-                    <div class="mb-3">
-                        <label asp-for="Name" class="form-label font-weight-bold">Name</label>
-                        <input asp-for="Name" class="form-control" placeholder="Enter student name" />
-                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    <div class="mb-4">
+                        <label asp-for="Name" class="form-label fw-bold"><i class="bi bi-person me-1"></i>Name</label>
+                        <input asp-for="Name" class="form-control form-control-lg" placeholder="Enter student name" />
+                        <span asp-validation-for="Name" class="text-danger small mt-1 d-block"></span>
                     </div>
 
-                    <div class="mb-3">
-                        <label asp-for="Email" class="form-label font-weight-bold">Email</label>
-                        <input asp-for="Email" class="form-control" placeholder="Enter student email" />
-                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    <div class="mb-4">
+                        <label asp-for="Email" class="form-label fw-bold"><i class="bi bi-envelope me-1"></i>Email</label>
+                        <input asp-for="Email" class="form-control form-control-lg" placeholder="Enter student email" />
+                        <span asp-validation-for="Email" class="text-danger small mt-1 d-block"></span>
                     </div>
 
-                    <div class="mb-3">
-                        <label asp-for="DepartmentId" class="form-label font-weight-bold">Department</label>
-                        <select asp-for="DepartmentId" class="form-select" asp-items="@(new SelectList(ViewBag.Departments, "Id", "Name"))">
+                    <div class="mb-4">
+                        <label asp-for="DepartmentId" class="form-label fw-bold"><i class="bi bi-building me-1"></i>Department</label>
+                        <select asp-for="DepartmentId" class="form-select form-select-lg" asp-items="@(new SelectList(ViewBag.Departments, "Id", "Name"))">
                             <option value="">-- Select Department --</option>
                         </select>
-                        <span asp-validation-for="DepartmentId" class="text-danger small"></span>
+                        <span asp-validation-for="DepartmentId" class="text-danger small mt-1 d-block"></span>
                     </div>
 
-                    <div class="d-flex justify-content-between pt-2">
-                        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-                        <button type="submit" class="btn btn-primary">Create Student</button>
+                    <hr class="my-4" />
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                            <i class="bi bi-arrow-left me-1"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-lg px-4">
+                            <i class="bi bi-check-circle me-1"></i>Create Student
+                        </button>
                     </div>
 
                 </form>
