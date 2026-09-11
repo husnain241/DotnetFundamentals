@@ -325,6 +325,13 @@ Added comments and documentation for better code readability and maintainability
 - Implemented department name display instead of showing `DepartmentId`.
 - Currently working on student search/filter functionality.
 
+### Issue # 48 - Repository Pattern
+- Implemented the Repository Pattern for data access abstraction.
+- Created generic repository interfaces and concrete implementations for Student entity.
+- Implemented CRUD operations through the repository layer.
+- Created the Service layer (IStudentService and StudentService).
+- Connected Controller → Service → Repository.
+
 
 ## Project Structure
 
@@ -371,7 +378,36 @@ CMIntern4
     ├── Views
     ├── appsettings.json
     └── Program.cs
-
+└── RepositoryPattern
+    ├── Controllers/
+    │   ├── DepartmentController.cs
+    │   ├── HomeController.cs
+    │   └── StudentController.cs
+    ├── Data/
+    │   └── ApplicationDbContext.cs
+    ├── Models/
+    │   ├── Department.cs
+    │   ├── ErrorViewModel.cs
+    │   └── Student.cs
+    ├── Repositories/
+    │   ├── Interfaces/
+    │   │   ├── IDepartmentRepository.cs
+    │   │   └── IStudentRepository.cs
+    │   ├── DepartmentRepository.cs
+    │   └── StudentRepository.cs
+    ├── Services/
+    │   ├── Interfaces/
+    │   │   ├── IDepartmentService.cs
+    │   │   └── IStudentService.cs
+    │   ├── DepartmentService.cs
+    │   └── StudentService.cs
+    ├── Views/
+    │   ├── Department/
+    │   ├── Home/
+    │   ├── Student/
+    │   └── Shared/
+    ├── appsettings.json
+    └── Program.cs
 
 
 
