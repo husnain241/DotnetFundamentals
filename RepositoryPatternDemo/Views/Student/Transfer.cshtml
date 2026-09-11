@@ -10,18 +10,20 @@
             <div class="card-body">
                 <div class="alert alert-info py-2 small mb-3">
                     <strong>Unit of Work Transaction:</strong> Updating student department will decrease the old department count, increase the new department count, and assign the new department ID together in 1 atomic save.
+                    </div>
                 </div>
 
                 <div class="mb-2">
                     <label class="form-label text-muted mb-0">Student:</label>
                     <p class="fw-bold mb-2">@Model.Name (@Model.Email)</p>
-                </div>
+                    </div>
 
                 <div class="mb-3">
                     <label class="form-label text-muted mb-0">Current Department:</label>
                     <p class="mb-2">
                         <span class="badge bg-secondary">@(Model.Department?.Name ?? "None")</span>
-                    </p>
+                        </p>
+                    </div>
                 </div>
 
                 <form asp-action="Transfer" method="post">

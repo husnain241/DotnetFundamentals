@@ -33,7 +33,7 @@
             </div>
             <div class="card-footer d-flex justify-content-between">
                 <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-                <form asp-action="DeleteConfirmed" method="post" class="d-inline">
+                <form asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post" class="d-inline">
                     <input asp-for="Id" type="hidden" />
                     <button type="submit" class="btn btn-danger">Confirm Delete</button>
                 </form>

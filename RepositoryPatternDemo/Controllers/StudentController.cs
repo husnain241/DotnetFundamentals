@@ -4,18 +4,21 @@ using RepositoryPatternDemo.Services.Interfaces;
 
 namespace RepositoryPatternDemo.Controllers
 {
+    [Route("students")]
     public class StudentController : Controller
     {
         private readonly IStudentService _studentService;
         private readonly IDepartmentService _departmentService;
 
-        public StudentController(IStudentService studentService, IDepartmentService departmentService)
+        public StudentController(
+            IStudentService studentService,
+            IDepartmentService departmentService)
         {
             _studentService = studentService;
             _departmentService = departmentService;
         }
 
-        // Read - Get all students
+        [HttpGet("")]
         public IActionResult Index()
         {
             var students = _studentService.GetAll();
@@ -23,7 +26,7 @@ namespace RepositoryPatternDemo.Controllers
             return View(students);
         }
 
-        // Read - Get single student
+        [HttpGet("details/{id:int}")]
         public IActionResult Details(int id)
         {
             var student = _studentService.GetById(id);
@@ -36,22 +39,20 @@ namespace RepositoryPatternDemo.Controllers
             return View(student);
         }
 
-        // Create - GET
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
-            ViewBag.Departments = _departmentService.GetAll();
+            LoadDepartments();
             return View();
         }
 
-        // Create - POST
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Student student)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Departments = _departmentService.GetAll();
+                LoadDepartments();
                 return View(student);
             }
 
@@ -60,8 +61,7 @@ namespace RepositoryPatternDemo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Update - GET
-        [HttpGet]
+        [HttpGet("edit/{id:int}")]
         public IActionResult Edit(int id)
         {
             var student = _studentService.GetById(id);
@@ -71,29 +71,62 @@ namespace RepositoryPatternDemo.Controllers
                 return NotFound();
             }
 
-            ViewBag.Departments = _departmentService.GetAll();
+            LoadDepartments();
             return View(student);
         }
 
-        // Update - POST
-        [HttpPost]
+        [HttpPost("edit/{id:int}")]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Student student)
+        public IActionResult Edit(int id, Student student)
         {
+            if (id != student.Id)
+            {
+                return BadRequest();
+            }
             if (!ModelState.IsValid)
             {
-                ViewBag.Departments = _departmentService.GetAll();
+                LoadDepartments();
                 return View(student);
             }
 
-            var existingStudent = _studentService.GetById(student.Id);
+            _studentService.Update(student);
 
-            if (existingStudent == null)
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet("transfer/{id:int}")]
+        public IActionResult Transfer(int id)
+        {
+            var student = _studentService.GetById(id);
+
+            if (student == null)
             {
                 return NotFound();
             }
 
-            _studentService.Update(student);
+            LoadDepartments();
+            return View(student);
+        }
+
+        [HttpPost("transfer/{id:int}")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Transfer(int id, int newDepartmentId)
+        {
+            var student = _studentService.GetById(id);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            if (newDepartmentId <= 0)
+            {
+                ModelState.AddModelError("", "Please select a valid department.");
+                LoadDepartments();
+                return View(student);
+            }
+
+            _studentService.TransferDepartment(id, newDepartmentId);
 
             return RedirectToAction(nameof(Index));
         }
@@ -151,8 +184,8 @@ namespace RepositoryPatternDemo.Controllers
             return View(student);
         }
 
-        // Delete - POST
-        [HttpPost]
+        [HttpPost("delete/{id:int}")]
+
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
@@ -166,6 +199,11 @@ namespace RepositoryPatternDemo.Controllers
             _studentService.Delete(id);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        private void LoadDepartments()
+        {
+            ViewBag.Departments = _departmentService.GetAll();
         }
     }
 }

@@ -6,7 +6,6 @@ namespace RepositoryPatternDemo.Repositories.Interfaces
     {
         IStudentRepository Students { get; }
         IDepartmentRepository Departments { get; }
-        void Save();
         int Complete();
     }
 }

@@ -4,8 +4,12 @@ using RepositoryPatternDemo.Services.Interfaces;
 
 namespace RepositoryPatternDemo.Controllers
 {
+    [Route("departments")]
     public class DepartmentController : Controller
     {
+        // Dependency injection for services
+
+        // DI for IDepartmentService
         private readonly IDepartmentService _departmentService;
 
         public DepartmentController(IDepartmentService departmentService)
@@ -14,6 +18,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Read - Get all departments
+        [HttpGet("")]
         public IActionResult Index()
         {
             var departments = _departmentService.GetAll();
@@ -21,6 +26,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Read - Get single department
+        [HttpGet("details/{id:int}")]
         public IActionResult Details(int id)
         {
             var department = _departmentService.GetById(id);
@@ -34,14 +40,14 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Create - GET
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             return View();
         }
 
         // Create - POST
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Department department)
         {
@@ -56,7 +62,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Update - GET
-        [HttpGet]
+        [HttpGet("edit/{id:int}")]
         public IActionResult Edit(int id)
         {
             var department = _departmentService.GetById(id);
@@ -70,7 +76,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Update - POST
-        [HttpPost]
+        [HttpPost("edit/{id:int}")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Department department)
         {
@@ -79,20 +85,13 @@ namespace RepositoryPatternDemo.Controllers
                 return View(department);
             }
 
-            var existingDepartment = _departmentService.GetById(department.Id);
-
-            if (existingDepartment == null)
-            {
-                return NotFound();
-            }
-
             _departmentService.Update(department);
 
             return RedirectToAction(nameof(Index));
         }
 
         // Delete - GET
-        [HttpGet]
+        [HttpGet("delete/{id:int}")]
         public IActionResult Delete(int id)
         {
             var department = _departmentService.GetById(id);
@@ -106,7 +105,7 @@ namespace RepositoryPatternDemo.Controllers
         }
 
         // Delete - POST
-        [HttpPost]
+        [HttpPost("delete/{id:int}")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {

@@ -117,6 +117,26 @@ namespace RepositoryPatternDemo.Services
             _unitOfWork.Complete();
         }
 
+            var newDepartment = _unitOfWork.Departments.GetById(newDepartmentId);
+
+            if (newDepartment == null)
+            {
+                throw new Exception("Target department not found.");
+            }
+
+            if (student.DepartmentId.HasValue)
+            {
+                UpdateDepartmentStudentCount(student.DepartmentId.Value, -1);
+            }
+
+            UpdateDepartmentStudentCount(newDepartmentId, 1);
+
+            student.DepartmentId = newDepartmentId;
+            _unitOfWork.Students.Update(student);
+
+            _unitOfWork.Complete();
+        }
+
         private void PopulateDepartment(Student student)
         {
             if (student.DepartmentId.HasValue)
@@ -124,5 +144,20 @@ namespace RepositoryPatternDemo.Services
                 student.Department = _unitOfWork.Departments.GetById(student.DepartmentId.Value);
             }
         }
+
+        private void UpdateDepartmentStudentCount(int departmentId, int change)
+        {
+            var department = _unitOfWork.Departments.GetById(departmentId);
+
+            if (department == null)
+            {
+                return;
+            }
+
+            department.StudentCount += change;
+            _unitOfWork.Departments.Update(department);
+        }
+
+
     }
 }
