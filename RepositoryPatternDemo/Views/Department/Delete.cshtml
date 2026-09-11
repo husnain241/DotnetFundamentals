@@ -1,34 +1,19 @@
-@model RepositoryPatternDemo.Models.Student
+@model RepositoryPatternDemo.Models.Department
 
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card border-danger shadow-sm mt-3">
             <div class="card-header bg-danger text-white">
-                <h4 class="mb-0">Delete Student</h4>
+                <h4 class="mb-0">Delete Department</h4>
             </div>
             <div class="card-body">
-                <p class="text-danger fw-bold">Are you sure you want to delete this student?</p>
+                <p class="text-danger fw-bold">Are you sure you want to delete this department?</p>
                 <dl class="row mb-0">
                     <dt class="col-sm-4">Id:</dt>
                     <dd class="col-sm-8">@Model.Id</dd>
 
                     <dt class="col-sm-4">Name:</dt>
                     <dd class="col-sm-8">@Model.Name</dd>
-
-                    <dt class="col-sm-4">Email:</dt>
-                    <dd class="col-sm-8">@Model.Email</dd>
-
-                    <dt class="col-sm-4">Department:</dt>
-                    <dd class="col-sm-8">
-                        @if (Model.Department != null)
-                        {
-                            <span class="badge bg-info text-dark">@Model.Department.Name</span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-secondary">N/A</span>
-                        }
-                    </dd>
                 </dl>
             </div>
             <div class="card-footer d-flex justify-content-between">

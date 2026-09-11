@@ -1,0 +1,45 @@
+@model RepositoryPatternDemo.Models.Student
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm mt-3">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Transfer Student Department</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info py-2 small mb-3">
+                    <strong>Unit of Work Transaction:</strong> Updating student department will decrease the old department count, increase the new department count, and assign the new department ID together in 1 atomic save.
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label text-muted mb-0">Student:</label>
+                    <p class="fw-bold mb-2">@Model.Name (@Model.Email)</p>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-muted mb-0">Current Department:</label>
+                    <p class="mb-2">
+                        <span class="badge bg-secondary">@(Model.Department?.Name ?? "None")</span>
+                    </p>
+                </div>
+
+                <form asp-action="Transfer" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+
+                    <div class="mb-3">
+                        <label class="form-label font-weight-bold">Select New Department:</label>
+                        <select name="newDepartmentId" class="form-select" asp-items="@(new SelectList(ViewBag.Departments, "Id", "Name", Model.DepartmentId))">
+                            <option value="">-- Select New Department --</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex justify-content-between pt-2">
+                        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Execute Transfer (Unit of Work)</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
