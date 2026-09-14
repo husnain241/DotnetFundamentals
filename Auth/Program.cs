@@ -61,6 +61,36 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAuthentication(options =>
+{
+    // Default schemes for your API's local JWTs
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    // Your existing JWT Bearer configuration...
+})
+.AddCookie("ExternalScheme") // Temporary cookie storage for external provider identity
+.AddOpenIdConnect("OpenIdConnect", options =>
+{
+    // Base OIDC settings (can be overridden by specific providers like Google/Facebook)
+    options.SignInScheme = "ExternalScheme";
+    options.Authority = "https://your-oidc-provider.com"; // Set per provider
+    options.ClientId = builder.Configuration["Authentication:Oidc:ClientId"];
+    options.ClientSecret = builder.Configuration["Authentication:Oidc:ClientSecret"];
+    options.ResponseType = "code"; // OAuth 2.0 Authorization Code Flow
+
+    options.SaveTokens = true;
+    options.GetClaimsFromUserInfoEndpoint = true;
+
+    // Default scope for identity claims
+    options.Scope.Clear();
+    options.Scope.Add("openid");
+    options.Scope.Add("profile");
+    options.Scope.Add("email");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
