@@ -124,9 +124,8 @@ namespace Auth.Controllers
         [HttpGet("external-login")]
         public IActionResult ExternalLogin([FromQuery] string provider = "Google")
         {
-            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Auth");
+            var redirectUrl = Url.Action("ExternalLoginCallback", "Auth", null, Request.Scheme);
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-
             return Challenge(properties, provider);
         }
 
