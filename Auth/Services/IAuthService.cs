@@ -11,6 +11,7 @@ namespace Auth.Services
         Task<bool> AddClaimToUserAsync(UserClaimDto dto);
         Task<IList<Claim>> GetUserClaimsAsync(string userId);
 
+        Task<AuthResponseDto> ExternalLoginCallbackAsync();
         Task<AuthResponseDto> RefreshTokenAsync(string refreshToken); 
         //Task<bool> RevokeTokenAsync(string refreshToken); 
     }
