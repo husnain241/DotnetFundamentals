@@ -1,6 +1,8 @@
 ﻿using Auth.DTOs;
+using Auth.Models;
 using Auth.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Controllers
@@ -9,11 +11,13 @@ namespace Auth.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IAuthService _authService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, SignInManager<ApplicationUser> signInManager)
         {
             _authService = authService;
+            _signInManager = signInManager;
         }
 
         // 1. User Register Endpoint
@@ -115,6 +119,29 @@ namespace Auth.Controllers
                 Username = username,
                 Claims = claims
             });
+        }
+        // 1. Trigger redirect to Google Login page
+        [HttpGet("external-login")]
+        public IActionResult ExternalLogin([FromQuery] string provider = "Google")
+        {
+            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Auth");
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+
+            return Challenge(properties, provider);
+        }
+
+        // 2. Callback target configured in Google Console (signin-google redirects here internally)
+        [HttpGet("external-callback")]
+        public async Task<IActionResult> ExternalLoginCallback()
+        {
+            var response = await _authService.ExternalLoginCallbackAsync();
+
+            if (!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
         }
     }
 }
