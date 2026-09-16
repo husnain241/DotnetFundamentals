@@ -227,5 +227,28 @@ namespace Auth.Services
                 RefreshToken = refreshToken.Token
             };
         }
+
+
+        public async Task<bool> ToggleMfaAsync(string userId, bool enable)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return false;
+
+            var result = await _userManager.SetTwoFactorEnabledAsync(user, enable);
+            return result.Succeeded;
+        }
+
+        public async Task<MfaStatusDto> GetMfaStatusAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return null;
+
+            return new MfaStatusDto
+            {
+                IsMfaEnabled = user.TwoFactorEnabled,
+                IsEmailConfirmed = user.EmailConfirmed,
+                IsPhoneNumberConfirmed = user.PhoneNumberConfirmed
+            };
+        }
     }
 }

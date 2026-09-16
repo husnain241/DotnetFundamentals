@@ -12,7 +12,11 @@ namespace Auth.Services
         Task<IList<Claim>> GetUserClaimsAsync(string userId);
 
         Task<AuthResponseDto> ExternalLoginCallbackAsync();
-        Task<AuthResponseDto> RefreshTokenAsync(string refreshToken); 
+        Task<AuthResponseDto> RefreshTokenAsync(string refreshToken);
         //Task<bool> RevokeTokenAsync(string refreshToken); 
+
+
+        Task<bool> ToggleMfaAsync(string userId, bool enable);
+        Task<MfaStatusDto> GetMfaStatusAsync(string userId);
     }
 }

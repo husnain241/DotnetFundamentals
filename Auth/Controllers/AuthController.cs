@@ -4,6 +4,7 @@ using Auth.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Auth.Controllers
 {
@@ -141,6 +142,32 @@ namespace Auth.Controllers
             }
 
             return Ok(response);
+        }
+
+        [Authorize]
+        [HttpPost("mfa/toggle")]
+        public async Task<IActionResult> ToggleMfa([FromBody] EnableMfaDto dto)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+            var result = await _authService.ToggleMfaAsync(userId, dto.Enable);
+            if (!result) return BadRequest(new { Message = "Failed to update MFA settings." });
+
+            return Ok(new { Message = $"MFA has been {(dto.Enable ? "enabled" : "disabled")} successfully." });
+        }
+
+        [Authorize]
+        [HttpGet("mfa/status")]
+        public async Task<IActionResult> GetMfaStatus()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+            var status = await _authService.GetMfaStatusAsync(userId);
+            if (status == null) return NotFound(new { Message = "User not found." });
+
+            return Ok(status);
         }
     }
 }
