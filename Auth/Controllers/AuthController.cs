@@ -169,5 +169,19 @@ namespace Auth.Controllers
 
             return Ok(status);
         }
+
+        [HttpPost("mfa/verify")]
+        public async Task<IActionResult> VerifyMfa([FromBody] VerifyMfaDto dto)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var response = await _authService.VerifyMfaAndGenerateTokensAsync(dto);
+            if (!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
     }
 }

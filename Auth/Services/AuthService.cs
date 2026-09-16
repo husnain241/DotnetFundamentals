@@ -302,5 +302,38 @@ namespace Auth.Services
             // Validates if the supplied MFA code is valid and not expired
             return await _userManager.VerifyTwoFactorTokenAsync(user, provider, code);
         }
+
+        public async Task<AuthResponseDto> VerifyMfaAndGenerateTokensAsync(VerifyMfaDto dto)
+        {
+            var user = await _userManager.FindByIdAsync(dto.UserId);
+            if (user == null)
+            {
+                return new AuthResponseDto { IsSuccess = false, Message = "Invalid user request." };
+            }
+
+            // Verify code against user and provider (Identity handles code consumption & expiration)
+            var isValid = await _userManager.VerifyTwoFactorTokenAsync(user, dto.Provider, dto.Code);
+            if (!isValid)
+            {
+                return new AuthResponseDto { IsSuccess = false, Message = "Invalid or expired MFA verification code." };
+            }
+
+            // Load user roles and custom claims
+            var roles = await _userManager.GetRolesAsync(user);
+            var claims = await _userManager.GetClaimsAsync(user);
+
+            // Issue standard JWT Access Token and Refresh Token (Issue #65)
+            var accessToken = _jwtTokenService.GenerateAccessToken(user, roles, claims);
+            var refreshToken = _jwtTokenService.GenerateRefreshToken(user.Id);
+
+            return new AuthResponseDto
+            {
+                IsSuccess = true,
+                IsMfaRequired = false,
+                AccessToken = accessToken,
+                RefreshToken = refreshToken.Token,
+                Message = "MFA verification successful. Authentication complete!"
+            };
+        }
     }
 }

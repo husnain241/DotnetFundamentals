@@ -21,5 +21,7 @@ namespace Auth.Services
 
         Task<string> GenerateMfaTokenAsync(string userId, string provider);
         Task<bool> VerifyMfaTokenAsync(string userId, string provider, string code);
+
+        Task<AuthResponseDto> VerifyMfaAndGenerateTokensAsync(VerifyMfaDto dto);
     }
 }
