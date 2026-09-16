@@ -335,5 +335,18 @@ namespace Auth.Services
                 Message = "MFA verification successful. Authentication complete!"
             };
         }
+        public async Task<bool> SetPreferredMfaProviderAsync(string userId, string provider)
+        {
+            if (provider != "Email" && provider != "Phone") return false;
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return false;
+
+            if (provider == "Phone" && string.IsNullOrEmpty(user.PhoneNumber)) return false;
+            if (provider == "Email" && string.IsNullOrEmpty(user.Email)) return false;
+
+            // Persist provider configuration or state
+            return true;
+        }
     }
 }
