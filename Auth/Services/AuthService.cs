@@ -2,8 +2,9 @@
 using Auth.DTOs;
 using Auth.Models;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Auth.Services
 {
@@ -15,18 +16,25 @@ namespace Auth.Services
         private readonly IJwtTokenService _jwtTokenService;
         private readonly ApplicationDbContext _context; 
 
+        private readonly IEmailSender _emailSender;
+        private readonly ISmsSender _smsSender;
+
         public AuthService(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<ApplicationRole> roleManager,
             IJwtTokenService jwtTokenService,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            IEmailSender emailSender,
+            ISmsSender smsSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _jwtTokenService = jwtTokenService;
             _context = context;
+            _emailSender = emailSender;
+            _smsSender = smsSender;
         }
 
         // 1. User Registration Logic
@@ -63,6 +71,32 @@ namespace Auth.Services
                 return new AuthResponseDto { IsSuccess = false, Message = "Invalid username or password." };
             }
 
+            // Check if user has MFA Enabled
+            if (await _userManager.GetTwoFactorEnabledAsync(user))
+            {
+                // Default to Email or configured provider
+                string provider = "Email";
+                var code = await _userManager.GenerateTwoFactorTokenAsync(user, provider);
+
+                if (provider == "Email" && !string.IsNullOrEmpty(user.Email))
+                {
+                    await _emailSender.SendEmailAsync(user.Email, "MFA Verification Code", $"Your verification code is: {code}");
+                }
+                else if (provider == "Phone" && !string.IsNullOrEmpty(user.PhoneNumber))
+                {
+                    await _smsSender.SendSmsAsync(user.PhoneNumber, $"Your verification code is: {code}");
+                }
+
+                // Return challenge without Access Token or Refresh Token
+                return new AuthResponseDto
+                {
+                    IsSuccess = true,
+                    IsMfaRequired = true,
+                    UserId = user.Id,
+                    Provider = provider,
+                    Message = "MFA required. Verification code has been sent."
+                };
+            }
             var roles = await _userManager.GetRolesAsync(user);
             var claims = await _userManager.GetClaimsAsync(user);
 
