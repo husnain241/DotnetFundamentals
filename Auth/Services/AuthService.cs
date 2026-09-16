@@ -250,5 +250,23 @@ namespace Auth.Services
                 IsPhoneNumberConfirmed = user.PhoneNumberConfirmed
             };
         }
+
+        public async Task<string> GenerateMfaTokenAsync(string userId, string provider)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return null;
+
+            // Generates a 6-digit MFA verification code for 'Email' or 'Phone' provider
+            return await _userManager.GenerateTwoFactorTokenAsync(user, provider);
+        }
+
+        public async Task<bool> VerifyMfaTokenAsync(string userId, string provider, string code)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return false;
+
+            // Validates if the supplied MFA code is valid and not expired
+            return await _userManager.VerifyTwoFactorTokenAsync(user, provider, code);
+        }
     }
 }

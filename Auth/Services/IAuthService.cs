@@ -18,5 +18,8 @@ namespace Auth.Services
 
         Task<bool> ToggleMfaAsync(string userId, bool enable);
         Task<MfaStatusDto> GetMfaStatusAsync(string userId);
+
+        Task<string> GenerateMfaTokenAsync(string userId, string provider);
+        Task<bool> VerifyMfaTokenAsync(string userId, string provider, string code);
     }
 }
