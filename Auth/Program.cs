@@ -1,3 +1,4 @@
+using Auth.Configuration;
 using Auth.Data;
 using Auth.Models;
 using Auth.Options;
@@ -21,6 +22,9 @@ builder.Services.AddOpenApi();
 // 3. Register Auth Services (Dependency Injection)
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+
+builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.SectionName));
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 // 4. Register Identity with ApplicationUser and ApplicationRole
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
