@@ -25,6 +25,8 @@ builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
 builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.SectionName));
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.Configure<SmsOptions>(builder.Configuration.GetSection(SmsOptions.SectionName));
+builder.Services.AddScoped<ISmsSender, SmsSender>();
 
 // 4. Register Identity with ApplicationUser and ApplicationRole
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
