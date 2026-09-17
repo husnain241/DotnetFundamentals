@@ -28,6 +28,23 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.Configure<SmsOptions>(builder.Configuration.GetSection(SmsOptions.SectionName));
 builder.Services.AddScoped<ISmsSender, SmsSender>();
 
+
+// Register Authorization Policies for Issue #69
+builder.Services.AddAuthorization(options =>
+{
+    // 1. Strict Admin policy
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole("Admin"));
+
+    // 2. Manager specific policy
+    options.AddPolicy("ManagerOnly", policy =>
+        policy.RequireRole("Manager"));
+
+    // 3. Shared policy for higher privileges (Admin or Manager)
+    options.AddPolicy("ManagementOrAdmin", policy =>
+        policy.RequireRole("Admin", "Manager"));
+});
+
 // 4. Register Identity with ApplicationUser and ApplicationRole    
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>   
 {
