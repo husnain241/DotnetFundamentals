@@ -30,19 +30,24 @@ builder.Services.AddScoped<ISmsSender, SmsSender>();
 
 
 // Register Authorization Policies for Issue #69
+// Register Authorization Policies for Issue #69
 builder.Services.AddAuthorization(options =>
 {
-    // 1. Strict Admin policy
+    // 1. Strict Admin policy — only users with the "Admin" role
     options.AddPolicy("AdminOnly", policy =>
         policy.RequireRole("Admin"));
 
-    // 2. Manager specific policy
+    // 2. Manager-specific policy — only users with the "Manager" role
     options.AddPolicy("ManagerOnly", policy =>
         policy.RequireRole("Manager"));
 
-    // 3. Shared policy for higher privileges (Admin or Manager)
-    options.AddPolicy("ManagementOrAdmin", policy =>
+    // 3. Shared elevated-privilege policy — Admin OR Manager
+    options.AddPolicy("ManagerOrAdmin", policy =>
         policy.RequireRole("Admin", "Manager"));
+
+    // 4. General authenticated-user policy — any user with the "User" role
+    options.AddPolicy("UserAccess", policy =>
+        policy.RequireRole("User"));
 });
 
 // 4. Register Identity with ApplicationUser and ApplicationRole    
