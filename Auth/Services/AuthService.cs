@@ -270,7 +270,16 @@ namespace Auth.Services
             };
         }
 
-
+        public async Task<bool> AssignRoleToUserAsync(string userId, string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return false;
+            if (!await _roleManager.RoleExistsAsync(roleName)) return false;
+            // Prevent duplicate assignment
+            if (await _userManager.IsInRoleAsync(user, roleName)) return true;
+            var result = await _userManager.AddToRoleAsync(user, roleName);
+            return result.Succeeded;
+        }
         public async Task<bool> ToggleMfaAsync(string userId, bool enable)
         {
             var user = await _userManager.FindByIdAsync(userId);
