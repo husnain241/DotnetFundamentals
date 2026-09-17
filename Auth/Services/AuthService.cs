@@ -74,26 +74,34 @@ namespace Auth.Services
             // Check if user has MFA Enabled
             if (await _userManager.GetTwoFactorEnabledAsync(user))
             {
-                // Default to Email or configured provider
-                string provider = "Email";
-                var code = await _userManager.GenerateTwoFactorTokenAsync(user, provider);
+                // 1. Dynamic Provider Selection (DTO se provider read karein)
+                bool isSms = string.Equals(dto.Provider, "Sms", StringComparison.OrdinalIgnoreCase) ||
+                             string.Equals(dto.Provider, "Phone", StringComparison.OrdinalIgnoreCase);
 
-                if (provider == "Email" && !string.IsNullOrEmpty(user.Email))
+                // Identity framework ke liye Provider name "Phone" ya "Email" hoga
+                string identityProvider = isSms ? "Phone" : "Email";
+
+                // 2. Generate 6-digit MFA Token
+                var code = await _userManager.GenerateTwoFactorTokenAsync(user, identityProvider);
+
+                // 3. Dynamic Dispatching
+                if (isSms)
                 {
-                    await _emailSender.SendEmailAsync(user.Email, "MFA Verification Code", $"Your verification code is: {code}");
+                    var phoneNumber = string.IsNullOrEmpty(user.PhoneNumber) ? "0000000000" : user.PhoneNumber;
+                    await _smsSender.SendSmsAsync(phoneNumber, $"Your verification code is: {code}");
                 }
-                else if (provider == "Phone" && !string.IsNullOrEmpty(user.PhoneNumber))
+                else
                 {
-                    await _smsSender.SendSmsAsync(user.PhoneNumber, $"Your verification code is: {code}");
+                    await _emailSender.SendEmailAsync(user.Email ?? "", "MFA Verification Code", $"Your verification code is: {code}");
                 }
 
-                // Return challenge without Access Token or Refresh Token
+                // Return challenge response
                 return new AuthResponseDto
                 {
                     IsSuccess = true,
                     IsMfaRequired = true,
                     UserId = user.Id,
-                    Provider = provider,
+                    Provider = isSms ? "Sms" : "Email",
                     Message = "MFA required. Verification code has been sent."
                 };
             }

@@ -9,5 +9,8 @@ namespace Auth.DTOs
 
         [Required]
         public string Password { get; set; } = string.Empty;
+
+        // Optional parameter with "Email" as default
+        public string Provider { get; set; } = "Email";
     }
 }
