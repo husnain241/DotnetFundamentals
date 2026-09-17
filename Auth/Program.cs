@@ -36,6 +36,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = true;
     options.Password.RequireLowercase = true;
+    options.User.RequireUniqueEmail = true; 
 
     options.Tokens.ChangePhoneNumberTokenProvider = TokenOptions.DefaultPhoneProvider;
     options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
