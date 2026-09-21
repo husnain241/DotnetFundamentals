@@ -10,7 +10,7 @@ namespace Auth.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationUserManager _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IJwtTokenService _jwtTokenService;
@@ -20,7 +20,7 @@ namespace Auth.Services
         private readonly ISmsSender _smsSender;
 
         public AuthService(
-            UserManager<ApplicationUser> userManager,
+            ApplicationUserManager userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<ApplicationRole> roleManager,
             IJwtTokenService jwtTokenService,
@@ -364,6 +364,23 @@ namespace Auth.Services
 
             // Persist provider configuration or state
             return true;
+        }
+
+
+        public async Task<ApplicationUser?> GetActiveUserByEmailAsync(string email)
+        {
+            // Consumes custom method defined on ApplicationUserManager
+            return await _userManager.FindActiveByEmailAsync(email);
+        }
+
+        public async Task<bool> DeactivateUserAccountAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return false;
+
+            // Consumes custom soft-deactivation method
+            var result = await _userManager.DeactivateUserAsync(user);
+            return result.Succeeded;
         }
     }
 }

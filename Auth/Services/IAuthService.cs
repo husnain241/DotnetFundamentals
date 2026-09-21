@@ -1,4 +1,5 @@
 ﻿using Auth.DTOs;
+using Auth.Models;
 using System.Security.Claims;
 
 namespace Auth.Services
@@ -24,5 +25,8 @@ namespace Auth.Services
         Task<bool> VerifyMfaTokenAsync(string userId, string provider, string code);
 
         Task<AuthResponseDto> VerifyMfaAndGenerateTokensAsync(VerifyMfaDto dto);
+       
+        Task<ApplicationUser?> GetActiveUserByEmailAsync(string email);
+        Task<bool> DeactivateUserAccountAsync(string userId);
     }
 }
