@@ -83,5 +83,35 @@ namespace Auth.Controllers
 
             return Ok(new { Message = "User account deactivated/locked successfully!" });
         }
+
+        [HttpPost("custom-role")]
+        public async Task<IActionResult> CreateCustomRole([FromBody] string roleName)
+        {
+            if (string.IsNullOrWhiteSpace(roleName))
+                return BadRequest(new { Message = "Role name is required." });
+
+            var result = await _authService.CreateCustomRoleAsync(roleName);
+            if (!result.Succeeded)
+            {
+                return BadRequest(new { Errors = result.Errors.Select(e => e.Description) });
+            }
+
+            return Ok(new { Message = $"Custom role '{roleName}' created successfully!" });
+        }
+
+        [HttpDelete("safe-delete-role/{roleName}")]
+        public async Task<IActionResult> SafeDeleteRole(string roleName)
+        {
+            if (string.IsNullOrWhiteSpace(roleName))
+                return BadRequest(new { Message = "Role name is required." });
+
+            var result = await _authService.SafeDeleteRoleAsync(roleName);
+            if (!result.Succeeded)
+            {
+                return BadRequest(new { Errors = result.Errors.Select(e => e.Description) });
+            }
+
+            return Ok(new { Message = $"Role '{roleName}' was safely deleted." });
+        }
     }
 }
