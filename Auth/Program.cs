@@ -66,6 +66,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddUserManager<ApplicationUserManager>()
+.AddSignInManager<ApplicationSignInManager>()
 .AddDefaultTokenProviders();
 
 // 5. Bind JwtOptions from appsettings.json
