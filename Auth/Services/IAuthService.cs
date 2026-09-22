@@ -9,7 +9,6 @@ namespace Auth.Services
     {
         Task<bool> RegisterUserAsync(RegisterDto dto);
         Task<AuthResponseDto> LoginUserAsync(LoginDto dto);
-        Task<bool> CreateRoleAsync(string roleName);
         Task<bool> AssignRoleToUserAsync(string userId, string roleName);
         Task<bool> AddClaimToUserAsync(UserClaimDto dto);
         Task<IList<Claim>> GetUserClaimsAsync(string userId);

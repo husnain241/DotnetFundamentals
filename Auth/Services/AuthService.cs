@@ -139,15 +139,6 @@ namespace Auth.Services
             };
         }
 
-        // 3. Role Creation Logic
-        public async Task<bool> CreateRoleAsync(string roleName)
-        {
-            if (await _roleManager.RoleExistsAsync(roleName)) return false;
-
-            var result = await _roleManager.CreateAsync(new ApplicationRole { Name = roleName });
-            return result.Succeeded;
-        }
-
         // 4. Custom Claim Assignment
         public async Task<bool> AddClaimToUserAsync(UserClaimDto dto)
         {
