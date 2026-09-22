@@ -49,20 +49,6 @@ namespace Auth.Controllers
             return Ok(result);
         }
 
-        // 3. Create Role Endpoint (RoleManager Test)
-        [HttpPost("create-role")]
-        public async Task<IActionResult> CreateRole([FromBody] CreateRoleDto dto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var result = await _authService.CreateRoleAsync(dto.RoleName);
-            if (!result)
-                return BadRequest(new { Message = "Role creation failed or role already exists." });
-
-            return Ok(new { Message = $"Role '{dto.RoleName}' creat ed successfully!" });
-        }
-
         // 4. Add Custom Claim to User Endpoint (Claims Test)
         [HttpPost("add-claim")]
         public async Task<IActionResult> AddClaim([FromBody] UserClaimDto dto)
