@@ -45,5 +45,43 @@ namespace Auth.Controllers
 
             return Ok(new { Message = $"Role '{dto.RoleName}' assigned successfully to user '{dto.UserId}'." });
         }
+
+        [HttpGet("active-user")]
+        public async Task<IActionResult> GetActiveUser([FromQuery] string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                return BadRequest(new { Message = "Email is required." });
+
+            var user = await _authService.GetActiveUserByEmailAsync(email);
+            if (user == null)
+            {
+                return NotFound(new { Message = "Active user not found or email unconfirmed." });
+            }
+
+            return Ok(new
+            {
+                user.Id,
+                user.UserName,
+                user.Email,
+                user.EmailConfirmed,
+                user.PhoneNumberConfirmed
+            });
+        }
+
+        // 2. Soft Deactivate User (Consumes Custom ApplicationUserManager)
+        [HttpPost("deactivate-user/{userId}")]
+        public async Task<IActionResult> DeactivateUser(string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+                return BadRequest(new { Message = "UserId is required." });
+
+            var result = await _authService.DeactivateUserAccountAsync(userId);
+            if (!result)
+            {
+                return BadRequest(new { Message = "Failed to deactivate user or user not found." });
+            }
+
+            return Ok(new { Message = "User account deactivated/locked successfully!" });
+        }
     }
 }
