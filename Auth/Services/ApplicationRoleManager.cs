@@ -1,21 +1,21 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Auth.Models; // ApplicationRole ki namespace include karein
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
 namespace Auth.Services
 {
-    public class ApplicationRoleManager : RoleManager<IdentityRole>
+    public class ApplicationRoleManager : RoleManager<ApplicationRole>
     {
         public ApplicationRoleManager(
-            IRoleStore<IdentityRole> store,
-            IEnumerable<IRoleValidator<IdentityRole>> roleValidators,
+            IRoleStore<ApplicationRole> store,
+            IEnumerable<IRoleValidator<ApplicationRole>> roleValidators,
             ILookupNormalizer keyNormalizer,
             IdentityErrorDescriber errors,
-            ILogger<RoleManager<IdentityRole>> logger)
+            ILogger<RoleManager<ApplicationRole>> logger)
             : base(store, roleValidators, keyNormalizer, errors, logger)
         {
         }
 
-        // 1. Custom Method: Create Role with System Protection Flag / Business Validation
         public async Task<IdentityResult> CreateCustomRoleAsync(string roleName)
         {
             if (string.IsNullOrWhiteSpace(roleName))
@@ -37,10 +37,10 @@ namespace Auth.Services
                 });
             }
 
-            return await CreateAsync(new IdentityRole(roleName.Trim()));
+            // Create ApplicationRole instance instead of IdentityRole
+            return await CreateAsync(new ApplicationRole { Name = roleName.Trim() });
         }
 
-        // 2. Custom Method: Safe Delete Role (Prevent deletion of core system roles)
         public async Task<IdentityResult> DeleteRoleSafelyAsync(string roleName)
         {
             var protectedRoles = new[] { "Admin", "User", "Manager" };
