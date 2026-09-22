@@ -11,7 +11,7 @@ namespace Auth.Services
     public class AuthService : IAuthService
     {
         private readonly ApplicationUserManager _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ApplicationSignInManager _signInManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IJwtTokenService _jwtTokenService;
         private readonly ApplicationDbContext _context; 
@@ -21,7 +21,7 @@ namespace Auth.Services
 
         public AuthService(
             ApplicationUserManager userManager,
-            SignInManager<ApplicationUser> signInManager,
+            ApplicationSignInManager signInManager,
             RoleManager<ApplicationRole> roleManager,
             IJwtTokenService jwtTokenService,
             ApplicationDbContext context,
@@ -65,13 +65,22 @@ namespace Auth.Services
                 return new AuthResponseDto { IsSuccess = false, Message = "Invalid username or password." };
             }
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, lockoutOnFailure: false);
-            if (!result.Succeeded)
+            var result = await _signInManager.CustomPasswordSignInAsync(
+                dto.UserName, 
+                dto.Password, 
+                isPersistent: false, 
+                lockoutOnFailure: true);
+
+            if (result.IsLockedOut)
             {
-                return new AuthResponseDto { IsSuccess = false, Message = "Invalid username or password." };
+                return new AuthResponseDto { IsSuccess = false, Message = "Account is locked out or deactivated." };
             }
 
-            // Check if user has MFA Enabled
+            if (result.IsNotAllowed)
+            {
+                return new AuthResponseDto { IsSuccess = false, Message = "Please confirm your email before logging in." };
+            }
+
             if (await _userManager.GetTwoFactorEnabledAsync(user))
             {
                 // 1. Dynamic Provider Selection (DTO se provider read karein)
@@ -105,6 +114,13 @@ namespace Auth.Services
                     Message = "MFA required. Verification code has been sent."
                 };
             }
+
+
+            if (!result.Succeeded)
+            {
+                return new AuthResponseDto { IsSuccess = false, Message = "Invalid username or password." };
+            }
+
             var roles = await _userManager.GetRolesAsync(user);
             var claims = await _userManager.GetClaimsAsync(user);
 
