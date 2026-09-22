@@ -12,7 +12,7 @@ namespace Auth.Services
     {
         private readonly ApplicationUserManager _userManager;
         private readonly ApplicationSignInManager _signInManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly ApplicationRoleManager _roleManager;
         private readonly IJwtTokenService _jwtTokenService;
         private readonly ApplicationDbContext _context; 
 
@@ -22,7 +22,7 @@ namespace Auth.Services
         public AuthService(
             ApplicationUserManager userManager,
             ApplicationSignInManager signInManager,
-            RoleManager<ApplicationRole> roleManager,
+            ApplicationRoleManager roleManager,
             IJwtTokenService jwtTokenService,
             ApplicationDbContext context,
             IEmailSender emailSender,
@@ -397,6 +397,15 @@ namespace Auth.Services
             // Consumes custom soft-deactivation method
             var result = await _userManager.DeactivateUserAsync(user);
             return result.Succeeded;
+        }
+        public async Task<IdentityResult> CreateCustomRoleAsync(string roleName)
+        {
+            return await _roleManager.CreateCustomRoleAsync(roleName);
+        }
+
+        public async Task<IdentityResult> SafeDeleteRoleAsync(string roleName)
+        {
+            return await _roleManager.DeleteRoleSafelyAsync(roleName);
         }
     }
 }

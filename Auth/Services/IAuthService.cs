@@ -1,5 +1,6 @@
 ﻿using Auth.DTOs;
 using Auth.Models;
+using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace Auth.Services
@@ -28,5 +29,9 @@ namespace Auth.Services
        
         Task<ApplicationUser?> GetActiveUserByEmailAsync(string email);
         Task<bool> DeactivateUserAccountAsync(string userId);
+
+
+        Task<IdentityResult> CreateCustomRoleAsync(string roleName);
+        Task<IdentityResult> SafeDeleteRoleAsync(string roleName);
     }
 }
