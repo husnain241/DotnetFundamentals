@@ -23,6 +23,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
+builder.Services.AddScoped<IConcurrencyService, ConcurrencyService>();
+
 builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.SectionName));
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.Configure<SmsOptions>(builder.Configuration.GetSection(SmsOptions.SectionName));
