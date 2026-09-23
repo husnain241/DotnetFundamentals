@@ -52,5 +52,46 @@ namespace Auth.Services
                 return (false, "Concurrency Conflict: The record was modified by another user. Please reload and try again.");
             }
         }
+
+        // --- CHECKPOINT 3: Pessimistic Concurrency Method ---
+        public async Task<(bool Success, string Message)> UpdateProductPessimisticAsync(int productId, int quantityToDeduct)
+        {
+            // Begin explicit Database Transaction
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                // Execute SELECT with UPDLOCK and ROWLOCK hints to acquire an exclusive lock
+                var product = await _context.Products
+                    .FromSqlInterpolated($"SELECT * FROM Products WITH (UPDLOCK, ROWLOCK) WHERE Id = {productId}")
+                    .SingleOrDefaultAsync();
+
+                if (product == null)
+                {
+                    await transaction.RollbackAsync();
+                    return (false, "Product not found.");
+                }
+
+                // Check business logic condition while row is locked
+                if (product.StockQuantity < quantityToDeduct)
+                {
+                    await transaction.RollbackAsync();
+                    return (false, $"Insufficient stock. Current stock is {product.StockQuantity}.");
+                }
+
+                // Deduct stock
+                product.StockQuantity -= quantityToDeduct;
+
+                // Save changes and Commit transaction (Lock is released after commit)
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return (true, $"Stock updated successfully. Remaining stock: {product.StockQuantity}");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return (false, $"Pessimistic Lock Error: {ex.Message}");
+            }
+        }
     }
 }

@@ -8,5 +8,7 @@ namespace Auth.Services
         Task<Product?> GetProductByIdAsync(int id);
         Task<Product> CreateProductAsync(Product product);
         Task<(bool Success, string Message)> UpdateProductOptimisticAsync(UpdateProductDto dto);
+
+        Task<(bool Success, string Message)> UpdateProductPessimisticAsync(int productId, int quantityToDeduct);
     }
 }
