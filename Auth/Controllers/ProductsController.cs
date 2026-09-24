@@ -20,5 +20,12 @@ namespace Auth.Controllers
             var result = await _productQueryService.GetBaselineProductsAsync();
             return Ok(result);
         }
+
+        [HttpGet("benchmark/optimized")]
+        public async Task<IActionResult> GetOptimizedProducts()
+        {
+            var result = await _productQueryService.GetOptimizedProductsAsync();
+            return Ok(result);
+        }
     }
 }

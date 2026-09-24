@@ -6,5 +6,7 @@ namespace Auth.Services
     public interface IProductQueryService
     {
         Task<ProductBenchmarkResultDto<List<Product>>> GetBaselineProductsAsync();
+
+        Task<ProductBenchmarkResultDto<List<ProductDto>>> GetOptimizedProductsAsync();
     }
 }
