@@ -17,6 +17,14 @@ namespace Auth.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder); // Required to map default Identity tables
+
+            builder.Entity<Product>()
+                .HasIndex(p => p.Name)
+                .HasDatabaseName("IX_Products_Name");
+
+            builder.Entity<Product>()
+                .HasIndex(p => p.Price)
+                .HasDatabaseName("IX_Products_Price");
         }
     }
 }

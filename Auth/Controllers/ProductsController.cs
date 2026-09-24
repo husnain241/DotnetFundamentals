@@ -27,5 +27,12 @@ namespace Auth.Controllers
             var result = await _productQueryService.GetOptimizedProductsAsync();
             return Ok(result);
         }
+
+        [HttpGet("benchmark/indexed-search")]
+        public async Task<IActionResult> GetIndexedFilteredProducts([FromQuery] string name = "Laptop", [FromQuery] decimal maxPrice = 1500)
+        {
+            var result = await _productQueryService.GetIndexedFilteredProductsAsync(name, maxPrice);
+            return Ok(result);
+        }
     }
 }

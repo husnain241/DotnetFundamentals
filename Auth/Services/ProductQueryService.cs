@@ -66,5 +66,33 @@ namespace Auth.Services
                 Data = products
             };
         }
+
+        public async Task<ProductBenchmarkResultDto<List<ProductDto>>> GetIndexedFilteredProductsAsync(string searchTerm, decimal maxPrice)
+        {
+            // High-frequency filtered query utilizing Indexes (IX_Products_Name & IX_Products_Price)
+            var query = _context.Products
+                .AsNoTracking()
+                .Where(p => p.Name.Contains(searchTerm) && p.Price <= maxPrice)
+                .Select(p => new ProductDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price
+                });
+
+            string generatedSql = query.ToQueryString();
+
+            var stopwatch = Stopwatch.StartNew();
+            var products = await query.ToListAsync();
+            stopwatch.Stop();
+
+            return new ProductBenchmarkResultDto<List<ProductDto>>
+            {
+                GeneratedSql = generatedSql,
+                ExecutionTimeMilliseconds = stopwatch.ElapsedMilliseconds,
+                RecordCount = products.Count,
+                Data = products
+            };
+        }
     }
 }

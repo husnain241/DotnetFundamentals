@@ -8,5 +8,7 @@ namespace Auth.Services
         Task<ProductBenchmarkResultDto<List<Product>>> GetBaselineProductsAsync();
 
         Task<ProductBenchmarkResultDto<List<ProductDto>>> GetOptimizedProductsAsync();
+
+        Task<ProductBenchmarkResultDto<List<ProductDto>>> GetIndexedFilteredProductsAsync(string searchTerm, decimal maxPrice);
     }
 }
