@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="AspNetCoreFundamentals/AspNetCoreFundamentals.csproj" />
+  <Project Path="Auth/Auth.csproj" Id="48b8852c-5fb5-4923-9fb4-921a359f9cc5" />
   <Project Path="mini-project-SMS/mini-project-SMS.csproj" Id="4da460ae-7390-40a2-b0f6-244a9f3e11b4" />
   <Project Path="RepositoryPatternDemo.Tests/RepositoryPatternDemo.Tests.csproj" Id="9f2b67c8-3799-4dc2-8385-c88d9a8823cf" />
   <Project Path="RepositoryPatternDemo/RepositoryPatternDemo.csproj" Id="ede9e524-2698-4a75-a1da-2087043dc891" />
