@@ -40,6 +40,9 @@ builder.Services.Configure<SmsOptions>(builder.Configuration.GetSection(SmsOptio
 builder.Services.AddScoped<ISmsSender, SmsSender>();
 
 
+builder.Services.AddHttpContextAccessor();
+
+
 // Register Authorization Policies for Issue #69
 // Register Authorization Policies for Issue #69
 builder.Services.AddAuthorization(options =>
