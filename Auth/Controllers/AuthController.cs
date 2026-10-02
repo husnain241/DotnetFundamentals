@@ -1,7 +1,10 @@
 ﻿using Auth.DTOs;
 using Auth.Models;
+using Auth.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Auth.Controllers
 {
@@ -9,53 +12,162 @@ namespace Auth.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IAuthService _authService;
 
-        public AuthController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+        public AuthController(IAuthService authService, SignInManager<ApplicationUser> signInManager)
         {
-            _userManager = userManager;
+            _authService = authService;
             _signInManager = signInManager;
         }
 
+        // 1. User Register Endpoint
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var user = new ApplicationUser
-            {
-                UserName = dto.UserName,
-                Email = dto.Email
-            };
-
-            var result = await _userManager.CreateAsync(user, dto.Password);
-
-            if (!result.Succeeded)
-                return BadRequest(result.Errors);
+            var result = await _authService.RegisterUserAsync(dto);
+            if (!result)
+                return BadRequest(new { Message = "Registration failed. User might already exist." });
 
             return Ok(new { Message = "User registered successfully!" });
         }
 
+        // 2. User Login Endpoint
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _signInManager.PasswordSignInAsync(
-                dto.UserName,
-                dto.Password,
-                isPersistent: false,
-                lockoutOnFailure: false);
+            var result = await _authService.LoginUserAsync(dto);
+            if (!result.IsSuccess)
+                return Unauthorized(new { Message = result.Message });
 
-            if (!result.Succeeded)
-                return Unauthorized(new { Message = "Invalid username or password." });
+            return Ok(result);
+        }
 
-            return Ok(new { Message = "Login successful!" });
+        // 4. Add Custom Claim to User Endpoint (Claims Test)
+        [HttpPost("add-claim")]
+        public async Task<IActionResult> AddClaim([FromBody] UserClaimDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.AddClaimToUserAsync(dto);
+            if (!result)
+                return BadRequest(new { Message = "Failed to add claim. Invalid UserId or Claim format." });
+
+            return Ok(new { Message = "Claim added to user successfully!" });
+        }
+
+        // 5. Get User Claims Endpoint
+        [HttpGet("user-claims/{userId}")]
+        public async Task<IActionResult> GetUserClaims(string userId)
+        {
+            var claims = await _authService.GetUserClaimsAsync(userId);
+
+            var claimsResponse = claims.Select(c => new
+            {
+                Type = c.Type,
+                Value = c.Value
+            });
+
+            return Ok(claimsResponse);
+        }
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequestDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.RefreshTokenAsync(dto.RefreshToken);
+            if (!result.IsSuccess)
+                return Unauthorized(new { result.Message });
+
+            return Ok(result);
+        }
+
+        // NEW: Protected Endpoint for Testing JWT Authentication
+        [Authorize]
+        [HttpGet("profile")]
+        public IActionResult GetProfile()
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var username = User.Identity?.Name;
+            var claims = User.Claims.Select(c => new { c.Type, c.Value });
+
+            return Ok(new
+            {
+                Message = "You have accessed a protected endpoint!",
+                UserId = userId,
+                Username = username,
+                Claims = claims
+            });
+        }
+        // 1. Trigger redirect to Google Login page
+        [HttpGet("external-login")]
+        public IActionResult ExternalLogin([FromQuery] string provider = "Google")
+        {
+            var redirectUrl = Url.Action("ExternalLoginCallback", "Auth", null, Request.Scheme);
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return Challenge(properties, provider);
+        }
+
+        // 2. Callback target configured in Google Console (signin-google redirects here internally)
+        [HttpGet("external-callback")]
+        public async Task<IActionResult> ExternalLoginCallback()
+        {
+            var response = await _authService.ExternalLoginCallbackAsync();
+
+            if (!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
+        [Authorize]
+        [HttpPost("mfa/toggle")]
+        public async Task<IActionResult> ToggleMfa([FromBody] EnableMfaDto dto)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+            var result = await _authService.ToggleMfaAsync(userId, dto.Enable);
+            if (!result) return BadRequest(new { Message = "Failed to update MFA settings." });
+
+            return Ok(new { Message = $"MFA has been {(dto.Enable ? "enabled" : "disabled")} successfully." });
+        }
+
+        [Authorize]
+        [HttpGet("mfa/status")]
+        public async Task<IActionResult> GetMfaStatus()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+            var status = await _authService.GetMfaStatusAsync(userId);
+            if (status == null) return NotFound(new { Message = "User not found." });
+
+            return Ok(status);
+        }
+
+        [HttpPost("mfa/verify")]
+        public async Task<IActionResult> VerifyMfa([FromBody] VerifyMfaDto dto)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var response = await _authService.VerifyMfaAndGenerateTokensAsync(dto);
+            if (!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
         }
     }
 }

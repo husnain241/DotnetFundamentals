@@ -1,26 +1,120 @@
+using Auth.Configuration;
 using Auth.Data;
 using Auth.Models;
+using Auth.Options;
+using Auth.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 // 1. Add DbContext with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 2. Add ASP.NET Core Identity Services
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-// Add services to the container.
-
+// 2. Add services to the container
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+// 3. Register Auth Services (Dependency Injection)
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+
+builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.SectionName));
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.Configure<SmsOptions>(builder.Configuration.GetSection(SmsOptions.SectionName));
+builder.Services.AddScoped<ISmsSender, SmsSender>();
+
+
+// Register Authorization Policies for Issue #69
+// Register Authorization Policies for Issue #69
+builder.Services.AddAuthorization(options =>
+{
+    // 1. Strict Admin policy — only users with the "Admin" role
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole("Admin"));
+
+    // 2. Manager-specific policy — only users with the "Manager" role
+    options.AddPolicy("ManagerOnly", policy =>
+        policy.RequireRole("Manager"));
+
+    // 3. Shared elevated-privilege policy — Admin OR Manager
+    options.AddPolicy("ManagerOrAdmin", policy =>
+        policy.RequireRole("Admin", "Manager"));
+
+    // 4. General authenticated-user policy — any user with the "User" role
+    options.AddPolicy("UserAccess", policy =>
+        policy.RequireRole("User"));
+});
+
+// 4. Register Identity with ApplicationUser and ApplicationRole    
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>   
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = true;
+    options.User.RequireUniqueEmail = true; 
+
+    options.Tokens.ChangePhoneNumberTokenProvider = TokenOptions.DefaultPhoneProvider;
+    options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
+    options.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddUserManager<ApplicationUserManager>()
+.AddSignInManager<ApplicationSignInManager>()
+.AddRoleManager<ApplicationRoleManager>() 
+.AddDefaultTokenProviders();
+
+// 5. Bind JwtOptions from appsettings.json
+var jwtOptions = new JwtOptions();
+builder.Configuration.GetSection(JwtOptions.SectionName).Bind(jwtOptions);
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
+
+// 6. Unified Authentication Setup (JWT + Cookie + External Google Provider)
+builder.Services.AddAuthentication(options =>
+{
+    // Default schemes for your API's local JWTs
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    // Required so that Google's OAuth handler can write the external identity cookie
+    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtOptions.Issuer,
+        ValidAudience = jwtOptions.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key)),
+        ClockSkew = TimeSpan.Zero // Removes default 5-minute buffer delay
+    };
+})
+// NOTE: .AddCookie("ExternalScheme") removed — AddIdentity() already registers
+// IdentityConstants.ExternalScheme ("Identity.External") which is the cookie
+// that GetExternalLoginInfoAsync() reads from.
+.AddGoogle(options =>
+{
+    options.SignInScheme = IdentityConstants.ExternalScheme;
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+
+    // Correlation cookie settings for local development
+    options.CorrelationCookie.SameSite = SameSiteMode.Unspecified;
+    options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// 7. Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -28,6 +122,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
