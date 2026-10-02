@@ -1,9 +1,9 @@
-﻿using Auth.DTOs;
+﻿using Auth.DTOs.Auth;
 using Auth.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-namespace Auth.Services
+namespace Auth.Services.Interfaces
 {
     public interface IAuthService
     {

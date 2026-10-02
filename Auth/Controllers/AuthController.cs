@@ -1,6 +1,6 @@
-﻿using Auth.DTOs;
+﻿using Auth.DTOs.Auth;
 using Auth.Models;
-using Auth.Services;
+using Auth.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Auth.Services
+namespace Auth.Services.Identity
 {
     public class ApplicationSignInManager : SignInManager<ApplicationUser>
     {

@@ -1,6 +1,8 @@
 ﻿using Auth.Data;
-using Auth.DTOs;
+using Auth.DTOs.Auth;
 using Auth.Models;
+using Auth.Services.Identity;
+using Auth.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +18,7 @@ namespace Auth.Services
         private readonly IJwtTokenService _jwtTokenService;
         private readonly ApplicationDbContext _context; 
 
-        private readonly IEmailSender _emailSender;
+        private readonly Interfaces.IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
 
         public AuthService(
@@ -25,7 +27,7 @@ namespace Auth.Services
             ApplicationRoleManager roleManager,
             IJwtTokenService jwtTokenService,
             ApplicationDbContext context,
-            IEmailSender emailSender,
+            Interfaces.IEmailSender emailSender,
             ISmsSender smsSender)
         {
             _userManager = userManager;

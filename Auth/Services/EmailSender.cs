@@ -1,5 +1,6 @@
 ﻿using Auth.Configuration;
 using Auth.Options;
+using Auth.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;

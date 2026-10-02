@@ -1,7 +1,7 @@
 ﻿using Auth.Models;
 using System.Security.Claims;
 
-namespace Auth.Services
+namespace Auth.Services.Interfaces
 {
     public interface IJwtTokenService
     {

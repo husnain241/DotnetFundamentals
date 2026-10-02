@@ -1,4 +1,4 @@
-﻿namespace Auth.Services
+﻿namespace Auth.Services.Interfaces
 {
     public interface IEmailSender
     {

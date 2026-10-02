@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics;
 using Auth.Data;
-using Auth.DTOs;
+using Auth.DTOs.Products;
 using Auth.Models;
+using Auth.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Auth.Services

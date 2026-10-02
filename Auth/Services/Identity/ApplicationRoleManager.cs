@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
-namespace Auth.Services
+namespace Auth.Services.Identity
 {
     public class ApplicationRoleManager : RoleManager<ApplicationRole>
     {

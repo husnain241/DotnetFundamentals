@@ -1,6 +1,6 @@
-﻿using Auth.DTOs;
+﻿using Auth.DTOs.Products;
 using Auth.Models;
-using Auth.Services;
+using Auth.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Controllers

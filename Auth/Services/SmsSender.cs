@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Auth.Options;
+using Auth.Services.Interfaces;
 
 namespace Auth.Services
 {

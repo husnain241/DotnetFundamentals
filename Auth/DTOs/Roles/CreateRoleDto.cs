@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Auth.DTOs
+namespace Auth.DTOs.Roles
 {
-    public class AssignRoleDto
+    public class CreateRoleDto
     {
-        [Required]
-        public string UserId { get; set; } = string.Empty;
-
         [Required]
         public string RoleName { get; set; } = string.Empty;
     }

@@ -3,6 +3,8 @@ using Auth.Data;
 using Auth.Models;
 using Auth.Options;
 using Auth.Services;
+using Auth.Services.Identity;
+using Auth.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

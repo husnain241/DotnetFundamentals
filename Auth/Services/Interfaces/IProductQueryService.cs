@@ -1,7 +1,7 @@
-﻿using Auth.DTOs;
+﻿using Auth.DTOs.Products;
 using Auth.Models;
 
-namespace Auth.Services
+namespace Auth.Services.Interfaces
 {
     public interface IProductQueryService
     {

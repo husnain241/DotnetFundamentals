@@ -1,4 +1,4 @@
-﻿namespace Auth.DTOs
+﻿namespace Auth.DTOs.Auth
 {
     public class VerifyMfaDto
     {
