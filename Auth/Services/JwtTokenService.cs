@@ -1,4 +1,4 @@
-﻿using Auth.Models;
+using Auth.Models;
 using Auth.Options;
 using Auth.Services.Interfaces;
 using Microsoft.Extensions.Options;
@@ -27,7 +27,8 @@ namespace Auth.Services
                 new Claim(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName ?? string.Empty)
+                new Claim(ClaimTypes.Name, user.UserName ?? string.Empty),
+                new Claim("tenant_id", user.TenantId ?? string.Empty)
             };
 
             // Add Role claims

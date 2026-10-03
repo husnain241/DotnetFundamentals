@@ -42,6 +42,8 @@ builder.Services.AddScoped<ISmsSender, SmsSender>();
 
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ITenantContext, TenantContext>();
+builder.Services.AddScoped<ITenantProvider, TenantProvider>();
 
 
 // Register Authorization Policies for Issue #69

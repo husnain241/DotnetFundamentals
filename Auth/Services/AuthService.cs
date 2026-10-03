@@ -42,11 +42,18 @@ namespace Auth.Services
         // 1. User Registration Logic
         public async Task<bool> RegisterUserAsync(RegisterDto dto)
         {
+            var tenantExists = await _context.Tenants.AnyAsync(t => t.Id == dto.TenantId && t.IsActive);
+            if (!tenantExists)
+            {
+                throw new ArgumentException("Invalid or inactive Tenant ID.");
+            }
+
             var user = new ApplicationUser
             {
                 Id = Guid.NewGuid().ToString(),
                 UserName = dto.UserName,
-                Email = dto.Email
+                Email = dto.Email,
+                TenantId = dto.TenantId 
             };
 
             var result = await _userManager.CreateAsync(user, dto.Password);

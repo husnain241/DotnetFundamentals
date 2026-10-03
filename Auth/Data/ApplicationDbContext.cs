@@ -1,4 +1,4 @@
-﻿using Auth.Models;
+using Auth.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
@@ -26,6 +26,18 @@ namespace Auth.Data
             builder.Entity<Product>()
                 .HasIndex(p => p.Price)
                 .HasDatabaseName("IX_Products_Price");
+
+            builder.Entity<ApplicationUser>(b =>
+            {
+                b.HasOne(u => u.Tenant)
+                 .WithMany()
+                 .HasForeignKey(u => u.TenantId)
+                 .IsRequired(false)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+                b.HasIndex(u => u.TenantId)
+                 .HasDatabaseName("IX_AspNetUsers_TenantId");
+            });
         }
     }
 }
