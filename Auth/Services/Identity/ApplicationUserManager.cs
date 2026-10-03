@@ -1,5 +1,6 @@
-﻿using Auth.Models;
+using Auth.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace Auth.Services.Identity
@@ -38,6 +39,20 @@ namespace Auth.Services.Identity
             user.LockoutEnd = DateTimeOffset.UtcNow.AddYears(100); // Indefinite lockout
 
             return await UpdateAsync(user);
+        }
+
+        // 3. Custom Method: Find user by username scoped to tenant
+        public async Task<ApplicationUser?> FindByNameAndTenantAsync(string userName, string tenantId)
+        {
+            var normalizedUserName = NormalizeName(userName);
+            return await Users.FirstOrDefaultAsync(u => u.TenantId == tenantId && u.NormalizedUserName == normalizedUserName);
+        }
+
+        // 4. Custom Method: Find user by email scoped to tenant
+        public async Task<ApplicationUser?> FindByEmailAndTenantAsync(string email, string tenantId)
+        {
+            var normalizedEmail = NormalizeEmail(email);
+            return await Users.FirstOrDefaultAsync(u => u.TenantId == tenantId && u.NormalizedEmail == normalizedEmail);
         }
     }
 }

@@ -37,7 +37,25 @@ namespace Auth.Data
 
                 b.HasIndex(u => u.TenantId)
                  .HasDatabaseName("IX_AspNetUsers_TenantId");
+
+                b.HasIndex(u => u.NormalizedUserName)
+                 .HasDatabaseName("UserNameIndex")
+                 .IsUnique(false);
+
+                b.HasIndex(u => u.NormalizedEmail)
+                 .HasDatabaseName("EmailIndex")
+                 .IsUnique(false);
+
+                b.HasIndex(u => new { u.TenantId, u.NormalizedEmail })
+                 .IsUnique()
+                 .HasDatabaseName("IX_ApplicationUsers_TenantId_NormalizedEmail");
+
+                b.HasIndex(u => new { u.TenantId, u.NormalizedUserName })
+                 .IsUnique()
+                 .HasDatabaseName("IX_ApplicationUsers_TenantId_NormalizedUserName");
             });
+
+
         }
     }
 }

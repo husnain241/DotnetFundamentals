@@ -4,6 +4,7 @@ using Auth.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Auth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20261003071053_AddTenantScopedUserIndex")]
+    partial class AddTenantScopedUserIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,20 +113,17 @@ namespace Auth.Migrations
                         .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
-                        .HasDatabaseName("UserNameIndex");
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("TenantId")
                         .HasDatabaseName("IX_AspNetUsers_TenantId");
 
-                    b.HasIndex("TenantId", "NormalizedEmail")
+                    b.HasIndex("TenantId", "Email")
                         .IsUnique()
-                        .HasDatabaseName("IX_ApplicationUsers_TenantId_NormalizedEmail")
-                        .HasFilter("[TenantId] IS NOT NULL AND [NormalizedEmail] IS NOT NULL");
-
-                    b.HasIndex("TenantId", "NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("IX_ApplicationUsers_TenantId_NormalizedUserName")
-                        .HasFilter("[TenantId] IS NOT NULL AND [NormalizedUserName] IS NOT NULL");
+                        .HasDatabaseName("IX_ApplicationUsers_TenantId_Email")
+                        .HasFilter("[TenantId] IS NOT NULL AND [Email] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });

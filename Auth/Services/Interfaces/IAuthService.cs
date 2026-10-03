@@ -7,7 +7,7 @@ namespace Auth.Services.Interfaces
 {
     public interface IAuthService
     {
-        Task<bool> RegisterUserAsync(RegisterDto dto);
+        Task<(bool Success, string Message)> RegisterUserAsync(RegisterDto dto);
         Task<AuthResponseDto> LoginUserAsync(LoginDto dto);
         Task<bool> AssignRoleToUserAsync(string userId, string roleName);
         Task<bool> AddClaimToUserAsync(UserClaimDto dto);

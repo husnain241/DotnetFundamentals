@@ -8,6 +8,7 @@ using Auth.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -86,6 +87,10 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 .AddSignInManager<ApplicationSignInManager>()
 .AddRoleManager<ApplicationRoleManager>() 
 .AddDefaultTokenProviders();
+
+// Replace built-in global UserValidator with Tenant-scoped UserValidator
+builder.Services.RemoveAll<IUserValidator<ApplicationUser>>();
+builder.Services.AddScoped<IUserValidator<ApplicationUser>, TenantUserValidator>();
 
 // 5. Bind JwtOptions from appsettings.json
 var jwtOptions = new JwtOptions();
