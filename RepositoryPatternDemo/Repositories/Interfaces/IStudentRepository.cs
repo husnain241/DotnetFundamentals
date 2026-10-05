@@ -9,5 +9,7 @@ namespace RepositoryPatternDemo.Repositories.Interfaces
         void Add(Student student);
         void Update(Student student);
         void Delete(int id);
+
+        IEnumerable<Student> GetAllAsNoTracking();
     }
 }

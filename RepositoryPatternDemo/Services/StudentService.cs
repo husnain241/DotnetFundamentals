@@ -1,4 +1,5 @@
 using RepositoryPatternDemo.Models;
+using RepositoryPatternDemo.Repositories;
 using RepositoryPatternDemo.Repositories.Interfaces;
 using RepositoryPatternDemo.Services.Interfaces;
 
@@ -12,7 +13,11 @@ namespace RepositoryPatternDemo.Services
         {
             _unitOfWork = unitOfWork;
         }
-
+        public IEnumerable<Student> GetAllAsNoTracking()
+        {
+            // For read-only operations, use AsNoTracking via Unit of Work
+            return _unitOfWork.Students.GetAllAsNoTracking();
+        }
         public List<Student> GetAll()
         {
             var students = _unitOfWork.Students.GetAll();

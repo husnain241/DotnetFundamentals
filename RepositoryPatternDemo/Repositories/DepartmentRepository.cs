@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RepositoryPatternDemo.Data;
 using RepositoryPatternDemo.Models;
 using RepositoryPatternDemo.Repositories.Interfaces;
@@ -13,6 +14,10 @@ namespace RepositoryPatternDemo.Repositories
             _context = context;
         }
 
+        public IEnumerable<Department> GetAllAsNoTracking()
+        {
+            return _context.Departments.AsNoTracking().ToList();
+        }
         public List<Department> GetAll()
         {
             return _context.Departments.ToList();

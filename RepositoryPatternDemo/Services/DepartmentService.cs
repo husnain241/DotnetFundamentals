@@ -12,7 +12,12 @@ namespace RepositoryPatternDemo.Services
         {
             _unitOfWork = unitOfWork;
         }
-
+        public IEnumerable<Department> GetAllAsNoTracking()
+        {
+            // For read-only operations, use AsNoTracking via Unit of Work
+            return _unitOfWork.Departments.GetAllAsNoTracking();
+        }
+      
         public List<Department> GetAll()
         {
             return _unitOfWork.Departments.GetAll();

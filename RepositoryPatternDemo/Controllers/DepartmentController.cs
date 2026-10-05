@@ -21,7 +21,7 @@ namespace RepositoryPatternDemo.Controllers
         [HttpGet("")]
         public IActionResult Index()
         {
-            var departments = _departmentService.GetAll();
+            var departments = _departmentService.GetAllAsNoTracking();
             return View(departments);
         }
 
