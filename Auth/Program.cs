@@ -13,7 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 1. Add DbContext with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.LogTo(Console.WriteLine, LogLevel.Information)
+           .EnableSensitiveDataLogging();
+});
+
 
 // 2. Add services to the container
 builder.Services.AddControllers();
@@ -22,6 +27,10 @@ builder.Services.AddOpenApi();
 // 3. Register Auth Services (Dependency Injection)
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+
+builder.Services.AddScoped<IConcurrencyService, ConcurrencyService>();
+
+builder.Services.AddScoped<IProductQueryService, ProductQueryService>();
 
 builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.SectionName));
 builder.Services.AddScoped<IEmailSender, EmailSender>();
