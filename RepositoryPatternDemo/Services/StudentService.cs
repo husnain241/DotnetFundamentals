@@ -15,8 +15,11 @@ namespace RepositoryPatternDemo.Services
         }
         public IEnumerable<Student> GetAllAsNoTracking()
         {
-            // For read-only operations, use AsNoTracking via Unit of Work
             return _unitOfWork.Students.GetAllAsNoTracking();
+        }
+        public IEnumerable<Student> GetAllWithDepartment()
+        {
+            return _unitOfWork.Students.GetAllWithDepartment();
         }
         public List<Student> GetAll()
         {

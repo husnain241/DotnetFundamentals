@@ -12,5 +12,6 @@ namespace RepositoryPatternDemo.Services.Interfaces
         void TransferDepartment(int studentId, int newDepartmentId);
 
         IEnumerable<Student> GetAllAsNoTracking();
+        IEnumerable<Student> GetAllWithDepartment();
     }
 }

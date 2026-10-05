@@ -11,5 +11,7 @@ namespace RepositoryPatternDemo.Repositories.Interfaces
         void Delete(int id);
 
         IEnumerable<Student> GetAllAsNoTracking();
+
+        IEnumerable<Student> GetAllWithDepartment();
     }
 }
