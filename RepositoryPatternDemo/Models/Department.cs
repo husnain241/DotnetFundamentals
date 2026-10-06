@@ -11,6 +11,6 @@ namespace RepositoryPatternDemo.Models
 
         public int StudentCount { get; set; }
 
-        public List<Student> Students { get; set; } = new();
+        public virtual List<Student> Students { get; set; }
     }
 }
