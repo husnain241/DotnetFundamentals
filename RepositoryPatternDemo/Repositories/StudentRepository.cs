@@ -75,5 +75,25 @@ namespace RepositoryPatternDemo.Repositories
                 _context.Students.Remove(student);
             }
         }
+
+        public void BulkInsert(IEnumerable<Student> students)
+        {
+            _context.Students.AddRange(students);
+            _context.SaveChanges();
+        }
+
+        public int BulkUpdateDepartmentId(int oldDepartmentId, int newDepartmentId)
+        {
+            return _context.Students
+                .Where(s => s.DepartmentId == oldDepartmentId)
+                .ExecuteUpdate(s => s.SetProperty(x => x.DepartmentId, newDepartmentId));
+        }
+
+        public int BulkDeleteByDepartmentId(int departmentId)
+        {
+            return _context.Students
+                .Where(s => s.DepartmentId == departmentId)
+                .ExecuteDelete();
+        }
     }
 }
