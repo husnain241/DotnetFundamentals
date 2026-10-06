@@ -13,5 +13,9 @@ namespace RepositoryPatternDemo.Repositories.Interfaces
         IEnumerable<Student> GetAllAsNoTracking();
 
         IEnumerable<Student> GetAllWithDepartment();
+
+
+        Task<Student?> GetByIdCompiledAsync(int id);
+        Task<List<Student>> GetByDepartmentCompiledAsync(int departmentId);
     }
 }

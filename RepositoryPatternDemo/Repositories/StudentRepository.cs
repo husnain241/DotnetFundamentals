@@ -8,6 +8,14 @@ namespace RepositoryPatternDemo.Repositories
     public class StudentRepository : IStudentRepository
     {
         private readonly ApplicationDbContext _context;
+        private static readonly Func<ApplicationDbContext, int, Task<Student?>> _getByIdCompiled =
+           EF.CompileAsyncQuery((ApplicationDbContext context, int id) =>
+               context.Students
+                   .Include(s => s.Department) 
+                   .FirstOrDefault(s => s.Id == id));
+        private static readonly Func<ApplicationDbContext, int, IAsyncEnumerable<Student>> _getByDepartmentCompiled =
+            EF.CompileAsyncQuery((ApplicationDbContext context, int departmentId) =>
+                context.Students.Where(s => s.DepartmentId == departmentId));
 
         public StudentRepository(ApplicationDbContext context)
         {
@@ -30,6 +38,22 @@ namespace RepositoryPatternDemo.Repositories
         public Student? GetById(int id)
         {
             return _context.Students.Find(id);
+        }
+
+        public async Task<Student?> GetByIdCompiledAsync(int id)
+        {
+            return await _getByIdCompiled(_context, id);
+        }
+        public async Task<List<Student>> GetByDepartmentCompiledAsync(int departmentId)
+        {
+            var students = new List<Student>();
+
+            await foreach (var student in _getByDepartmentCompiled(_context, departmentId))
+            {
+                students.Add(student);
+            }
+
+            return students;
         }
 
         public void Add(Student student)
