@@ -128,6 +128,55 @@ namespace RepositoryPatternDemo.Services
             _unitOfWork.Departments.Update(department);
         }
 
+        public void TransferDepartmentByTransaction(int studentId, int newDepartmentId)
+        {
+            // 1. Unit of Work ke zariye Transaction Start karein
+            _unitOfWork.BeginTransaction();
 
+            try
+            {
+                var student = _unitOfWork.Students.GetById(studentId);
+                if (student == null)
+                {
+                    throw new Exception("Student not found.");
+                }
+
+                if (student.DepartmentId == newDepartmentId)
+                {
+                    return;
+                }
+
+                var newDepartment = _unitOfWork.Departments.GetById(newDepartmentId);
+                if (newDepartment == null)
+                {
+                    throw new Exception("Target department not found.");
+                }
+
+                // Operation 1: Purane department ka count kam karein
+                if (student.DepartmentId.HasValue)
+                {
+                    UpdateDepartmentStudentCount(student.DepartmentId.Value, -1);
+                }
+
+                // Operation 2: Naye department ka count barhayen
+                UpdateDepartmentStudentCount(newDepartmentId, 1);
+
+                // Operation 3: Student ka record update karein
+                student.DepartmentId = newDepartmentId;
+                _unitOfWork.Students.Update(student);
+
+                // Sab changes save karein
+                _unitOfWork.Complete();
+
+                // 2. Transaction Commit karein (Permanent Save)
+                _unitOfWork.Commit();
+            }
+            catch (Exception)
+            {
+                // 3. Error aane par Rollback karein (Sab Undo)
+                _unitOfWork.Rollback();
+                throw; // Error ko upar bhej dein taake Controller handle kar sake
+            }
+        }
     }
 }

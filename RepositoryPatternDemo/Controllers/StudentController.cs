@@ -127,7 +127,9 @@ namespace RepositoryPatternDemo.Controllers
                 return View(student);
             }
 
-            _studentService.TransferDepartment(id, newDepartmentId);
+            //_studentService.TransferDepartment(id, newDepartmentId);
+            _studentService.TransferDepartmentByTransaction(id, newDepartmentId);
+
 
             return RedirectToAction(nameof(Index));
         }
