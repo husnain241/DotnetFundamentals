@@ -9,6 +9,7 @@ namespace Auth.Data
     {
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -53,6 +54,12 @@ namespace Auth.Data
                 b.HasIndex(u => new { u.TenantId, u.NormalizedUserName })
                  .IsUnique()
                  .HasDatabaseName("IX_ApplicationUsers_TenantId_NormalizedUserName");
+
+
+                //M:M
+                builder.Entity<Product>()
+        .HasMany(p => p.Categories)
+        .WithMany(c => c.Products);
             });
 
 

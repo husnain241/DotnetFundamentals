@@ -18,5 +18,8 @@ namespace Auth.Models
 
         [Timestamp]
         public byte[] RowVersion { get; set; } = Array.Empty<byte>();
+
+        public ICollection<Category> Categories { get; set; } = new List<Category>();
+
     }
 }
