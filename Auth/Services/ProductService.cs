@@ -109,5 +109,42 @@ namespace Auth.Services
                 return (false, $"Pessimistic Lock Error: {ex.Message}");
             }
         }
+
+        public async Task<PhysicalProduct> CreatePhysicalProductAsync(CreatePhysicalProductDto dto)
+        {
+            var product = new PhysicalProduct
+            {
+                Name = dto.Name,
+                Price = dto.Price,
+                StockQuantity = dto.StockQuantity,
+                Weight = dto.Weight,
+                Dimensions = dto.Dimensions
+            };
+
+            _context.PhysicalProducts.Add(product);
+            await _context.SaveChangesAsync();
+            return product;
+        }
+
+        public async Task<DigitalProduct> CreateDigitalProductAsync(CreateDigitalProductDto dto)
+        {
+            var product = new DigitalProduct
+            {
+                Name = dto.Name,
+                Price = dto.Price,
+                StockQuantity = dto.StockQuantity,
+                FileSize = dto.FileSize,
+                DownloadUrl = dto.DownloadUrl
+            };
+
+            _context.DigitalProducts.Add(product);
+            await _context.SaveChangesAsync();
+            return product;
+        }
+
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        {
+            return await _context.Products.ToListAsync();
+        }
     }
 }

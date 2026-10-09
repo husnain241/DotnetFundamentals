@@ -11,5 +11,10 @@ namespace Auth.Services.Interfaces
         Task<Product> CreateProductAsync(CreateProductDto dto);
         Task<(bool Success, string Message)> UpdateProductOptimisticAsync(UpdateProductDto dto);
         Task<(bool Success, string Message)> UpdateProductPessimisticAsync(int productId, int quantityToDeduct);
+
+
+        Task<PhysicalProduct> CreatePhysicalProductAsync(CreatePhysicalProductDto dto);
+        Task<DigitalProduct> CreateDigitalProductAsync(CreateDigitalProductDto dto);
+        Task<IEnumerable<Product>> GetAllProductsAsync();
     }
 }

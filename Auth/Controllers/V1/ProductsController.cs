@@ -68,5 +68,28 @@ namespace Auth.Controllers
 
             return Ok(new { message });
         }
-    }
+
+        [HttpPost("physical")]
+        public async Task<IActionResult> CreatePhysicalProduct([FromBody] CreatePhysicalProductDto dto)
+        {
+            var product = await _productService.CreatePhysicalProductAsync(dto);
+            return Ok(new { message = "Physical Product created", productId = product.Id });
+        }
+
+        [HttpPost("digital")]
+        public async Task<IActionResult> CreateDigitalProduct([FromBody] CreateDigitalProductDto dto)
+        {
+            var product = await _productService.CreateDigitalProductAsync(dto);
+            return Ok(new { message = "Digital Product created", productId = product.Id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllProducts()
+        {
+            var products = await _productService.GetAllProductsAsync();
+            return Ok(products);
+        }
+    
+}
+
 }
