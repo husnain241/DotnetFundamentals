@@ -1,16 +1,17 @@
 ﻿using Auth.Data;
 using Auth.DTOs.Products;
 using Auth.Models;
+using Auth.Models.Dtos;
 using Auth.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Auth.Services
 {
-    public class ConcurrencyService : IConcurrencyService
+    public class ProductService : IProductService
     {
         private readonly ApplicationDbContext _context;
 
-        public ConcurrencyService(ApplicationDbContext context)
+        public ProductService(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -19,14 +20,29 @@ namespace Auth.Services
         {
             return await _context.Products.FindAsync(id);
         }
-
-        public async Task<Product> CreateProductAsync(Product product)
+        public async Task<Product> CreateProductAsync(CreateProductDto dto)
         {
+            var product = new Product
+            {
+                Name = dto.Name,
+                Price = dto.Price,
+                StockQuantity = dto.StockQuantity
+            };
+
+            foreach (var categoryId in dto.CategoryIds)
+            {
+                var category = new Category { Id = categoryId };
+
+                _context.Categories.Attach(category);
+
+                product.Categories.Add(category);
+            }
+
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
+
             return product;
         }
-
         public async Task<(bool Success, string Message)> UpdateProductOptimisticAsync(UpdateProductDto dto)
         {
             try
@@ -54,7 +70,6 @@ namespace Auth.Services
             }
         }
 
-        // --- CHECKPOINT 3: Pessimistic Concurrency Method ---
         public async Task<(bool Success, string Message)> UpdateProductPessimisticAsync(int productId, int quantityToDeduct)
         {
             // Begin explicit Database Transaction
