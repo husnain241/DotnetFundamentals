@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Auth.Models
+namespace Auth.Models.Product
 {
     public class Category
     {

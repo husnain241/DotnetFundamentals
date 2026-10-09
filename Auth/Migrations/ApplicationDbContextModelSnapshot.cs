@@ -128,7 +128,7 @@ namespace Auth.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Auth.Models.Category", b =>
+            modelBuilder.Entity("Auth.Models.Product.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -150,13 +150,18 @@ namespace Auth.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Auth.Models.Product", b =>
+            modelBuilder.Entity("Auth.Models.Product.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -184,6 +189,10 @@ namespace Auth.Migrations
                         .HasDatabaseName("IX_Products_Price");
 
                     b.ToTable("Products");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Product");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Auth.Models.RefreshToken", b =>
@@ -360,6 +369,34 @@ namespace Auth.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Auth.Models.Product.DigitalProduct", b =>
+                {
+                    b.HasBaseType("Auth.Models.Product.Product");
+
+                    b.Property<string>("DownloadUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.HasDiscriminator().HasValue("DigitalProduct");
+                });
+
+            modelBuilder.Entity("Auth.Models.Product.PhysicalProduct", b =>
+                {
+                    b.HasBaseType("Auth.Models.Product.Product");
+
+                    b.Property<string>("Dimensions")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Weight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasDiscriminator().HasValue("PhysicalProduct");
+                });
+
             modelBuilder.Entity("Auth.Models.ApplicationUser", b =>
                 {
                     b.HasOne("Auth.Models.Tenant", "Tenant")
@@ -372,13 +409,13 @@ namespace Auth.Migrations
 
             modelBuilder.Entity("CategoryProduct", b =>
                 {
-                    b.HasOne("Auth.Models.Category", null)
+                    b.HasOne("Auth.Models.Product.Category", null)
                         .WithMany()
                         .HasForeignKey("CategoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Auth.Models.Product", null)
+                    b.HasOne("Auth.Models.Product.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)

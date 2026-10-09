@@ -1,5 +1,5 @@
 ﻿using Auth.DTOs.Products;
-using Auth.Models;
+using Auth.Models.Product;
 
 namespace Auth.Services.Interfaces
 {

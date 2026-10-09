@@ -1,4 +1,5 @@
 using Auth.Models;
+using Auth.Models.Product;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
@@ -10,6 +11,8 @@ namespace Auth.Data
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<PhysicalProduct> PhysicalProducts { get; set; }
+        public DbSet<DigitalProduct> DigitalProducts { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
