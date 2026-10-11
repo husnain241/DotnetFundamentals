@@ -16,9 +16,28 @@ namespace Auth.Services
             _context = context;
         }
 
-        public async Task<Product?> GetProductByIdAsync(int id)
+        public async Task<ProductResponseDto?> GetProductByIdAsync(int id)
         {
-            return await _context.Products.FindAsync(id);
+            var product = await _context.Products.FindAsync(id);
+            if (product == null) return null;
+
+            return new ProductResponseDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                StockQuantity = product.StockQuantity,
+                ProductType = product is PhysicalProduct ? "Physical" : product is DigitalProduct ? "Digital" : "Unknown",
+                Weight = product is PhysicalProduct physical ? physical.Weight : null,
+                Dimensions = product is PhysicalProduct physicalProd ? physicalProd.Dimensions : null,
+                FileSize = product is DigitalProduct digital ? digital.FileSize : null,
+                DownloadUrl = product is DigitalProduct digitalProd ? digitalProd.DownloadUrl : null,
+                CategoryNames = await _context.Entry(product)
+                    .Collection(p => p.Categories)
+                    .Query()
+                    .Select(c => c.Name)
+                    .ToListAsync()
+            };
         }
         public async Task<Product> CreateProductAsync(CreateProductDto dto)
         {

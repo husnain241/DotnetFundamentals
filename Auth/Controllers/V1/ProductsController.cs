@@ -12,12 +12,10 @@ namespace Auth.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductQueryService _productQueryService;
         private readonly IProductService _productService;
 
-        public ProductsController(IProductQueryService productQueryService, IProductService productService)
+        public ProductsController(IProductService productService)
         {
-            _productQueryService = productQueryService;
             _productService = productService;
         }
         [HttpPost("createProduct")]
@@ -34,7 +32,7 @@ namespace Auth.Controllers
             });
         }
 
-        [HttpGet("products/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct(int id)
         {
             var product = await _productService.GetProductByIdAsync(id);
@@ -44,7 +42,7 @@ namespace Auth.Controllers
             return Ok(product);
         }
 
-        [HttpPut("products/optimistic")]
+        [HttpPut("optimistic")]
         public async Task<IActionResult> UpdateOptimistic([FromBody] UpdateProductDto dto)
         {
             var (success, message) = await _productService.UpdateProductOptimisticAsync(dto);
@@ -57,7 +55,7 @@ namespace Auth.Controllers
             return Ok(new { message });
         }
 
-        [HttpPost("products/pessimistic/{id}/deduct")]
+        [HttpPost("pessimistic/{id}/deduct")]
         public async Task<IActionResult> UpdatePessimistic(int id, [FromQuery] int quantity)
         {
             var (success, message) = await _productService.UpdateProductPessimisticAsync(id, quantity);
