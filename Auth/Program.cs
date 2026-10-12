@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Auth.Configuration;
 using Auth.Data;
 using Auth.Models;
@@ -46,9 +47,6 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ITenantContext, TenantContext>();
 builder.Services.AddScoped<ITenantProvider, TenantProvider>();
 
-
-// Register Authorization Policies for Issue #69
-// Register Authorization Policies for Issue #69
 builder.Services.AddAuthorization(options =>
 {
     // 1. Strict Admin policy — only users with the "Admin" role
@@ -92,18 +90,25 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 builder.Services.RemoveAll<IUserValidator<ApplicationUser>>();
 builder.Services.AddScoped<IUserValidator<ApplicationUser>, TenantUserValidator>();
 
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ApiVersionReader = new UrlSegmentApiVersionReader(); 
+
+}).AddMvc();
+builder.Services.AddApiVersioning();
 // 5. Bind JwtOptions from appsettings.json
 var jwtOptions = new JwtOptions();
 builder.Configuration.GetSection(JwtOptions.SectionName).Bind(jwtOptions);
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
 
-// 6. Unified Authentication Setup (JWT + Cookie + External Google Provider)
 builder.Services.AddAuthentication(options =>
 {
     // Default schemes for your API's local JWTs
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    // Required so that Google's OAuth handler can write the external identity cookie
     options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
 })
 .AddJwtBearer(options =>
@@ -120,9 +125,7 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero // Removes default 5-minute buffer delay
     };
 })
-// NOTE: .AddCookie("ExternalScheme") removed — AddIdentity() already registers
-// IdentityConstants.ExternalScheme ("Identity.External") which is the cookie
-// that GetExternalLoginInfoAsync() reads from.
+
 .AddGoogle(options =>
 {
     options.SignInScheme = IdentityConstants.ExternalScheme;
