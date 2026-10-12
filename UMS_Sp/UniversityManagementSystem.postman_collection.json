@@ -1,0 +1,911 @@
+{
+	"info": {
+		"_postman_id": "a91b4e22-6b98-4c6e-8e31-d8f99016b8ef",
+		"name": "University Management System API",
+		"description": "Comprehensive Postman collection for University Management System featuring 4 related entities (Departments, Students, Courses, Enrollments), Repository Pattern, and EF Core.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Departments",
+			"description": "Endpoints for managing university departments",
+			"item": [
+				{
+					"name": "1. Get All Departments (Paged)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/departments?pageNumber=1&pageSize=10&searchTerm=&sortBy=id&isDescending=false",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"departments"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1",
+									"description": "Page number (default 1)"
+								},
+								{
+									"key": "pageSize",
+									"value": "10",
+									"description": "Items per page (max 50)"
+								},
+								{
+									"key": "searchTerm",
+									"value": "",
+									"description": "Search by department name or HOD"
+								},
+								{
+									"key": "sortBy",
+									"value": "id",
+									"description": "Sort field: id, name, headofdepartment, createdat"
+								},
+								{
+									"key": "isDescending",
+									"value": "false",
+									"description": "Sort direction: true or false"
+								}
+							]
+						},
+						"description": "Retrieves a paginated list of departments."
+					},
+					"response": []
+				},
+				{
+					"name": "2. Get Department by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/departments/{{departmentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"departments",
+								"{{departmentId}}"
+							]
+						},
+						"description": "Gets department by its primary key ID."
+					},
+					"response": []
+				},
+				{
+					"name": "3. Create New Department",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Civil Engineering\",\n  \"headOfDepartment\": \"Dr. Gustave Eiffel\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/departments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"departments"
+							]
+						},
+						"description": "Creates a new department record."
+					},
+					"response": []
+				},
+				{
+					"name": "4. Update Department",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Computer Science & Information Technology\",\n  \"headOfDepartment\": \"Dr. Alan Turing\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/departments/{{departmentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"departments",
+								"{{departmentId}}"
+							]
+						},
+						"description": "Updates an existing department's name and head of department."
+					},
+					"response": []
+				},
+				{
+					"name": "5. Delete Department",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/departments/{{departmentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"departments",
+								"{{departmentId}}"
+							]
+						},
+						"description": "Deletes a department by ID."
+					},
+					"response": []
+				},
+				{
+					"name": "6. Get Department With Total Students Count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/departments/{{departmentId}}/students-count",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"departments",
+								"{{departmentId}}",
+								"students-count"
+							]
+						},
+						"description": "Returns department details along with the total count of enrolled students."
+					},
+					"response": []
+				},
+				{
+					"name": "7. Get All Departments With Total Students Count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/departments/with-students-count",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"departments",
+								"with-students-count"
+							]
+						},
+						"description": "Returns all departments with their aggregated total student count."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Students",
+			"description": "Endpoints for managing university students and their department/course relationships",
+			"item": [
+				{
+					"name": "1. Get All Students (Paged)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/students?pageNumber=1&pageSize=10&searchTerm=&sortBy=id&isDescending=false",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"students"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "searchTerm",
+									"value": ""
+								},
+								{
+									"key": "sortBy",
+									"value": "id"
+								},
+								{
+									"key": "isDescending",
+									"value": "false"
+								}
+							]
+						},
+						"description": "Returns a paginated list of all students."
+					},
+					"response": []
+				},
+				{
+					"name": "2. Get Student by ID with Department Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/students/{{studentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"students",
+								"{{studentId}}"
+							]
+						},
+						"description": "Returns student information along with joined department name and HOD."
+					},
+					"response": []
+				},
+				{
+					"name": "3. Create New Student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Franklin Richards\",\n  \"email\": \"franklin.richards@university.edu\",\n  \"enrollmentDate\": \"2026-09-01T00:00:00Z\",\n  \"departmentId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/students",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"students"
+							]
+						},
+						"description": "Enrolls a new student in a department."
+					},
+					"response": []
+				},
+				{
+					"name": "4. Update Student",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Alice Johnson\",\n  \"email\": \"alice.j@university.edu\",\n  \"departmentId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/students/{{studentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"students",
+								"{{studentId}}"
+							]
+						},
+						"description": "Updates student profile details."
+					},
+					"response": []
+				},
+				{
+					"name": "5. Delete Student",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/students/{{studentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"students",
+								"{{studentId}}"
+							]
+						},
+						"description": "Deletes a student record."
+					},
+					"response": []
+				},
+				{
+					"name": "6. Get Students by Department",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/students/by-department/{{departmentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"students",
+								"by-department",
+								"{{departmentId}}"
+							]
+						},
+						"description": "Fetches all students associated with a given department ID."
+					},
+					"response": []
+				},
+				{
+					"name": "7. Get Student with All Enrolled Courses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/students/{{studentId}}/courses",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"students",
+								"{{studentId}}",
+								"courses"
+							]
+						},
+						"description": "Retrieves the student profile together with all their enrolled courses, course credits, marks, and grades."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"description": "Endpoints for managing academic courses",
+			"item": [
+				{
+					"name": "1. Get All Courses (Paged)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses?pageNumber=1&pageSize=10&searchTerm=&sortBy=id&isDescending=false",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"courses"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "searchTerm",
+									"value": ""
+								},
+								{
+									"key": "sortBy",
+									"value": "id"
+								},
+								{
+									"key": "isDescending",
+									"value": "false"
+								}
+							]
+						},
+						"description": "Lists all courses with pagination, search, and sorting."
+					},
+					"response": []
+				},
+				{
+					"name": "2. Get Course by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/{{courseId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"{{courseId}}"
+							]
+						},
+						"description": "Retrieves course details including department name."
+					},
+					"response": []
+				},
+				{
+					"name": "3. Create New Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Cloud Computing Systems\",\n  \"credits\": 4,\n  \"departmentId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/courses",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"courses"
+							]
+						},
+						"description": "Creates a new course assigned to a department."
+					},
+					"response": []
+				},
+				{
+					"name": "4. Update Course",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Introduction to Programming and Problem Solving\",\n  \"credits\": 4,\n  \"departmentId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/{{courseId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"{{courseId}}"
+							]
+						},
+						"description": "Updates course title, credits, or department assignment."
+					},
+					"response": []
+				},
+				{
+					"name": "5. Delete Course",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/{{courseId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"{{courseId}}"
+							]
+						},
+						"description": "Deletes a course by its ID."
+					},
+					"response": []
+				},
+				{
+					"name": "6. Get Courses by Department",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/by-department/{{departmentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"by-department",
+								"{{departmentId}}"
+							]
+						},
+						"description": "Gets all courses offered under a specific department."
+					},
+					"response": []
+				},
+				{
+					"name": "7. Get Course With Enrolled Students Count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/{{courseId}}/students-count",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"{{courseId}}",
+								"students-count"
+							]
+						},
+						"description": "Gets single course details with the total number of students enrolled."
+					},
+					"response": []
+				},
+				{
+					"name": "8. Get All Courses With Enrolled Students Count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/with-students-count",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"courses",
+								"with-students-count"
+							]
+						},
+						"description": "Lists all courses accompanied by their total student count."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Enrollments",
+			"description": "Many-to-Many join entity managing course enrollments, grades, and marks",
+			"item": [
+				{
+					"name": "1. Get All Enrollments (Paged)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/enrollments?pageNumber=1&pageSize=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"enrollments"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Returns all enrollments with student and course details."
+					},
+					"response": []
+				},
+				{
+					"name": "2. Get Enrollment Details by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/enrollments/{{enrollmentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"enrollments",
+								"{{enrollmentId}}"
+							]
+						},
+						"description": "Gets enrollment details including student name, student email, course title, credits, marks, and grade."
+					},
+					"response": []
+				},
+				{
+					"name": "3. Enroll Student in Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentId\": 2,\n  \"courseId\": 2,\n  \"enrollmentDate\": \"2026-10-12T00:00:00Z\",\n  \"grade\": \"A\",\n  \"marks\": 92.5\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/enrollments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"enrollments"
+							]
+						},
+						"description": "Enrolls a student in a specific course. Validates duplicate enrollments and returns HTTP 409 Conflict if already enrolled."
+					},
+					"response": []
+				},
+				{
+					"name": "4. Update Enrollment (Grade & Marks)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"grade\": \"A\",\n  \"marks\": 96.0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/enrollments/{{enrollmentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"enrollments",
+								"{{enrollmentId}}"
+							]
+						},
+						"description": "Updates grade (A, B, C, D, F) and marks (0-100) for an existing enrollment."
+					},
+					"response": []
+				},
+				{
+					"name": "5. Delete Enrollment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/enrollments/{{enrollmentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"enrollments",
+								"{{enrollmentId}}"
+							]
+						},
+						"description": "Cancels or deletes an enrollment record."
+					},
+					"response": []
+				},
+				{
+					"name": "6. Get All Enrollments for a Student",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/enrollments/student/{{studentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"enrollments",
+								"student",
+								"{{studentId}}"
+							]
+						},
+						"description": "Lists all course enrollments for a given student ID."
+					},
+					"response": []
+				},
+				{
+					"name": "7. Get All Enrollments for a Course",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/enrollments/course/{{courseId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"enrollments",
+								"course",
+								"{{courseId}}"
+							]
+						},
+						"description": "Lists all student enrollments in a given course ID."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "departmentId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "studentId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "courseId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "enrollmentId",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}

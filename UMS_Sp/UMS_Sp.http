@@ -1,6 +1,166 @@
-@UMS_Sp_HostAddress = http://localhost:5279
+@UMS_Sp_HostAddress = https://localhost:7087
 
-GET {{UMS_Sp_HostAddress}}/weatherforecast/
+### -------------------------------------------
+### DEPARTMENTS MODULE
+### -------------------------------------------
+
+### 1. Get All Departments (with pagination & sorting)
+GET {{UMS_Sp_HostAddress}}/api/departments?pageNumber=1&pageSize=10
 Accept: application/json
 
-###
+### 2. Get Department by ID
+GET {{UMS_Sp_HostAddress}}/api/departments/1
+Accept: application/json
+
+### 3. Create New Department
+POST {{UMS_Sp_HostAddress}}/api/departments
+Content-Type: application/json
+
+{
+  "name": "Civil Engineering",
+  "headOfDepartment": "Dr. Gustave Eiffel"
+}
+
+### 4. Update Department
+PUT {{UMS_Sp_HostAddress}}/api/departments/1
+Content-Type: application/json
+
+{
+  "name": "Computer Science & Engineering",
+  "headOfDepartment": "Dr. Alan Turing"
+}
+
+### 5. Get Department with Total Students Count
+GET {{UMS_Sp_HostAddress}}/api/departments/1/students-count
+Accept: application/json
+
+### 6. Get All Departments with Total Students Count
+GET {{UMS_Sp_HostAddress}}/api/departments/with-students-count
+Accept: application/json
+
+
+### -------------------------------------------
+### STUDENTS MODULE
+### -------------------------------------------
+
+### 1. Get All Students
+GET {{UMS_Sp_HostAddress}}/api/students?pageNumber=1&pageSize=10
+Accept: application/json
+
+### 2. Get Student by ID with Department Details
+GET {{UMS_Sp_HostAddress}}/api/students/1
+Accept: application/json
+
+### 3. Create New Student
+POST {{UMS_Sp_HostAddress}}/api/students
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@university.edu",
+  "enrollmentDate": "2026-09-01T00:00:00Z",
+  "departmentId": 1
+}
+
+### 4. Update Student
+PUT {{UMS_Sp_HostAddress}}/api/students/1
+Content-Type: application/json
+
+{
+  "name": "Alice Johnson",
+  "email": "alice.johnson@university.edu",
+  "departmentId": 1
+}
+
+### 5. Get Students by Department
+GET {{UMS_Sp_HostAddress}}/api/students/by-department/1
+Accept: application/json
+
+### 6. Get Student with All Enrolled Courses
+GET {{UMS_Sp_HostAddress}}/api/students/1/courses
+Accept: application/json
+
+
+### -------------------------------------------
+### COURSES MODULE
+### -------------------------------------------
+
+### 1. Get All Courses
+GET {{UMS_Sp_HostAddress}}/api/courses?pageNumber=1&pageSize=10
+Accept: application/json
+
+### 2. Get Course by ID
+GET {{UMS_Sp_HostAddress}}/api/courses/1
+Accept: application/json
+
+### 3. Create New Course
+POST {{UMS_Sp_HostAddress}}/api/courses
+Content-Type: application/json
+
+{
+  "title": "Machine Learning",
+  "credits": 4,
+  "departmentId": 1
+}
+
+### 4. Update Course
+PUT {{UMS_Sp_HostAddress}}/api/courses/1
+Content-Type: application/json
+
+{
+  "title": "Introduction to Programming & Problem Solving",
+  "credits": 4,
+  "departmentId": 1
+}
+
+### 5. Get Courses by Department
+GET {{UMS_Sp_HostAddress}}/api/courses/by-department/1
+Accept: application/json
+
+### 6. Get Course with Enrolled Students Count
+GET {{UMS_Sp_HostAddress}}/api/courses/1/students-count
+Accept: application/json
+
+### 7. Get All Courses with Enrolled Students Count
+GET {{UMS_Sp_HostAddress}}/api/courses/with-students-count
+Accept: application/json
+
+
+### -------------------------------------------
+### ENROLLMENT MODULE (Many-to-Many)
+### -------------------------------------------
+
+### 1. Enroll Student in Course
+POST {{UMS_Sp_HostAddress}}/api/enrollments
+Content-Type: application/json
+
+{
+  "studentId": 2,
+  "courseId": 2,
+  "grade": "A",
+  "marks": 91.5
+}
+
+### 2. Update Enrollment (Grade & Marks)
+PUT {{UMS_Sp_HostAddress}}/api/enrollments/1
+Content-Type: application/json
+
+{
+  "grade": "A",
+  "marks": 96.0
+}
+
+### 3. Get Enrollment Details by ID
+GET {{UMS_Sp_HostAddress}}/api/enrollments/1
+Accept: application/json
+
+### 4. Get All Enrollments for a Student
+GET {{UMS_Sp_HostAddress}}/api/enrollments/student/1
+Accept: application/json
+
+### 5. Get All Enrollments for a Course
+GET {{UMS_Sp_HostAddress}}/api/enrollments/course/1
+Accept: application/json
+
+### 6. Delete Enrollment
+DELETE {{UMS_Sp_HostAddress}}/api/enrollments/5
