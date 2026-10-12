@@ -1,32 +1,67 @@
 ﻿using Auth.Data;
 using Auth.DTOs.Products;
-using Auth.Models;
+using Auth.Models.Dtos;
+using Auth.Models.Product;
 using Auth.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Auth.Services
 {
-    public class ConcurrencyService : IConcurrencyService
+    public class ProductService : IProductService
     {
         private readonly ApplicationDbContext _context;
 
-        public ConcurrencyService(ApplicationDbContext context)
+        public ProductService(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<Product?> GetProductByIdAsync(int id)
+        public async Task<ProductResponseDto?> GetProductByIdAsync(int id)
         {
-            return await _context.Products.FindAsync(id);
-        }
+            var product = await _context.Products.FindAsync(id);
+            if (product == null) return null;
 
-        public async Task<Product> CreateProductAsync(Product product)
+            return new ProductResponseDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                StockQuantity = product.StockQuantity,
+                ProductType = product is PhysicalProduct ? "Physical" : product is DigitalProduct ? "Digital" : "Unknown",
+                Weight = product is PhysicalProduct physical ? physical.Weight : null,
+                Dimensions = product is PhysicalProduct physicalProd ? physicalProd.Dimensions : null,
+                FileSize = product is DigitalProduct digital ? digital.FileSize : null,
+                DownloadUrl = product is DigitalProduct digitalProd ? digitalProd.DownloadUrl : null,
+                CategoryNames = await _context.Entry(product)
+                    .Collection(p => p.Categories)
+                    .Query()
+                    .Select(c => c.Name)
+                    .ToListAsync()
+            };
+        }
+        public async Task<Product> CreateProductAsync(CreateProductDto dto)
         {
+            var product = new Product
+            {
+                Name = dto.Name,
+                Price = dto.Price,
+                StockQuantity = dto.StockQuantity
+            };
+
+            foreach (var categoryId in dto.CategoryIds)
+            {
+                var category = new Category { Id = categoryId };
+
+                _context.Categories.Attach(category);
+
+                product.Categories.Add(category);
+            }
+
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
+
             return product;
         }
-
         public async Task<(bool Success, string Message)> UpdateProductOptimisticAsync(UpdateProductDto dto)
         {
             try
@@ -54,7 +89,6 @@ namespace Auth.Services
             }
         }
 
-        // --- CHECKPOINT 3: Pessimistic Concurrency Method ---
         public async Task<(bool Success, string Message)> UpdateProductPessimisticAsync(int productId, int quantityToDeduct)
         {
             // Begin explicit Database Transaction
@@ -93,6 +127,43 @@ namespace Auth.Services
                 await transaction.RollbackAsync();
                 return (false, $"Pessimistic Lock Error: {ex.Message}");
             }
+        }
+
+        public async Task<PhysicalProduct> CreatePhysicalProductAsync(CreatePhysicalProductDto dto)
+        {
+            var product = new PhysicalProduct
+            {
+                Name = dto.Name,
+                Price = dto.Price,
+                StockQuantity = dto.StockQuantity,
+                Weight = dto.Weight,
+                Dimensions = dto.Dimensions
+            };
+
+            _context.PhysicalProducts.Add(product);
+            await _context.SaveChangesAsync();
+            return product;
+        }
+
+        public async Task<DigitalProduct> CreateDigitalProductAsync(CreateDigitalProductDto dto)
+        {
+            var product = new DigitalProduct
+            {
+                Name = dto.Name,
+                Price = dto.Price,
+                StockQuantity = dto.StockQuantity,
+                FileSize = dto.FileSize,
+                DownloadUrl = dto.DownloadUrl
+            };
+
+            _context.DigitalProducts.Add(product);
+            await _context.SaveChangesAsync();
+            return product;
+        }
+
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        {
+            return await _context.Products.ToListAsync();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Auth.Models
+namespace Auth.Models.Product
 {
     public class Product
     {
@@ -18,5 +18,8 @@ namespace Auth.Models
 
         [Timestamp]
         public byte[] RowVersion { get; set; } = Array.Empty<byte>();
+
+        public ICollection<Category> Categories { get; set; } = new List<Category>();
+
     }
 }
