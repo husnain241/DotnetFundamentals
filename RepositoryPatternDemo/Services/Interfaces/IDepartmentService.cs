@@ -9,5 +9,7 @@ namespace RepositoryPatternDemo.Services.Interfaces
         void Add(Department department);
         void Update(Department department);
         void Delete(int id);
+
+        IEnumerable<Department> GetAllAsNoTracking();
     }
 }

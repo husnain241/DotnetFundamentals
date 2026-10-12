@@ -10,5 +10,7 @@ namespace RepositoryPatternDemo.Services.Interfaces
         void Update(Student student);
         void Delete(int id);
         void TransferDepartment(int studentId, int newDepartmentId);
+
+        IEnumerable<Student> GetAllAsNoTracking();
     }
 }
