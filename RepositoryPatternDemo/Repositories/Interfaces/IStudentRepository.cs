@@ -17,5 +17,9 @@ namespace RepositoryPatternDemo.Repositories.Interfaces
 
         Task<Student?> GetByIdCompiledAsync(int id);
         Task<List<Student>> GetByDepartmentCompiledAsync(int departmentId);
+
+        void BulkInsert(IEnumerable<Student> students);
+        int BulkUpdateDepartmentId(int oldDepartmentId, int newDepartmentId);
+        int BulkDeleteByDepartmentId(int departmentId);
     }
 }

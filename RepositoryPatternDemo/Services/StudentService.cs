@@ -216,5 +216,20 @@ namespace RepositoryPatternDemo.Services
                 throw; // Error ko upar bhej dein taake Controller handle kar sake
             }
         }
+
+        public void BulkInsertStudents(IEnumerable<Student> students)
+        {
+            _unitOfWork.Students.BulkInsert(students);
+        }
+
+        public int BulkUpdateDepartmentId(int oldDepartmentId, int newDepartmentId)
+        {
+            return _unitOfWork.Students.BulkUpdateDepartmentId(oldDepartmentId, newDepartmentId);
+        }
+
+        public int BulkDeleteByDepartmentId(int departmentId)
+        {
+            return _unitOfWork.Students.BulkDeleteByDepartmentId(departmentId);
+        }
     }
 }
