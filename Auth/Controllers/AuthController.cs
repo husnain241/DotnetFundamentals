@@ -1,6 +1,6 @@
-﻿using Auth.DTOs;
+﻿using Auth.DTOs.Auth;
 using Auth.Models;
-using Auth.Services;
+using Auth.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,18 +21,17 @@ namespace Auth.Controllers
             _signInManager = signInManager;
         }
 
-        // 1. User Register Endpoint
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _authService.RegisterUserAsync(dto);
-            if (!result)
-                return BadRequest(new { Message = "Registration failed. User might already exist." });
+            var (success, message) = await _authService.RegisterUserAsync(dto);
+            if (!success)
+                return BadRequest(new { Message = message });
 
-            return Ok(new { Message = "User registered successfully!" });
+            return Ok(new { Message = message });
         }
 
         // 2. User Login Endpoint

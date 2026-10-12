@@ -8,5 +8,6 @@ namespace Auth.Models
         {
             Id = Guid.NewGuid().ToString();
         }
+
     }
 }

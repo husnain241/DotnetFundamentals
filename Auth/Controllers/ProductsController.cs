@@ -1,4 +1,4 @@
-﻿using Auth.Services;
+﻿using Auth.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Controllers

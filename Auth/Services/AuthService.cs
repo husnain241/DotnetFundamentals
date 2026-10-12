@@ -1,6 +1,8 @@
 ﻿using Auth.Data;
-using Auth.DTOs;
+using Auth.DTOs.Auth;
 using Auth.Models;
+using Auth.Services.Identity;
+using Auth.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +18,7 @@ namespace Auth.Services
         private readonly IJwtTokenService _jwtTokenService;
         private readonly ApplicationDbContext _context; 
 
-        private readonly IEmailSender _emailSender;
+        private readonly Interfaces.IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
 
         public AuthService(
@@ -25,7 +27,7 @@ namespace Auth.Services
             ApplicationRoleManager roleManager,
             IJwtTokenService jwtTokenService,
             ApplicationDbContext context,
-            IEmailSender emailSender,
+            Interfaces.IEmailSender emailSender,
             ISmsSender smsSender)
         {
             _userManager = userManager;
@@ -37,23 +39,45 @@ namespace Auth.Services
             _smsSender = smsSender;
         }
 
-        // 1. User Registration Logic
-        public async Task<bool> RegisterUserAsync(RegisterDto dto)
+        public async Task<(bool Success, string Message)> RegisterUserAsync(RegisterDto dto)
         {
+            // 1. Tenant Existence Check
+            var tenantExists = await _context.Tenants.AnyAsync(t => t.Id == dto.TenantId && t.IsActive);
+            if (!tenantExists)
+            {
+                return (false, "Invalid or inactive Tenant ID.");
+            }
+
+            // 2. Tenant-Scoped Duplication Check
+            var isUserExistsInTenant = await _userManager.Users
+                .AnyAsync(u => u.TenantId == dto.TenantId && (u.Email == dto.Email || u.UserName == dto.UserName));
+
+            if (isUserExistsInTenant)
+            {
+                return (false, "User with this Email or Username already exists in your tenant.");
+            }
+
+            // 3. User Object Creation
             var user = new ApplicationUser
             {
                 Id = Guid.NewGuid().ToString(),
                 UserName = dto.UserName,
-                Email = dto.Email
+                Email = dto.Email,
+                TenantId = dto.TenantId
             };
 
+            // 4. User Save via Identity
             var result = await _userManager.CreateAsync(user, dto.Password);
-            if (!result.Succeeded) return false;
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                return (false, errors);
+            }
 
-            // Default Claim automatically attach karte hain
-            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Email, user.Email));
+            // 5. Attach Claim
+            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Email, user.Email!));
 
-            return true;
+            return (true, "User registered successfully.");
         }
 
         // 2. User Login Logic

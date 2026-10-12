@@ -3,9 +3,12 @@ using Auth.Data;
 using Auth.Models;
 using Auth.Options;
 using Auth.Services;
+using Auth.Services.Identity;
+using Auth.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -31,11 +34,17 @@ builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IConcurrencyService, ConcurrencyService>();
 
 builder.Services.AddScoped<IProductQueryService, ProductQueryService>();
+builder.Services.AddScoped<ITenantService, TenantService>();
 
 builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.SectionName));
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.Configure<SmsOptions>(builder.Configuration.GetSection(SmsOptions.SectionName));
 builder.Services.AddScoped<ISmsSender, SmsSender>();
+
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ITenantContext, TenantContext>();
+builder.Services.AddScoped<ITenantProvider, TenantProvider>();
 
 
 // Register Authorization Policies for Issue #69
@@ -78,6 +87,10 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 .AddSignInManager<ApplicationSignInManager>()
 .AddRoleManager<ApplicationRoleManager>() 
 .AddDefaultTokenProviders();
+
+// Replace built-in global UserValidator with Tenant-scoped UserValidator
+builder.Services.RemoveAll<IUserValidator<ApplicationUser>>();
+builder.Services.AddScoped<IUserValidator<ApplicationUser>, TenantUserValidator>();
 
 // 5. Bind JwtOptions from appsettings.json
 var jwtOptions = new JwtOptions();
