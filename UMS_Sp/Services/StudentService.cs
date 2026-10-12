@@ -176,5 +176,22 @@ namespace UMS_Sp.Services
                 }).ToList()
             };
         }
+
+        public async Task<StudentDto> GetByIdUsingStoredProcedureAsync(int id)
+        {
+            var student = await _unitOfWork.Students.GetByIdUsingStoredProcedureAsync(id);
+
+            if (student == null)
+                throw new KeyNotFoundException($"Student with ID {id} not found");
+
+            return new StudentDto
+            {
+                Id = student.Id,
+                Name = student.Name,
+                Email = student.Email,
+                EnrollmentDate = student.EnrollmentDate,
+                DepartmentId = student.DepartmentId
+            };
+        }
     }
 }

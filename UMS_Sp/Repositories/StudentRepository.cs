@@ -70,5 +70,15 @@ namespace UMS_Sp.Repositories
             var normalizedEmail = email.Trim().ToLower();
             return await _dbSet.AnyAsync(s => s.Email.ToLower() == normalizedEmail && (!excludeStudentId.HasValue || s.Id != excludeStudentId.Value));
         }
+
+        public async Task<Student> GetByIdUsingStoredProcedureAsync(int id)
+{
+    var student = _context.Students
+        .FromSqlInterpolated($"EXEC GetStudentById {id}")
+        .AsEnumerable() 
+        .FirstOrDefault(); 
+        
+    return student;
+}
     }
 }

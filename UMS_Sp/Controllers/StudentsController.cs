@@ -133,5 +133,12 @@ namespace UMS_Sp.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("{id}/sp")]
+        public async Task<ActionResult<StudentDto>> GetByIdUsingStoredProcedure(int id)
+        {
+            var student = await _studentService.GetByIdUsingStoredProcedureAsync(id);
+            return Ok(student);
+        }
     }
 }

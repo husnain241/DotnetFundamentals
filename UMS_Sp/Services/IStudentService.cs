@@ -13,5 +13,7 @@ namespace UMS_Sp.Services
         Task<bool> DeleteAsync(int id);
         Task<IEnumerable<StudentDto>> GetStudentsByDepartmentAsync(int departmentId);
         Task<StudentWithCoursesDto?> GetStudentWithCoursesAsync(int id);
+
+        Task<StudentDto?> GetByIdUsingStoredProcedureAsync(int id);
     }
 }
