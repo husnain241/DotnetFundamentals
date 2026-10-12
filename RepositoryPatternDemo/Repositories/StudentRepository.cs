@@ -18,6 +18,10 @@ namespace RepositoryPatternDemo.Repositories
         {
             return _context.Students.AsNoTracking().ToList();
         }
+        public IEnumerable<Student> GetAllWithDepartment()
+        {
+            return _context.Students.Include(s => s.Department).ToList();
+        }
         public List<Student> GetAll()
         {
             return _context.Students.ToList();
