@@ -10,9 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
     options.UseInMemoryDatabase("RepositoryPatternDemoDb")
-     .UseLazyLoadingProxies());
+           .UseLazyLoadingProxies();
 
+    // --- EF Core Logging Setup ---
+
+    options.LogTo(Console.WriteLine, LogLevel.Information);
+
+    options.EnableSensitiveDataLogging();
+
+    options.EnableDetailedErrors();
+});
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
