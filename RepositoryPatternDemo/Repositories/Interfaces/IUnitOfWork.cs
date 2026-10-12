@@ -7,5 +7,8 @@ namespace RepositoryPatternDemo.Repositories.Interfaces
         IStudentRepository Students { get; }
         IDepartmentRepository Departments { get; }
         int Complete();
+        void BeginTransaction();
+        void Commit();
+        void Rollback();
     }
 }

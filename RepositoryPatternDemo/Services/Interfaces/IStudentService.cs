@@ -13,5 +13,6 @@ namespace RepositoryPatternDemo.Services.Interfaces
 
         IEnumerable<Student> GetAllAsNoTracking();
         IEnumerable<Student> GetAllWithDepartment();
+        void TransferDepartmentByTransaction(int studentId, int newDepartmentId);
     }
 }
