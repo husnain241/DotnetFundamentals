@@ -15,5 +15,6 @@ namespace UMS_Sp.Services
         Task<StudentWithCoursesDto?> GetStudentWithCoursesAsync(int id);
 
         Task<StudentDto?> GetByIdUsingStoredProcedureAsync(int id);
+        Task<StudentDepartmentDto> GetStudentWithDepartmentAsync(int id);
     }
 }

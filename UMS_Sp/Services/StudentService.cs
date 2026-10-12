@@ -193,5 +193,16 @@ namespace UMS_Sp.Services
                 DepartmentId = student.DepartmentId
             };
         }
+
+        public async Task<StudentDepartmentDto> GetStudentWithDepartmentAsync(int id)
+        {
+            var student = await _unitOfWork.Students.GetStudentWithDepartmentAsync(id);
+
+            if (student == null)
+            {
+                throw new KeyNotFoundException($"Student with ID {id} not found");
+            }
+            return student;
+        }
     }
 }

@@ -140,5 +140,23 @@ namespace UMS_Sp.Controllers
             var student = await _studentService.GetByIdUsingStoredProcedureAsync(id);
             return Ok(student);
         }
+
+        [HttpGet("{id}/department-details")]
+        public async Task<IActionResult> GetStudentWithDepartment(int id)
+        {
+            try
+            {
+                var student = await _studentService.GetStudentWithDepartmentAsync(id);
+                return Ok(student); 
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message); 
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error"); 
+            }
+        }
     }
 }

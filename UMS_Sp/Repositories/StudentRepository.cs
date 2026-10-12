@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using UMS_Sp.Data;
+using UMS_Sp.DTOs;
 using UMS_Sp.DTOs.Common;
 using UMS_Sp.Models;
 
@@ -80,5 +81,13 @@ namespace UMS_Sp.Repositories
         
     return student;
 }
+
+        public async Task<StudentDepartmentDto> GetStudentWithDepartmentAsync(int id)
+        {
+            var result = await _context.Set<StudentDepartmentDto>()
+                .FromSqlInterpolated($"EXEC GetStudentWithDepartment {id}")
+                .ToListAsync(); 
+            return result.FirstOrDefault();
+        }
     }
 }

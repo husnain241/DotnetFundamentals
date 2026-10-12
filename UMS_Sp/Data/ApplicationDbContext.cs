@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using UMS_Sp.DTOs;
 using UMS_Sp.Models;
 
 namespace UMS_Sp.Data
@@ -76,6 +77,10 @@ namespace UMS_Sp.Data
                       .HasForeignKey(e => e.CourseId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
+
+
+            modelBuilder.Entity<StudentDepartmentDto>().HasNoKey();
+
         }
     }
 }

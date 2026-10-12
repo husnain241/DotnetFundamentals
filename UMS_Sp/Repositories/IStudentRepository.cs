@@ -13,6 +13,7 @@ namespace UMS_Sp.Repositories
         Task<bool> EmailExistsAsync(string email, int? excludeStudentId = null);
 
         Task<Student> GetByIdUsingStoredProcedureAsync(int id);
+        Task<StudentDepartmentDto> GetStudentWithDepartmentAsync(int id);
 
     }
 }
