@@ -49,7 +49,8 @@ namespace UMS_Sp.Services
             await _unitOfWork.Departments.AddAsync(department);
             await _unitOfWork.CompleteAsync();
 
-            _cache.Remove("departments:all");
+            // Cache Invalidation: List cache ko remove karein
+            await _distributedCache.RemoveAsync("departments:all");
 
             return new DepartmentDto
             {
@@ -71,8 +72,9 @@ namespace UMS_Sp.Services
             _unitOfWork.Departments.Update(department);
             await _unitOfWork.CompleteAsync();
 
-            _cache.Remove($"department:{id}");
-            _cache.Remove("departments:all");
+            // Cache Invalidation: Specific aur List dono ko remove karein
+            await _distributedCache.RemoveAsync($"department:{id}");
+            await _distributedCache.RemoveAsync("departments:all");
 
             return new DepartmentDto
             {
@@ -91,8 +93,9 @@ namespace UMS_Sp.Services
             _unitOfWork.Departments.Delete(department);
             await _unitOfWork.CompleteAsync();
 
-            _cache.Remove($"department:{id}");
-            _cache.Remove("departments:all");
+            // Cache Invalidation: Specific aur List dono ko remove karein
+            await _distributedCache.RemoveAsync($"department:{id}");
+            await _distributedCache.RemoveAsync("departments:all");
 
             return true;
         }
