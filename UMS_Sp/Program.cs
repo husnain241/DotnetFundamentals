@@ -41,6 +41,11 @@ builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<UMS_Sp.Filters.ValidationActionFilterAttribute>();
+});
+
 var app = builder.Build();
 
 // Seed Database on startup
