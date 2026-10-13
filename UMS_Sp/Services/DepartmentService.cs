@@ -1,4 +1,6 @@
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
+using System.Text.Json;
 using UMS_Sp.DTOs;
 using UMS_Sp.DTOs.Common;
 using UMS_Sp.Models;
@@ -9,15 +11,15 @@ namespace UMS_Sp.Services
     public class DepartmentService : IDepartmentService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMemoryCache _cache;
+        private readonly IDistributedCache _distributedCache;
         private readonly ILogger<DepartmentService> _logger;
 
 
 
-        public DepartmentService(IUnitOfWork unitOfWork, IMemoryCache cache, ILogger<DepartmentService> logger)
+        public DepartmentService(IUnitOfWork unitOfWork, IDistributedCache distributedCache, ILogger<DepartmentService> logger)
         {
             _unitOfWork = unitOfWork;
-            _cache = cache;
+            _distributedCache = distributedCache;
             _logger = logger;
         }
 
@@ -198,5 +200,20 @@ namespace UMS_Sp.Services
 
             return cachedDepartment;
         }
+
+        // --- Helper Methods for Serialization ---
+        private async Task<T?> GetFromCacheAsync<T>(string key)
+        {
+            var cachedData = await _distributedCache.GetAsync(key);
+            if (cachedData == null) return default;
+            return JsonSerializer.Deserialize<T>(cachedData);
+        }
+
+        private async Task SetCacheAsync<T>(string key, T value, DistributedCacheEntryOptions options)
+        {
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(value);
+            await _distributedCache.SetAsync(key, bytes, options);
+        }
+
     }
 }
