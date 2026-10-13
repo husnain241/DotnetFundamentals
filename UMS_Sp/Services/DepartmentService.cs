@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Caching.Memory;
 using UMS_Sp.DTOs;
 using UMS_Sp.DTOs.Common;
 using UMS_Sp.Models;
@@ -8,10 +9,13 @@ namespace UMS_Sp.Services
     public class DepartmentService : IDepartmentService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMemoryCache _cache;
 
-        public DepartmentService(IUnitOfWork unitOfWork)
+
+        public DepartmentService(IUnitOfWork unitOfWork, IMemoryCache cache)
         {
             _unitOfWork = unitOfWork;
+            _cache = cache;
         }
 
         public async Task<IEnumerable<DepartmentDto>> GetAllAsync()
