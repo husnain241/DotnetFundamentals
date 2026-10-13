@@ -94,12 +94,41 @@ namespace UMS_Sp.Services
 
         public async Task<DepartmentWithStudentCountDto?> GetDepartmentWithStudentCountAsync(int id)
         {
-            return await _unitOfWork.Departments.GetDepartmentWithStudentCountAsync(id);
+            string cacheKey = $"department:studentcount:{id}";
+
+            if (!_cache.TryGetValue(cacheKey, out DepartmentWithStudentCountDto? cachedResult))
+            {
+                cachedResult = await _unitOfWork.Departments.GetDepartmentWithStudentCountAsync(id);
+
+                if (cachedResult != null)
+                {
+                    var cacheOptions = new MemoryCacheEntryOptions()
+                        .SetAbsoluteExpiration(TimeSpan.FromMinutes(15))
+                        .SetSlidingExpiration(TimeSpan.FromMinutes(5));
+
+                    _cache.Set(cacheKey, cachedResult, cacheOptions);
+                }
+            }
+
+            return cachedResult;
         }
 
         public async Task<IEnumerable<DepartmentWithStudentCountDto>> GetAllWithStudentCountAsync()
         {
-            return await _unitOfWork.Departments.GetAllWithStudentCountAsync();
+            string cacheKey = "departments:all:studentcount";
+
+            if (!_cache.TryGetValue(cacheKey, out IEnumerable<DepartmentWithStudentCountDto> cachedResults))
+            {
+                cachedResults = (await _unitOfWork.Departments.GetAllWithStudentCountAsync()).ToList();
+
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(15))
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(5));
+
+                _cache.Set(cacheKey, cachedResults, cacheOptions);
+            }
+
+            return cachedResults;
         }
 
         public async Task<IEnumerable<DepartmentDto>> GetAllAsync()
