@@ -104,18 +104,29 @@ namespace UMS_Sp.Services
         {
             string cacheKey = $"department:studentcount:{id}";
 
-            if (!_cache.TryGetValue(cacheKey, out DepartmentWithStudentCountDto? cachedResult))
+            // 1. Cache Check (Helper method use kiya)
+            var cachedResult = await GetFromCacheAsync<DepartmentWithStudentCountDto>(cacheKey);
+
+            if (cachedResult != null)
             {
-                cachedResult = await _unitOfWork.Departments.GetDepartmentWithStudentCountAsync(id);
+                _logger.LogInformation("✅ Distributed Cache HIT for {Key}", cacheKey);
+                return cachedResult;
+            }
 
-                if (cachedResult != null)
-                {
-                    var cacheOptions = new MemoryCacheEntryOptions()
-                        .SetAbsoluteExpiration(TimeSpan.FromMinutes(15))
-                        .SetSlidingExpiration(TimeSpan.FromMinutes(5));
+            _logger.LogInformation("❌ Distributed Cache MISS for {Key}. Fetching from DB...", cacheKey);
 
-                    _cache.Set(cacheKey, cachedResult, cacheOptions);
-                }
+            // 2. Cache Miss: Database se heavy query load karein
+            cachedResult = await _unitOfWork.Departments.GetDepartmentWithStudentCountAsync(id);
+
+            if (cachedResult != null)
+            {
+                // 3. Cache Options (Heavy queries ke liye thora lamba time)
+                var cacheOptions = new DistributedCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(15))
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(5));
+
+                // 4. Cache mein store karein
+                await SetCacheAsync(cacheKey, cachedResult, cacheOptions);
             }
 
             return cachedResult;
@@ -125,16 +136,29 @@ namespace UMS_Sp.Services
         {
             string cacheKey = "departments:all:studentcount";
 
-            if (!_cache.TryGetValue(cacheKey, out IEnumerable<DepartmentWithStudentCountDto> cachedResults))
+            // 1. Cache Check (Helper method use kiya)
+            // Note: Hum yahan List<DepartmentWithStudentCountDto> use kar rahe hain serialization ke liye
+            var cachedResults = await GetFromCacheAsync<List<DepartmentWithStudentCountDto>>(cacheKey);
+
+            if (cachedResults != null)
             {
-                cachedResults = (await _unitOfWork.Departments.GetAllWithStudentCountAsync()).ToList();
-
-                var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(15))
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(5));
-
-                _cache.Set(cacheKey, cachedResults, cacheOptions);
+                _logger.LogInformation("✅ Distributed Cache HIT for {Key}", cacheKey);
+                return cachedResults;
             }
+
+            _logger.LogInformation("❌ Distributed Cache MISS for {Key}. Fetching from DB...", cacheKey);
+
+            // 2. Cache Miss: Database se heavy query load karein
+            // .ToList() zaroori hai taake data serialize ho sake
+            cachedResults = (await _unitOfWork.Departments.GetAllWithStudentCountAsync()).ToList();
+
+            // 3. Cache Options
+            var cacheOptions = new DistributedCacheEntryOptions()
+                .SetAbsoluteExpiration(TimeSpan.FromMinutes(15))
+                .SetSlidingExpiration(TimeSpan.FromMinutes(5));
+
+            // 4. Cache mein store karein
+            await SetCacheAsync(cacheKey, cachedResults, cacheOptions);
 
             return cachedResults;
         }
