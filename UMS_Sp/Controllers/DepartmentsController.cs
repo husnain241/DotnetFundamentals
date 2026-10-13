@@ -17,8 +17,9 @@ namespace UMS_Sp.Controllers
         }
 
         /// <summary>
-        /// 1. Get all departments (supports pagination, search, sorting)
+        /// Gets all departments from the database.
         /// </summary>
+        /// <returns>A list of all departments.</returns>
         [HttpGet]
         public async Task<ActionResult<PagedResult<DepartmentDto>>> GetAll([FromQuery] PaginationParams pagination)
         {
@@ -41,8 +42,10 @@ namespace UMS_Sp.Controllers
         }
 
         /// <summary>
-        /// 3. Create new department
+        /// Creates a new department in the university.
         /// </summary>
+        /// <param name="dto">The details of the new department.</param>
+        /// <returns>The newly created department.</returns>
         [HttpPost]
         public async Task<ActionResult<DepartmentDto>> Create([FromBody] CreateDepartmentDto dto)
         {
