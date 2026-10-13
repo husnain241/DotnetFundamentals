@@ -140,17 +140,22 @@ namespace UMS_Sp.Services
         {
             string cacheKey = "departments:all";
 
-            // 1. Cache Check
-            if (_cache.TryGetValue(cacheKey, out IEnumerable<DepartmentDto> cachedDepartments))
+            // 1. Cache Check (Helper method use kiya)
+            var cachedDepartments = await GetFromCacheAsync<List<DepartmentDto>>(cacheKey);
+
+            if (cachedDepartments != null)
             {
-                _logger.LogInformation("✅ Cache HIT for {Key}", cacheKey);
+                _logger.LogInformation("✅ Distributed Cache HIT for {Key}", cacheKey);
                 return cachedDepartments;
             }
 
-            _logger.LogInformation("❌ Cache MISS for {Key}. Fetching from DB...", cacheKey); 
+            _logger.LogInformation("❌ Distributed Cache MISS for {Key}. Fetching from DB...", cacheKey);
 
+            // 2. Cache Miss: Database se data load karein
             var departments = await _unitOfWork.Departments.GetAllAsync();
-            cachedDepartments = departments.Select(d => new DepartmentDto
+
+            // ️ Important: .ToList() lagana zaroori hai taake data memory mein materialize ho jaye
+            var departmentDtos = departments.Select(d => new DepartmentDto
             {
                 Id = d.Id,
                 Name = d.Name,
@@ -158,32 +163,38 @@ namespace UMS_Sp.Services
                 CreatedAt = d.CreatedAt
             }).ToList();
 
-            var cacheOptions = new MemoryCacheEntryOptions()
+            // 3. Cache Options set karein
+            var cacheOptions = new DistributedCacheEntryOptions()
                 .SetAbsoluteExpiration(TimeSpan.FromMinutes(10))
                 .SetSlidingExpiration(TimeSpan.FromMinutes(2));
 
-            _cache.Set(cacheKey, cachedDepartments, cacheOptions);
+            // 4. Cache mein store karein (Helper method use kiya)
+            await SetCacheAsync(cacheKey, departmentDtos, cacheOptions);
 
-            return cachedDepartments;
+            return departmentDtos;
         }
+
         public async Task<DepartmentDto?> GetByIdAsync(int id)
         {
             string cacheKey = $"department:{id}";
 
             // 1. Cache Check
-            if (_cache.TryGetValue(cacheKey, out DepartmentDto? cachedDepartment))
+            var cachedDepartment = await GetFromCacheAsync<DepartmentDto>(cacheKey);
+
+            if (cachedDepartment != null)
             {
-                _logger.LogInformation("✅ Cache HIT for {Key}", cacheKey); 
+                _logger.LogInformation("✅ Distributed Cache HIT for {Key}", cacheKey);
                 return cachedDepartment;
             }
 
-            _logger.LogInformation("❌ Cache MISS for {Key}. Fetching from DB...", cacheKey);
+            _logger.LogInformation("❌ Distributed Cache MISS for {Key}. Fetching from DB...", cacheKey);
 
+            // 2. Cache Miss: Database se load karein
             var department = await _unitOfWork.Departments.GetByIdAsync(id);
 
             if (department != null)
             {
-                cachedDepartment = new DepartmentDto
+                var departmentDto = new DepartmentDto
                 {
                     Id = department.Id,
                     Name = department.Name,
@@ -191,14 +202,18 @@ namespace UMS_Sp.Services
                     CreatedAt = department.CreatedAt
                 };
 
-                var cacheOptions = new MemoryCacheEntryOptions()
+                // 3. Cache Options
+                var cacheOptions = new DistributedCacheEntryOptions()
                     .SetAbsoluteExpiration(TimeSpan.FromMinutes(10))
                     .SetSlidingExpiration(TimeSpan.FromMinutes(2));
 
-                _cache.Set(cacheKey, cachedDepartment, cacheOptions);
+                // 4. Cache mein store karein
+                await SetCacheAsync(cacheKey, departmentDto, cacheOptions);
+
+                return departmentDto;
             }
 
-            return cachedDepartment;
+            return null;
         }
 
         // --- Helper Methods for Serialization ---
