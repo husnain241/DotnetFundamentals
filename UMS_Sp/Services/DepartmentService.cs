@@ -10,12 +10,15 @@ namespace UMS_Sp.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMemoryCache _cache;
+        private readonly ILogger<DepartmentService> _logger;
 
 
-        public DepartmentService(IUnitOfWork unitOfWork, IMemoryCache cache)
+
+        public DepartmentService(IUnitOfWork unitOfWork, IMemoryCache cache, ILogger<DepartmentService> logger)
         {
             _unitOfWork = unitOfWork;
             _cache = cache;
+            _logger = logger;
         }
 
         public async Task<PagedResult<DepartmentDto>> GetPagedAsync(PaginationParams pagination)
@@ -136,52 +139,61 @@ namespace UMS_Sp.Services
             string cacheKey = "departments:all";
 
             // 1. Cache Check
-            if (!_cache.TryGetValue(cacheKey, out IEnumerable<DepartmentDto> cachedDepartments))
+            if (_cache.TryGetValue(cacheKey, out IEnumerable<DepartmentDto> cachedDepartments))
             {
-                var departments = await _unitOfWork.Departments.GetAllAsync();
-                cachedDepartments = departments.Select(d => new DepartmentDto
-                {
-                    Id = d.Id,
-                    Name = d.Name,
-                    HeadOfDepartment = d.HeadOfDepartment,
-                    CreatedAt = d.CreatedAt
-                }).ToList(); 
-
-                var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(10)) // Max 10 minute
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(2));  // 2 minute idle hone par expire
-
-                _cache.Set(cacheKey, cachedDepartments, cacheOptions);
+                _logger.LogInformation("✅ Cache HIT for {Key}", cacheKey);
+                return cachedDepartments;
             }
+
+            _logger.LogInformation("❌ Cache MISS for {Key}. Fetching from DB...", cacheKey); 
+
+            var departments = await _unitOfWork.Departments.GetAllAsync();
+            cachedDepartments = departments.Select(d => new DepartmentDto
+            {
+                Id = d.Id,
+                Name = d.Name,
+                HeadOfDepartment = d.HeadOfDepartment,
+                CreatedAt = d.CreatedAt
+            }).ToList();
+
+            var cacheOptions = new MemoryCacheEntryOptions()
+                .SetAbsoluteExpiration(TimeSpan.FromMinutes(10))
+                .SetSlidingExpiration(TimeSpan.FromMinutes(2));
+
+            _cache.Set(cacheKey, cachedDepartments, cacheOptions);
 
             return cachedDepartments;
         }
-
         public async Task<DepartmentDto?> GetByIdAsync(int id)
         {
             string cacheKey = $"department:{id}";
 
             // 1. Cache Check
-            if (!_cache.TryGetValue(cacheKey, out DepartmentDto? cachedDepartment))
+            if (_cache.TryGetValue(cacheKey, out DepartmentDto? cachedDepartment))
             {
-                var department = await _unitOfWork.Departments.GetByIdAsync(id);
+                _logger.LogInformation("✅ Cache HIT for {Key}", cacheKey); 
+                return cachedDepartment;
+            }
 
-                if (department != null)
+            _logger.LogInformation("❌ Cache MISS for {Key}. Fetching from DB...", cacheKey);
+
+            var department = await _unitOfWork.Departments.GetByIdAsync(id);
+
+            if (department != null)
+            {
+                cachedDepartment = new DepartmentDto
                 {
-                    cachedDepartment = new DepartmentDto
-                    {
-                        Id = department.Id,
-                        Name = department.Name,
-                        HeadOfDepartment = department.HeadOfDepartment,
-                        CreatedAt = department.CreatedAt
-                    };
+                    Id = department.Id,
+                    Name = department.Name,
+                    HeadOfDepartment = department.HeadOfDepartment,
+                    CreatedAt = department.CreatedAt
+                };
 
-                    var cacheOptions = new MemoryCacheEntryOptions()
-                        .SetAbsoluteExpiration(TimeSpan.FromMinutes(10))
-                        .SetSlidingExpiration(TimeSpan.FromMinutes(2));
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(10))
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(2));
 
-                    _cache.Set(cacheKey, cachedDepartment, cacheOptions);
-                }
+                _cache.Set(cacheKey, cachedDepartment, cacheOptions);
             }
 
             return cachedDepartment;
