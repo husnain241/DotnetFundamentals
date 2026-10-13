@@ -203,6 +203,10 @@ namespace UMS_Sp.Services
 
         public async Task<DepartmentDto?> GetByIdAsync(int id)
         {
+            //if (id == 999)
+            //{
+            //    throw new InvalidOperationException("Yeh ek test exception hai Global Filter check karne ke liye!");
+            //}
             string cacheKey = $"department:{id}";
 
             // 1. Cache Check
