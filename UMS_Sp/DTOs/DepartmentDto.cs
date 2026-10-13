@@ -12,23 +12,23 @@ namespace UMS_Sp.DTOs
 
     public class CreateDepartmentDto
     {
-        [Required]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "Department Name is required.")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Department Name must be between 3 and 100 characters.")]
         public string Name { get; set; } = string.Empty;
 
-        [Required]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "Head of Department is required.")]
+        [StringLength(100, ErrorMessage = "Head of Department name cannot exceed 100 characters.")]
         public string HeadOfDepartment { get; set; } = string.Empty;
     }
 
     public class UpdateDepartmentDto
     {
-        [Required]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "Department Name is required.")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Department Name must be between 3 and 100 characters.")]
         public string Name { get; set; } = string.Empty;
 
-        [Required]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "Head of Department is required.")]
+        [StringLength(100, ErrorMessage = "Head of Department name cannot exceed 100 characters.")]
         public string HeadOfDepartment { get; set; } = string.Empty;
     }
 
