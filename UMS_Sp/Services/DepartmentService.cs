@@ -44,6 +44,8 @@ namespace UMS_Sp.Services
             await _unitOfWork.Departments.AddAsync(department);
             await _unitOfWork.CompleteAsync();
 
+            _cache.Remove("departments:all");
+
             return new DepartmentDto
             {
                 Id = department.Id,
@@ -64,6 +66,9 @@ namespace UMS_Sp.Services
             _unitOfWork.Departments.Update(department);
             await _unitOfWork.CompleteAsync();
 
+            _cache.Remove($"department:{id}");
+            _cache.Remove("departments:all");
+
             return new DepartmentDto
             {
                 Id = department.Id,
@@ -80,6 +85,10 @@ namespace UMS_Sp.Services
 
             _unitOfWork.Departments.Delete(department);
             await _unitOfWork.CompleteAsync();
+
+            _cache.Remove($"department:{id}");
+            _cache.Remove("departments:all");
+
             return true;
         }
 
