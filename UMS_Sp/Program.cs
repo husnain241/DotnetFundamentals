@@ -15,6 +15,12 @@ builder.Services.AddControllers()
 // Configure EF Core with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDistributedSqlServerCache(options =>
+{
+    options.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.SchemaName = "dbo";
+    options.TableName = "CacheEntries";
+});
 
 // Register Repositories and Unit of Work
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
