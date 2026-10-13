@@ -23,7 +23,7 @@ namespace UMS_Sp.Controllers
         public async Task<ActionResult<PagedResult<DepartmentDto>>> GetAll([FromQuery] PaginationParams pagination)
         {
             var result = await _departmentService.GetPagedAsync(pagination);
-            return Ok(result);
+            return Ok(new ApiResponse<PagedResult<DepartmentDto>>(result));
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace UMS_Sp.Controllers
             {
                 return NotFound(new { message = $"Department with ID {id} not found." });
             }
-            return Ok(department);
+            return Ok(new ApiResponse<DepartmentDto>(department));
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace UMS_Sp.Controllers
             }
 
             var created = await _departmentService.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, new ApiResponse<DepartmentDto>(created));
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace UMS_Sp.Controllers
             {
                 return NotFound(new { message = $"Department with ID {id} not found." });
             }
-            return Ok(updated);
+            return Ok(new ApiResponse<DepartmentDto>(updated));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace UMS_Sp.Controllers
             {
                 return NotFound(new { message = $"Department with ID {id} not found." });
             }
-            return Ok(result);
+            return Ok(new ApiResponse<DepartmentWithStudentCountDto>(result));
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace UMS_Sp.Controllers
         public async Task<ActionResult<IEnumerable<DepartmentWithStudentCountDto>>> GetAllWithStudentCount()
         {
             var results = await _departmentService.GetAllWithStudentCountAsync();
-            return Ok(results);
+            return Ok(new ApiResponse<IEnumerable<DepartmentWithStudentCountDto>>(results));
         }
     }
 }
