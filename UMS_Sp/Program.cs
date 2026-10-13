@@ -57,6 +57,9 @@ builder.Services.AddControllers(options =>
 
 var app = builder.Build();
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
 // Seed Database on startup
 using (var scope = app.Services.CreateScope())
 {
