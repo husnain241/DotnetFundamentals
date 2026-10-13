@@ -44,6 +44,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<UMS_Sp.Filters.ValidationActionFilterAttribute>();
+    options.Filters.Add<UMS_Sp.Filters.GlobalExceptionFilter>();
+
 });
 
 var app = builder.Build();
