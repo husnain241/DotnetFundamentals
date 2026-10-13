@@ -46,6 +46,10 @@ builder.Services.AddControllers(options =>
     options.Filters.Add<UMS_Sp.Filters.ValidationActionFilterAttribute>();
     options.Filters.Add<UMS_Sp.Filters.GlobalExceptionFilter>();
 
+}).AddJsonOptions(options =>
+{    options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+     options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+     options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
 });
 
 var app = builder.Build();
