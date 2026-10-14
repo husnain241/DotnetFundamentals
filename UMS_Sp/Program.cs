@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Profiling.SqlFormatters;
 using UMS_Sp.Data;
 using UMS_Sp.Repositories;
 using UMS_Sp.Services;
@@ -22,6 +23,17 @@ builder.Services.AddDistributedSqlServerCache(options =>
     options.TableName = "CacheEntries";
 });
 
+builder.Services.AddMiniProfiler(options =>
+{
+    options.RouteBasePath = "/profiler";
+
+    options.SqlFormatter = new InlineFormatter();
+
+    options.TrackConnectionOpenClose = true;
+    // OPTIONAL BUT RECOMMENDED: Restrict to local development or Admin users in Production
+    // options.ResultsAuthorize = request => request.HttpContext.User.IsInRole("Admin") || builder.Environment.IsDevelopment();
+})
+.AddEntityFramework();
 // Register Repositories and Unit of Work
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
@@ -93,7 +105,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseMiniProfiler();
 app.UseAuthorization();
 
 app.MapControllers();
